@@ -32,11 +32,15 @@ FINITURE_CONFIG = {
 # ==============================================================================
 SALES_PART_ARTICOLI = {
     "Adattatore": {
-        "output_tech": "ADATTATORE",
+        "output_tech": "ADATT",
         "output_comm": "ADATTATORE",
         "ha_finitura": True,
-        "pills_config": {}
-    },
+        "pills_config": [
+            ("FORATO", 1),
+            ("LISCIO", 2)
+        ]
+    }
+}
     "Anta": {
         "output_tech": "ANTA",
         "output_comm": "ANTA",
@@ -500,14 +504,14 @@ DATABASE_PILLS = {
     "Con viteria": ("CON VITERIA", "+VIT"),
     "Con viteria saldata": ("CON VITERIA SALDATA", "VIT.SALD"),
     "Dritto": ("DRITTO", "DRITT"),
-    "Forato": ("FORATO", "FOR"),
+    "Forato": ("FOR", "FORATO"),
     "Fresata": ("FRESATA", "FRES"),
     "Fresato": ("FRESATO", "FRES"),
     "Impilabile": ("IMPILABILE", "IMP"),
     "In filo": ("IN FILO", "FILO"),
     "In rete": ("IN RETE", "RETE"),
     "Inclinato": ("INCLINATO", "INCL"),
-    "Liscio": ("LISCIO", "LISC"),
+    "Liscio": ("LISC", "LISCIO"),
     "Minirack": ("MINIRACK", "MINI"),
     "Mobile": ("MOBILE", "MOB"),
     "Multibarra": ("MULTIBARRA", "M.BAR"),
