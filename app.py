@@ -5,17 +5,21 @@ import streamlit as st
 import pandas as pd
 import datetime
 import time
-#from streamlit_gsheets import GSheetsConnection
 from zoneinfo import ZoneInfo
 from database import *
 
-# ==============================================================================
-# STYLES.PY - Foglio di Stile CSS Personalizzato per Streamlit
-# ==============================================================================
+# =========================================================
+# 0. CONFIGURAZIONE PAGINA (Deve essere la prima istruzione Streamlit)
+# =========================================================
+st.set_page_config(page_title="Technical Generator v2.0", layout="wide")
 
-import streamlit as st
+
+# =========================================================
+# 1. FUNZIONI DI SUPPORTO (CSS, AUTH & RESET)
+# =========================================================
 
 def inject_custom_css():
+    """Inietta lo stile CSS personalizzato."""
     st.markdown("""
         <style>
             .block-container {
@@ -49,11 +53,6 @@ def inject_custom_css():
         </style>
     """, unsafe_allow_html=True)
 
-# ==============================================================================
-# AUTH.PY - Gestione Autenticazione Utenti Ufficio Tecnico
-# ==============================================================================
-
-import streamlit as st
 
 UTENTI_AUTORIZZATI = {
     "admin": {"password": "reg2026", "nome": "Amministratore di Sistema"},
@@ -95,7 +94,42 @@ def check_authentication():
                         else:
                             st.error("❌ Credenziali non valide. Riprova.")
         st.stop()
-    
+
+
+def activate_reset():
+    """Pulisce la sessione per resettare la maschera."""
+    defaults = {
+        'comp_tags': None,
+        'selectbox_part': None,
+        'extra_tags': [],
+        'check_1090': False,
+        'stringa_tecnica': "",
+        'stringa_commerciale': "",
+        'generazione_effettuata': False
+    }
+    text_keys = ['dim_l', 'dim_p', 'dim_h', 'dim_dia', 'dim_s', 'extra_text', 'select_finitura']
+    for key, val in defaults.items():
+        st.session_state[key] = val
+    for key in text_keys:
+        if key in st.session_state:
+            st.session_state[key] = ""
+    for key in list(st.session_state.keys()):
+        if key.startswith("dyn_") or key.startswith("text_"):
+            del st.session_state[key]
+    st.session_state['reset_eseguito'] = True
+
+
+# =========================================================
+# ESECUZIONE INIZIALE (Iniezione CSS e Login)
+# =========================================================
+inject_custom_css()
+check_authentication()
+
+if st.session_state.get('reset_eseguito'):
+    st.toast("Interfaccia pulita!", icon="✨")
+    st.session_state['reset_eseguito'] = False
+
+
 # =========================================================
 # 2. INTERFACCIA UTENTE (Layout & Logica)
 # =========================================================
@@ -232,7 +266,6 @@ with col_workarea:
 # =========================================================
 # 3. LOGICA DI GENERAZIONE (MOTORE DI CALCOLO)
 # =========================================================
-
 st.divider()
 
 if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
@@ -354,10 +387,10 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
         st.session_state['stringa_commerciale'] = stringa_commerciale_definitiva
         st.session_state['generazione_effettuata'] = True
 
+
 # =========================================================
 # 4. VISUALIZZAZIONE RISULTATI (OUTPUT BOX)
 # =========================================================
-
 if st.session_state.get('generazione_effettuata', False):
     st.markdown("### 📋 Risultato Generazione")
     
