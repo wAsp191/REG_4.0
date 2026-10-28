@@ -8,8 +8,10 @@ import time
 from zoneinfo import ZoneInfo
 from database import *
 
-st.set_page_config(page_title="Reg v4.0", layout="wide")
+# Dichiariamo la compatibilità qui per sicurezza assoluta anti-NameError
+OPZIONI_COMPATIBILITA = ["", "F25", "F25 BESPOKE", "F50", "F50 BESPOKE", "UNIVERSAL", "BC", "FORTISSIMO", "MINIRACK", "UNIMOB"]
 
+st.set_page_config(page_title="Reg v4.0", layout="wide")
 
 # =========================================================
 # 1. FUNZIONI DI SUPPORTO (CSS, AUTH & RESET)
