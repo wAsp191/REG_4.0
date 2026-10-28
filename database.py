@@ -37,7 +37,8 @@ SALES_PART_ARTICOLI = {
         "ha_finitura": True,
         "pills_config": [
             ("Forato", 2),
-            ("Liscio", 1)
+            ("Liscio", 3),
+            ("Sezione montante (+)", 1)
         ]
     },
     "Anta": {
