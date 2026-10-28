@@ -422,9 +422,23 @@ if st.session_state.get('generazione_effettuata', False):
     st.markdown("### 📋 Risultato Generazione")
     
     col_out1, col_out2 = st.columns(2)
+    
     with col_out1:
         st.markdown("**Stringa Tecnica:**")
-        st.code(st.session_state.get('stringa_tecnica', ''), language="text")
+        tech_string = st.session_state.get('stringa_tecnica', '')
+        st.code(tech_string, language="text")
+        
+        # --- CONTATORE CARATTERI STRINGA TECNICA ---
+        num_caratteri = len(tech_string)
+        limite_max = 100
+        
+        if num_caratteri > limite_max:
+            st.error(f"⚠️ **Limite superato!** ({num_caratteri}/{limite_max} caratteri). La stringa è troppo lunga per gli standard tecnici.")
+        elif num_caratteri >= 85:
+            st.warning(f"⚠️ **Attenzione vicino al limite**: {num_caratteri}/{limite_max} caratteri utilizzati.")
+        else:
+            st.info(f"📏 Lunghezza stringa tecnica: **{num_caratteri} / {limite_max}** caratteri")
+            
     with col_out2:
         st.markdown("**Stringa Commerciale:**")
         st.code(st.session_state.get('stringa_commerciale', ''), language="text")
