@@ -35,7 +35,6 @@ def inject_custom_css():
             }
             
             /* --- MACRO CATEGORIE GRANDI A SINISTRA --- */
-            /* Ingrandisce il testo delle opzioni del radio button per le categorie */
             div[data-testid="stRadio"] div[role="radiogroup"] label p {
                 font-size: 1.3rem !important;
                 font-weight: 700 !important;
@@ -127,7 +126,7 @@ def activate_reset():
         'stringa_commerciale': "",
         'generazione_effettuata': False
     }
-    text_keys = ['dim_l', 'dim_p', 'dim_h', 'dim_dia', 'dim_s', 'extra_text', 'select_finitura']
+    text_keys = ['dim_l', 'dim_p', 'dim_h', 'dim_dia', 'dim_s', 'extra_text', 'select_finitura', 'select_compatibilita']
     for key, val in defaults.items():
         st.session_state[key] = val
     for key in text_keys:
@@ -292,6 +291,16 @@ with col_workarea:
 
     st.text_input("Note libere / Specifiche extra:", key="extra_text")
     st.checkbox("Aggiungi marcatura (UNI EN 1090-1)", key="check_1090")
+
+    # Nuova Sezione Compatibilità Finale (A scelta singola mutualmente esclusiva)
+    st.markdown("---")
+    st.subheader("🔗 Opzione di Compatibilità Finale")
+    compatibilita_scelta = st.selectbox(
+        "Seleziona compatibilità (esclude le altre):",
+        options=OPZIONI_COMPATIBILITA,
+        format_func=lambda x: "Seleziona compatibilità..." if x == "" else x,
+        key="select_compatibilita"
+    )
     
 # =========================================================
 # 3. LOGICA DI GENERAZIONE (MOTORE DI CALCOLO)
@@ -354,7 +363,6 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
                     return val[1]
                 return 99
             elif isinstance(pills_config_art, (list, tuple)):
-                # Se è una lista (es. [("FORATO", 1), ("LISCIO", 2)]), cerchiamo la tupla corrispondente
                 for item in pills_config_art:
                     if isinstance(item, (list, tuple)) and len(item) >= 2:
                         if item[0] == tag:
@@ -404,34 +412,54 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
                     if t_val: lista_tech_pills.append(t_val)
                     if c_val: lista_comm_pills.append(c_val)
             else:
-                tuple_pill = DATABASE_PILLS.get(pill, (pill.upper(), pill.upper()))
-                if isinstance(tuple_pill, (tuple, list)) and len(tuple_pill) >= 2:
+                # Ricerca sicura case-insensitive in DATABASE_PILLS per evitare mismatch sulle maiuscole
+                pill_key = str(pill).strip()
+                tuple_pill = None
+                for k, v in DATABASE_PILLS.items():
+                    if k.strip().lower() == pill_key.lower():
+                        tuple_pill = v
+                        break
+                
+                if tuple_pill and isinstance(tuple_pill, (tuple, list)) and len(tuple_pill) >= 2:
                     t_pill = str(tuple_pill[0]).strip().upper()
                     c_pill = str(tuple_pill[1]).strip().upper()
                 else:
-                    t_pill = str(tuple_pill).strip().upper()
-                    c_pill = t_pill
+                    t_pill = pill_key.upper()
+                    c_pill = pill_key.upper()
                     
                 if t_pill: lista_tech_pills.append(t_pill)
                 if c_pill and c_pill != "NONE": lista_comm_pills.append(c_pill)
 
         note_libere = str(st.session_state.get("extra_text", "") or "").strip().upper()
+        compatibilita_val = str(st.session_state.get("select_compatibilita", "") or "").strip().upper()
 
-        # Assemblaggio Stringa Tecnica
+        # Assemblaggio Stringa Tecnica Base
         pezzi_tech = [output_tech_base, finitura_tech_str] + lista_tech_pills
         if dim_str: pezzi_tech.append(dim_str)
         if note_libere: pezzi_tech.append(note_libere)
         if st.session_state.get("check_1090"):
             pezzi_tech.append("(UNI EN 1090-1)")
             
-        stringa_tecnica_definitiva = " ".join([p for p in pezzi_tech if p]).upper()
+        stringa_tecnica_base = " ".join([p for p in pezzi_tech if p]).upper()
+        
+        # Accodamento compatibilità in coda con il trattino
+        if compatibilita_val and compatibilita_val != "NONE":
+            stringa_tecnica_definitiva = f"{stringa_tecnica_base} - {compatibilita_val}"
+        else:
+            stringa_tecnica_definitiva = stringa_tecnica_base
 
-        # Assemblaggio Stringa Commerciale
+        # Assemblaggio Stringa Commerciale Base
         pezzi_comm = [output_comm_base, finitura_comm_str] + lista_comm_pills
         if dim_str: pezzi_comm.append(dim_str)
         if note_libere: pezzi_comm.append(note_libere)
         
-        stringa_commerciale_definitiva = " ".join([p for p in pezzi_comm if p]).upper()
+        stringa_commerciale_base = " ".join([p for p in pezzi_comm if p]).upper()
+        
+        # Accodamento compatibilità in coda con il trattino anche per la commerciale
+        if compatibilita_val and compatibilita_val != "NONE":
+            stringa_commerciale_definitiva = f"{stringa_commerciale_base} - {compatibilita_val}"
+        else:
+            stringa_commerciale_definitiva = stringa_commerciale_base
 
         st.session_state['stringa_tecnica'] = stringa_tecnica_definitiva
         st.session_state['stringa_commerciale'] = stringa_commerciale_definitiva
