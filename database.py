@@ -36,8 +36,8 @@ SALES_PART_ARTICOLI = {
         "output_comm": "ADATTATORE",
         "ha_finitura": True,
         "pills_config": [
-            ("FORATO", 1),
-            ("LISCIO", 2)
+            ("Forato", 1),
+            ("Liscio", 2)
         ]
     },
     "Anta": {
