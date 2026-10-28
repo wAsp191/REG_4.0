@@ -19,18 +19,41 @@ st.set_page_config(page_title="Reg v4.0", layout="wide")
 # =========================================================
 
 def inject_custom_css():
-    """Inietta lo stile CSS personalizzato."""
     st.markdown("""
         <style>
             .block-container {
-                padding-top: 2.5rem !important;
+                padding-top: 2rem !important;
                 padding-bottom: 0rem !important;
             }
             [data-testid="stVerticalBlock"] > div {
                 flex-direction: column;
                 gap: 0.12rem !important;
             }
-            h1 { margin-bottom: -1rem !important; font-size: 1.6rem !important; }
+            
+            /* --- TITOLO CENTRATO --- */
+            .reg-title-container {
+                text-align: center;
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            /* --- MACRO CATEGORIE GRANDI A SINISTRA --- */
+            /* Ingrandisce il testo delle opzioni del radio button per le categorie */
+            div[data-testid="stRadio"] div[role="radiogroup"] label p {
+                font-size: 1.3rem !important;
+                font-weight: 700 !important;
+                padding: 8px 0px !important;
+            }
+            div[data-testid="stRadio"] div[role="radiogroup"] label {
+                padding: 6px 10px !important;
+                margin-bottom: 8px !important;
+                transition: all 0.2s ease;
+            }
+            div[data-testid="stRadio"] div[role="radiogroup"] label:hover {
+                background-color: rgba(255, 255, 255, 0.05);
+                border-radius: 8px;
+            }
+
             h2 { margin-bottom: -0.8rem !important; font-size: 1.2rem !important; }
             h3 { margin-bottom: -0.5rem !important; font-size: 1.0rem !important; }
             hr {
@@ -133,24 +156,28 @@ if st.session_state.get('reset_eseguito'):
 # =========================================================
 # 2. INTERFACCIA UTENTE (Layout & Logica)
 # =========================================================
-col_t, col_r = st.columns([3.5, 1], vertical_alignment="bottom")
 
-with col_t: 
-    st.markdown("""
-        <div>
-            <h1 style="margin: 0; font-size: 1.8rem;">⚙️ REG - Title Generator</h1>
-        </div>
-    """, unsafe_allow_html=True)
-    st.markdown(f"<p style='font-size: 0.85rem; color: gray; margin-top: 4px;'>Utente attivo: <b>{st.session_state.utente_corrente}</b></p>", unsafe_allow_html=True)
+# Intestazione Centrata a pieno schermo
+st.markdown("""
+    <div class="reg-title-container">
+        <h1 style="margin: 0; font-size: 2.2rem;">⚙️ REG - Title Generator</h1>
+        <p style='font-size: 0.9rem; color: gray; margin-top: 4px;'>Utente attivo: <b>{}</b></p>
+    </div>
+""".format(st.session_state.utente_corrente), unsafe_allow_html=True)
 
-with col_r: 
+# Pulsante di reset posizionato elegantemente o subito sopra l'area di lavoro
+col_top_left, col_top_right = st.columns([5, 1])
+with col_top_right:
     st.button("🔄 AZZERA", on_click=activate_reset, use_container_width=True)
 
 st.markdown("---")
 
-col_left, col_workarea = st.columns([1, 3.5], gap="large")
+# Layout Principale a 2 Colonne (Colonna sinistra larga per le macro-categorie grandi)
+col_left, col_workarea = st.columns([1.2, 3.2], gap="large")
 
-# Colonna Sinistra: Scelta Macro Categoria
+# =========================================================
+# COLONNA SINISTRA: MACRO CATEGORIE (Grandi)
+# =========================================================
 with col_left:
     st.subheader("📂 1. Categoria")
     mappa_estetica = {
