@@ -416,20 +416,29 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
 
 
 # =========================================================
-# 4. VISUALIZZAZIONE RISULTATI (OUTPUT BOX)
+# 4. VISUALIZZAZIONE E MODIFICA RISULTATI (OUTPUT BOX)
 # =========================================================
 if st.session_state.get('generazione_effettuata', False):
-    st.markdown("### 📋 Risultato Generazione")
+    st.markdown("### 📋 Risultato Generazione & Modifica")
     
     col_out1, col_out2 = st.columns(2)
     
     with col_out1:
-        st.markdown("**Stringa Tecnica:**")
-        tech_string = st.session_state.get('stringa_tecnica', '')
-        st.code(tech_string, language="text")
+        st.markdown("**Stringa Tecnica (Modificabile):**")
         
-        # --- CONTATORE CARATTERI STRINGA TECNICA ---
-        num_caratteri = len(tech_string)
+        # Inizializziamo una chiave di sessione dedicata alla modifica se non esiste
+        if 'editable_tech' not in st.session_state:
+            st.session_state['editable_tech'] = st.session_state.get('stringa_tecnica', '')
+            
+        # Campo di testo modificabile per la stringa tecnica
+        stringa_tecnica_finale = st.text_input(
+            "Modifica Stringa Tecnica:",
+            key="editable_tech",
+            label_visibility="collapsed"
+        )
+        
+        # --- CONTATORE CARATTERI STRINGA TECNICA (DINAMICO SUL MODIFICATO) ---
+        num_caratteri = len(stringa_tecnica_finale)
         limite_max = 100
         
         if num_caratteri > limite_max:
@@ -438,7 +447,19 @@ if st.session_state.get('generazione_effettuata', False):
             st.warning(f"⚠️ **Attenzione vicino al limite**: {num_caratteri}/{limite_max} caratteri utilizzati.")
         else:
             st.info(f"📏 Lunghezza stringa tecnica: **{num_caratteri} / {limite_max}** caratteri")
-            
+        
     with col_out2:
-        st.markdown("**Stringa Commerciale:**")
-        st.code(st.session_state.get('stringa_commerciale', ''), language="text")
+        st.markdown("**Stringa Commerciale (Modificabile):**")
+        
+        # Inizializziamo una chiave di sessione dedicata alla modifica se non esiste
+        if 'editable_comm' not in st.session_state:
+            st.session_state['editable_comm'] = st.session_state.get('stringa_commerciale', '')
+            
+        # Campo di testo modificabile per la stringa commerciale
+        stringa_commerciale_finale = st.text_input(
+            "Modifica Stringa Commerciale:",
+            key="editable_comm",
+            label_visibility="collapsed"
+        )
+        
+        st.success("💡 Puoi cliccare nei box sopra, correggere liberamente il testo e copiarlo al volo.")
