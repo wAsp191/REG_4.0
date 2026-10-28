@@ -410,25 +410,24 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
         
         stringa_commerciale_definitiva = " ".join([p for p in pezzi_comm if p]).upper()
 
-        st.session_state['stringa_tecnica'] = stringa_tecnica_definitiva
-        st.session_state['stringa_commerciale'] = stringa_commerciale_definitiva
-        st.session_state['sync_needed'] = True 
-        st.session_state['generazione_effettuata'] = True
-
+st.session_state['stringa_tecnica'] = stringa_tecnica_definitiva
+st.session_state['stringa_commerciale'] = stringa_commerciale_definitiva
+st.session_state['sync_needed'] = True  
+st.session_state['generazione_effettuata'] = True
 
 # =========================================================
 # 4. VISUALIZZAZIONE E MODIFICA RISULTATI (OUTPUT BOX)
 # =========================================================
 if st.session_state.get('generazione_effettuata', False):
-    st.markdown("### 📋 Risultato Generazione & Modifica")
+    st.markdown("### 📋 Risultato Generazione")
     
     col_out1, col_out2 = st.columns(2, gap="medium")
     
-    # --- COLONNA 1: STRINGA TECNICA ---
+    # --- COLONNA 1: STRINGA TECNICA (MODIFICABILE + CONTATORE MINIMAL) ---
     with col_out1:
-        st.markdown("**Stringa Tecnica (Modificabile):**")
+        st.markdown("**Stringa Tecnica:**")
         
-        # Inizializzazione session state se vuota o dopo nuova generazione
+        # Sincronizzazione dati con il pulsante di generazione
         if 'editable_tech' not in st.session_state or st.session_state.get('sync_needed', False):
             st.session_state['editable_tech'] = st.session_state.get('stringa_tecnica', '')
             
@@ -438,40 +437,37 @@ if st.session_state.get('generazione_effettuata', False):
             label_visibility="collapsed"
         )
         
-        # --- CONTATORE CARATTERI ELEGANTE & MINIMAL ---
+        # --- CONTATORE CARATTERI CON PROGRESS BAR MINIMAL ---
         char_count = len(tech_val)
         max_chars = 100
         percent = min(char_count / max_chars, 1.0)
         
-        # Colore dinamico in base alla lunghezza
+        # Gestione cromatica della soglia
         if char_count > max_chars:
-            color_code = "#FF4B4B" # Rosso
-            status_text = f"⚠️ {char_count}/{max_chars} CARATTERI (SUPERATO)"
+            color_code = "#FF4B4B"  # Rosso (Superato)
+            status_text = f"⚠️ {char_count}/{max_chars} CARATTERI (LIMIT SFORATO)"
         elif char_count >= 85:
-            color_code = "#FFA500" # Arancione
+            color_code = "#FFA500"  # Arancione (In guardia)
             status_text = f"⚡ {char_count}/{max_chars} caratteri"
         else:
-            color_code = "#00C853" # Verde professionale
+            color_code = "#00C853"  # Verde (Ok)
             status_text = f"📏 {char_count}/{max_chars} caratteri"
 
-        # Barra di avanzamento e contatore micro-styled
+        # Sottile barra d'avanzamento minimal (4px)
         st.markdown(f"""
-            <div style="margin-top: -6px; margin-bottom: 8px;">
+            <div style="margin-top: 2px; margin-bottom: 8px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 600; color: {color_code}; margin-bottom: 3px;">
                     <span>{status_text}</span>
                 </div>
-                <div style="width: 100%; background-color: #e0e0e0; height: 4px; border-radius: 2px;">
+                <div style="width: 100%; background-color: rgba(150, 150, 150, 0.2); height: 4px; border-radius: 2px;">
                     <div style="width: {percent * 100}%; background-color: {color_code}; height: 4px; border-radius: 2px; transition: width 0.3s ease;"></div>
                 </div>
             </div>
         """, unsafe_allow_html=True)
-        
-        # Blocco st.code sincronizzato per la COPIA RAPIDA negli appunti
-        st.code(tech_val, language="text")
 
-    # --- COLONNA 2: STRINGA COMMERCIALE ---
+    # --- COLONNA 2: STRINGA COMMERCIALE (MODIFICABILE) ---
     with col_out2:
-        st.markdown("**Stringa Commerciale (Modificabile):**")
+        st.markdown("**Stringa Commerciale:**")
         
         if 'editable_comm' not in st.session_state or st.session_state.get('sync_needed', False):
             st.session_state['editable_comm'] = st.session_state.get('stringa_commerciale', '')
@@ -481,13 +477,7 @@ if st.session_state.get('generazione_effettuata', False):
             key="editable_comm",
             label_visibility="collapsed"
         )
-        
-        # Spaziatore visivo per allineare i box
-        st.markdown("<div style='height: 19px;'></div>", unsafe_allow_html=True)
-        
-        # Blocco st.code sincronizzato per la COPIA RAPIDA negli appunti
-        st.code(comm_val, language="text")
 
-    # Reset flag di sincronizzazione
+    # Reset del flag di sincronizzazione
     if st.session_state.get('sync_needed'):
         st.session_state['sync_needed'] = False
