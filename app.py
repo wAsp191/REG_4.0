@@ -412,6 +412,7 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
 
         st.session_state['stringa_tecnica'] = stringa_tecnica_definitiva
         st.session_state['stringa_commerciale'] = stringa_commerciale_definitiva
+        st.session_state['sync_needed'] = True 
         st.session_state['generazione_effettuata'] = True
 
 
@@ -421,45 +422,72 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
 if st.session_state.get('generazione_effettuata', False):
     st.markdown("### 📋 Risultato Generazione & Modifica")
     
-    col_out1, col_out2 = st.columns(2)
+    col_out1, col_out2 = st.columns(2, gap="medium")
     
+    # --- COLONNA 1: STRINGA TECNICA ---
     with col_out1:
         st.markdown("**Stringa Tecnica (Modificabile):**")
         
-        # Inizializziamo una chiave di sessione dedicata alla modifica se non esiste
-        if 'editable_tech' not in st.session_state:
+        # Inizializzazione session state se vuota o dopo nuova generazione
+        if 'editable_tech' not in st.session_state or st.session_state.get('sync_needed', False):
             st.session_state['editable_tech'] = st.session_state.get('stringa_tecnica', '')
             
-        # Campo di testo modificabile per la stringa tecnica
-        stringa_tecnica_finale = st.text_input(
-            "Modifica Stringa Tecnica:",
+        tech_val = st.text_input(
+            "Stringa Tecnica",
             key="editable_tech",
             label_visibility="collapsed"
         )
         
-        # --- CONTATORE CARATTERI STRINGA TECNICA (DINAMICO SUL MODIFICATO) ---
-        num_caratteri = len(stringa_tecnica_finale)
-        limite_max = 100
+        # --- CONTATORE CARATTERI ELEGANTE & MINIMAL ---
+        char_count = len(tech_val)
+        max_chars = 100
+        percent = min(char_count / max_chars, 1.0)
         
-        if num_caratteri > limite_max:
-            st.error(f"⚠️ **Limite superato!** ({num_caratteri}/{limite_max} caratteri). La stringa è troppo lunga per gli standard tecnici.")
-        elif num_caratteri >= 85:
-            st.warning(f"⚠️ **Attenzione vicino al limite**: {num_caratteri}/{limite_max} caratteri utilizzati.")
+        # Colore dinamico in base alla lunghezza
+        if char_count > max_chars:
+            color_code = "#FF4B4B" # Rosso
+            status_text = f"⚠️ {char_count}/{max_chars} CARATTERI (SUPERATO)"
+        elif char_count >= 85:
+            color_code = "#FFA500" # Arancione
+            status_text = f"⚡ {char_count}/{max_chars} caratteri"
         else:
-            st.info(f"📏 Lunghezza stringa tecnica: **{num_caratteri} / {limite_max}** caratteri")
+            color_code = "#00C853" # Verde professionale
+            status_text = f"📏 {char_count}/{max_chars} caratteri"
+
+        # Barra di avanzamento e contatore micro-styled
+        st.markdown(f"""
+            <div style="margin-top: -6px; margin-bottom: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 600; color: {color_code}; margin-bottom: 3px;">
+                    <span>{status_text}</span>
+                </div>
+                <div style="width: 100%; background-color: #e0e0e0; height: 4px; border-radius: 2px;">
+                    <div style="width: {percent * 100}%; background-color: {color_code}; height: 4px; border-radius: 2px; transition: width 0.3s ease;"></div>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
         
+        # Blocco st.code sincronizzato per la COPIA RAPIDA negli appunti
+        st.code(tech_val, language="text")
+
+    # --- COLONNA 2: STRINGA COMMERCIALE ---
     with col_out2:
         st.markdown("**Stringa Commerciale (Modificabile):**")
         
-        # Inizializziamo una chiave di sessione dedicata alla modifica se non esiste
-        if 'editable_comm' not in st.session_state:
+        if 'editable_comm' not in st.session_state or st.session_state.get('sync_needed', False):
             st.session_state['editable_comm'] = st.session_state.get('stringa_commerciale', '')
             
-        # Campo di testo modificabile per la stringa commerciale
-        stringa_commerciale_finale = st.text_input(
-            "Modifica Stringa Commerciale:",
+        comm_val = st.text_input(
+            "Stringa Commerciale",
             key="editable_comm",
             label_visibility="collapsed"
         )
         
-        st.success("💡 Puoi cliccare nei box sopra, correggere liberamente il testo e copiarlo al volo.")
+        # Spaziatore visivo per allineare i box
+        st.markdown("<div style='height: 19px;'></div>", unsafe_allow_html=True)
+        
+        # Blocco st.code sincronizzato per la COPIA RAPIDA negli appunti
+        st.code(comm_val, language="text")
+
+    # Reset flag di sincronizzazione
+    if st.session_state.get('sync_needed'):
+        st.session_state['sync_needed'] = False
