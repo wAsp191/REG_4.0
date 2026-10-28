@@ -342,9 +342,20 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
         pills_config_art = dati_art.get("pills_config", {})
         tags_selezionati_utente = st.session_state.get('extra_tags', [])
         
+        # Funzione sicura per estrarre l'ordine indipendentemente dal formato nel DB (int, dict o tuple)
+        def estrai_ordine(tag):
+            val = pills_config_art.get(tag, 99)
+            if isinstance(val, dict):
+                return val.get("ordine", 99)
+            elif isinstance(val, (int, float)):
+                return val
+            elif isinstance(val, (list, tuple)) and len(val) > 1:
+                return val[1]
+            return 99
+
         pills_ordinati_utente = sorted(
             tags_selezionati_utente,
-            key=lambda t: pills_config_art.get(t, {}).get("ordine", 99)
+            key=estrai_ordine
         )
         
         lista_tech_pills = []
