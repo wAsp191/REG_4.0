@@ -154,7 +154,7 @@ if st.session_state.get('reset_eseguito'):
 # 2. INTERFACCIA UTENTE (Layout & Logica)
 # =========================================================
 
-# Intestazione Centrata a pieno schermo
+# Intestazione Centrata a pieno schermo con Maschera Teatrale
 st.markdown("""
     <div class="reg-title-container">
         <h1 style="margin: 0; font-size: 2.2rem;">🎭 REG v4.0</h1>
@@ -162,7 +162,7 @@ st.markdown("""
     </div>
 """.format(st.session_state.utente_corrente), unsafe_allow_html=True)
 
-# Pulsante di reset posizionato elegantemente o subito sopra l'area di lavoro
+# Pulsante di reset posizionato in alto a destra
 col_top_left, col_top_right = st.columns([5, 1])
 with col_top_right:
     st.button("🔄 AZZERA", on_click=activate_reset, use_container_width=True)
@@ -229,12 +229,19 @@ with col_workarea:
     if articolo_scelto:
         pills_config_articolo = dati_articolo.get("pills_config", {})
         
-        if pills_config_articolo:
+        # Gestione flessibile: dizionario compatto {"FORATO": 1} o lista di tuple [("FORATO", 1)]
+        if isinstance(pills_config_articolo, dict):
             pills_ordinati = sorted(
                 pills_config_articolo.keys(),
-                key=lambda x: pills_config_articolo[x].get("ordine", 99)
+                key=lambda x: pills_config_articolo[x].get("ordine", pills_config_articolo[x]) 
+                if isinstance(pills_config_articolo[x], dict) else pills_config_articolo[x]
             )
+        elif isinstance(pills_config_articolo, (list, tuple)):
+            pills_ordinati = [p[0] for p in sorted(pills_config_articolo, key=lambda x: x[1])]
+        else:
+            pills_ordinati = []
             
+        if pills_ordinati:
             col_pills_sel, col_pills_dyn = st.columns([1.7, 1.3], gap="medium")
             
             with col_pills_sel:
@@ -285,8 +292,7 @@ with col_workarea:
 
     st.text_input("Note libere / Specifiche extra:", key="extra_text")
     st.checkbox("Aggiungi marcatura (UNI EN 1090-1)", key="check_1090")
-
-
+    
 # =========================================================
 # 3. LOGICA DI GENERAZIONE (MOTORE DI CALCOLO)
 # =========================================================
