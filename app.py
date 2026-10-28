@@ -11,7 +11,7 @@ from database import *
 # =========================================================
 # 0. CONFIGURAZIONE PAGINA (Deve essere la prima istruzione Streamlit)
 # =========================================================
-st.set_page_config(page_title="Technical Generator v2.0", layout="wide")
+st.set_page_config(page_title="Reg v4.0", layout="wide")
 
 
 # =========================================================
