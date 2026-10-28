@@ -39,9 +39,21 @@ SALES_PART_ARTICOLI = {
         "output_comm": "ADATTATORE",
         "ha_finitura": True,
         "pills_config": [
-            ("Forato", 2),
-            ("Liscio", 3),
-            ("Sezione montante (+)", 1)
+            "Antisgancio",
+            "Attacco montante",
+            "Compatibilità piede di base (+)",
+            "Con componente saldato",
+            "Con inserti filettati",
+            "Con viteria",
+            "Forato",
+            "Liscio",
+            "Orientamento Destro / Sinistro (+)",
+            "Predisposto per montante (+)",
+            "Per ripiano di base",
+            "Per ripiano di legno",
+            "Per ripiano di vetro",
+            "Piegato",
+            "Regolabile"
         ]
     },
     "Anta": {
