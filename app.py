@@ -9,10 +9,51 @@ import time
 from zoneinfo import ZoneInfo
 from database import *
 
-# =========================================================
-# 1. CONFIGURAZIONE PAGINA, CREDENZIALI E STILE CSS
-# =========================================================
-st.set_page_config(page_title="Technical Generator v2.0", layout="wide")
+# ==============================================================================
+# STYLES.PY - Foglio di Stile CSS Personalizzato per Streamlit
+# ==============================================================================
+
+import streamlit as st
+
+def inject_custom_css():
+    st.markdown("""
+        <style>
+            .block-container {
+                padding-top: 2.5rem !important;
+                padding-bottom: 0rem !important;
+            }
+            [data-testid="stVerticalBlock"] > div {
+                flex-direction: column;
+                gap: 0.12rem !important;
+            }
+            h1 { margin-bottom: -1rem !important; font-size: 1.6rem !important; }
+            h2 { margin-bottom: -0.8rem !important; font-size: 1.2rem !important; }
+            h3 { margin-bottom: -0.5rem !important; font-size: 1.0rem !important; }
+            hr {
+                margin-top: 0.35rem !important;
+                margin-bottom: 0.35rem !important;
+            }
+            div[data-baseweb="select"] > div, 
+            div[data-testid="stTextInput"] > div > div > input {
+                padding-top: 0px !important;
+                padding-bottom: 0px !important;
+                min-height: 1.6rem !important;
+            }
+            [data-testid="stWidgetLabel"] p {
+                font-size: 1.4rem !important;
+                font-weight: 700 !important;
+            }
+            [data-testid="stMarkdownContainer"] p {
+                font-size: 1.1rem !important;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
+# ==============================================================================
+# AUTH.PY - Gestione Autenticazione Utenti Ufficio Tecnico
+# ==============================================================================
+
+import streamlit as st
 
 UTENTI_AUTORIZZATI = {
     "admin": {"password": "reg2026", "nome": "Amministratore di Sistema"},
@@ -27,93 +68,34 @@ UTENTI_AUTORIZZATI = {
     "alberto.morana": {"password": "albertomorana", "nome": "Alberto Morana (Ufficio Tecnico)"}
 }
 
-st.markdown("""
-    <style>
-        .block-container {
-            padding-top: 2.5rem !important;
-            padding-bottom: 0rem !important;
-        }
-        [data-testid="stVerticalBlock"] > div {
-            flex-direction: column;
-            gap: 0.12rem !important;
-        }
-        h1 { margin-bottom: -1rem !important; font-size: 1.6rem !important; }
-        h2 { margin-bottom: -0.8rem !important; font-size: 1.2rem !important; }
-        h3 { margin-bottom: -0.5rem !important; font-size: 1.0rem !important; }
-        hr {
-            margin-top: 0.35rem !important;
-            margin-bottom: 0.35rem !important;
-        }
-        div[data-baseweb="select"] > div, 
-        div[data-testid="stTextInput"] > div > div > input {
-            padding-top: 0px !important;
-            padding-bottom: 0px !important;
-            min-height: 1.6rem !important;
-        }
-        [data-testid="stWidgetLabel"] p {
-            font-size: 1.4rem !important;
-            font-weight: 700 !important;
-        }
-        [data-testid="stMarkdownContainer"] p {
-            font-size: 1.1rem !important;
-        }
-    </style>
-""", unsafe_allow_html=True)
+def check_authentication():
+    """Gestisce lo stato di login e mostra la schermata di accesso se non autenticato."""
+    if "autenticato" not in st.session_state:
+        st.session_state.autenticato = False
+    if "utente_corrente" not in st.session_state:
+        st.session_state.utente_corrente = ""
 
-# Gestione Stato Autenticazione
-if "autenticato" not in st.session_state:
-    st.session_state.autenticato = False
-if "utente_corrente" not in st.session_state:
-    st.session_state.utente_corrente = ""
-
-if not st.session_state.autenticato:
-    col_spazio_sx, col_login_centro, col_spazio_dx = st.columns([1, 1.5, 1])
-    with col_login_centro:
-        with st.container(border=True):
-            st.markdown("<h2 style='text-align: center;'>🔐 Accesso - REG 2.0</h2>", unsafe_allow_html=True)
-            st.markdown("<p style='text-align: center; color: gray; font-size: 0.9rem;'>Inserisci le tue credenziali</p>", unsafe_allow_html=True)
-            
-            with st.form("form_login"):
-                username_input = st.text_input("Username").strip().lower()
-                password_input = st.text_input("Password", type="password")
-                btn_login = st.form_submit_button("🔑 Accedi", use_container_width=True)
+    if not st.session_state.autenticato:
+        col_spazio_sx, col_login_centro, col_spazio_dx = st.columns([1, 1.5, 1])
+        with col_login_centro:
+            with st.container(border=True):
+                st.markdown("<h2 style='text-align: center;'>🔐 Accesso - REG 2.0</h2>", unsafe_allow_html=True)
+                st.markdown("<p style='text-align: center; color: gray; font-size: 0.9rem;'>Inserisci le tue credenziali</p>", unsafe_allow_html=True)
                 
-                if btn_login:
-                    if username_input in UTENTI_AUTORIZZATI and UTENTI_AUTORIZZATI[username_input]["password"] == password_input:
-                        st.session_state.autenticato = True
-                        st.session_state.utente_corrente = UTENTI_AUTORIZZATI[username_input]["nome"]
-                        st.rerun()
-                    else:
-                        st.error("❌ Credenziali non valide. Riprova.")
-    st.stop()
-
-# Funzione di Reset dell'Interfaccia
-if st.session_state.get('reset_eseguito'):
-    st.toast("Interfaccia pulita!", icon="✨")
-    st.session_state['reset_eseguito'] = False
-
-def activate_reset():
-    defaults = {
-        'comp_tags': None,
-        'selectbox_part': None,
-        'extra_tags': [],
-        'check_1090': False,
-        'stringa_tecnica': "",
-        'stringa_commerciale': "",
-        'generazione_effettuata': False
-    }
-    text_keys = ['dim_l', 'dim_p', 'dim_h', 'dim_dia', 'dim_s', 'extra_text', 'select_finitura']
-    for key, val in defaults.items():
-        st.session_state[key] = val
-    for key in text_keys:
-        if key in st.session_state:
-            st.session_state[key] = ""
-    for key in list(st.session_state.keys()):
-        if key.startswith("dyn_") or key.startswith("text_"):
-            del st.session_state[key]
-    st.session_state['reset_eseguito'] = True
-
-
+                with st.form("form_login"):
+                    username_input = st.text_input("Username").strip().lower()
+                    password_input = st.text_input("Password", type="password")
+                    btn_login = st.form_submit_button("🔑 Accedi", use_container_width=True)
+                    
+                    if btn_login:
+                        if username_input in UTENTI_AUTORIZZATI and UTENTI_AUTORIZZATI[username_input]["password"] == password_input:
+                            st.session_state.autenticato = True
+                            st.session_state.utente_corrente = UTENTI_AUTORIZZATI[username_input]["nome"]
+                            st.rerun()
+                        else:
+                            st.error("❌ Credenziali non valide. Riprova.")
+        st.stop()
+    
 # =========================================================
 # 2. INTERFACCIA UTENTE (Layout & Logica)
 # =========================================================
@@ -250,6 +232,7 @@ with col_workarea:
 # =========================================================
 # 3. LOGICA DI GENERAZIONE (MOTORE DI CALCOLO)
 # =========================================================
+
 st.divider()
 
 if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
@@ -374,6 +357,7 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
 # =========================================================
 # 4. VISUALIZZAZIONE RISULTATI (OUTPUT BOX)
 # =========================================================
+
 if st.session_state.get('generazione_effettuata', False):
     st.markdown("### 📋 Risultato Generazione")
     
