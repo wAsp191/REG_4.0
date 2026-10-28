@@ -27,6 +27,9 @@ FINITURE_CONFIG = {
     "VETRO TEMPERATO": ("VETR.TEMP", "VETRO TEMPRATO"),
     "VETRO SATINATO": ("VETR.SAT", "VETRO SATINATO")
 }
+
+OPZIONI_COMPATIBILITA = ["", "F25", "F25 BESPOKE", "F50", "F50 BESPOKE", "UNIVERSAL", "BC", "FORTISSIMO", "MINIRACK", "UNIMOB"]
+
 # ==============================================================================
 # DATABASE ARTICOLI: SALES PART
 # ==============================================================================
