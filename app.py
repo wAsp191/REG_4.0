@@ -339,7 +339,7 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
             
         dim_str = " ".join(dim_list)
 
-pills_config_art = dati_art.get("pills_config", {})
+        pills_config_art = dati_art.get("pills_config", {})
         tags_selezionati_utente = st.session_state.get('extra_tags', [])
         
         # Funzione ultra-robusta per estrarre l'ordine sia da dizionari che da liste/tuple
