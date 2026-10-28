@@ -1,17 +1,7 @@
 # ==============================================================================
 # CONFIGURAZIONE GLOBALE FINITURE
 # ==============================================================================
-# Questa struttura è indipendente dalla macro-categoria e viene caricata
-# come opzione globale per tutti gli articoli che prevedono una finitura.
-#
-# STRUTTURA DEL DIZIONARIO:
-#     "Nome Visibile nella UI (Tendina)":
-#     "Stringa Tecnica (Output Tech)",
-#     "Stringa Commerciale (Output Comm)"
-# ==============================================================================
-
 FINITURE_CONFIG = {
-    
     # Metalli
     "DECAPATA": ("", ""),
     "ZINCATO": ("ZN", "ZINC"),
@@ -37,11 +27,9 @@ FINITURE_CONFIG = {
     "VETRO TEMPERATO": ("VETR.TEMP", "VETRO TEMPRATO"),
     "VETRO SATINATO": ("VETR.SAT", "VETRO SATINATO")
 }
-
 # ==============================================================================
 # DATABASE ARTICOLI: SALES PART
 # ==============================================================================
-
 SALES_PART_ARTICOLI = {
     "Adattatore": {
         "output_tech": "ADATTATORE",
@@ -278,11 +266,9 @@ SALES_PART_ARTICOLI = {
         "pills_config": {}
     }
 }
-
 # ==============================================================================
 # DATABASE ARTICOLI: PACKAGE PART (Solo quelli specifici)
 # ==============================================================================
-
 PACKAGE_PART_SPECIFICI = {
     "Avancassa": {
         "output_tech": "AVANCASSA",
@@ -369,11 +355,9 @@ PACKAGE_PART_SPECIFICI = {
         "pills_config": {}
     }
 }
-
 # ==============================================================================
 # DATABASE ARTICOLI: LEGNO
 # ==============================================================================
-
 LEGNO_ARTICOLI = {
     "Anta": {
         "output_tech": "ANTA_LEGNO",
@@ -454,34 +438,26 @@ LEGNO_ARTICOLI = {
         "pills_config": {}
     }
 }
-
 # ==============================================================================
 # MASTER DATABASE ARTICOLI
 # ==============================================================================
-
 DATABASE = {
     "SALES PART": {
         "macro_name": "SALES PART",
         "Articoli": SALES_PART_ARTICOLI
     },
-    
     "PACKAGE PART": {
         "macro_name": "PACKAGE PART",
-        # Unisce automaticamente tutti i Sales Part + i Package Part specifici
         "Articoli": SALES_PART_ARTICOLI | PACKAGE_PART_SPECIFICI
     },
-    
     "LEGNO": {
         "macro_name": "LEGNO",
         "Articoli": LEGNO_ARTICOLI
     }
 }
-
 # ==============================================================================
-# DATABASE PILLS (SEMPLICI) - MASTER FINALE UNIFICATO E ORDINATO
-# Struttura: "Nome Visibile nella UI": ("Stringa Tecnica", "Stringa Commerciale")
+# DATABASE PILLS (SEMPLICI)
 # ==============================================================================
-
 DATABASE_PILLS = {
     "Angolo aperto": ("ANGOLO APERTO", "ANG.AP"),
     "Angolo chiuso": ("ANGOLO CHIUSO", "ANG.CH"),
@@ -505,7 +481,7 @@ DATABASE_PILLS = {
     "Con componente saldato": ("CON COMPONENTE SALDATO", "SALD"),
     "Con finestra": ("CON FINESTRA", "FIN"),
     "Con foro serratura": ("C/N FORO SERRATURA", "FOR.SERR"),
-    "Con guide RAM": ("CON GUIDE RAM", "G.RAM"),
+    "Con guide RAM": ("C/N GUIDE RAM", "G.RAM"),
     "Con illuminazione": ("CON ILLUMINAZIONE", "ILLUM"),
     "Con inserti filettati": ("CON INSERTI FILETTATI", "INS"),
     "Con lati bordati": ("CON LATI BORDATI", "L.BORD"),
@@ -559,13 +535,9 @@ DATABASE_PILLS = {
     "Verniciato": ("VERNICIATO", "VERN"),
     "Zincato": ("ZINCATO", "ZN")
 }
-
 # ==============================================================================
 # CONFIGURAZIONE SUB-OPTIONS / PILLS MULTISCELTA (+)
 # ==============================================================================
-#     "Nome Opzione UI": ("Stringa Tecnica", "Stringa Commerciale")
-# ==============================================================================
-
 SUB_OPTIONS_CONFIG = {
     "VPA (+)": {
         "Serie S": ("VPA S", "VPA S"),
@@ -573,20 +545,17 @@ SUB_OPTIONS_CONFIG = {
         "Serie M": ("VPA M", "VPA M"),
         "Serie L": ("VPA L", "VPA L")
     },
-    
     "Con distanziale (+)": {
         "L100": ("S100", "S100"),
         "L150": ("S150", "S150"),
         "L200": ("S200", "S200"),
         "L250": ("S250", "S250")
     },
-    
     "Numero diagonali (+)": {
         "Doppie": ("DD", "DD"),
         "Triple": ("DT", "TD"),
         "Quadruple": ("DQ", "QD")
     },
-    
     "Sezione montante (+)": {
         "L55": ("L55", "L55"),
         "L80 Z/S": ("L80 Z/S", "L80 Z/S"),
@@ -598,12 +567,10 @@ SUB_OPTIONS_CONFIG = {
         "90X30": ("90X30", "90X30"),
         "30X30": ("30X30", "30X30")
     },
-    
     "Tipologia di mensola saldata (+)": {
         "Mensola saldata a filo superiore": ("MENSOLA FILO SUPERIORE", "MENS.FILO SUP"),
         "Mensola saldata a filo inferiore": ("MENSOLA FILO INFERIORE", "MENS.FILO INF")
     },
-    
     "Compatibilità piede di base (+)": {
         "altezze": {
             "": ("", ""),
@@ -622,51 +589,42 @@ SUB_OPTIONS_CONFIG = {
             "L600": ("L600", "L600")
         }
     },
-    
     "Attacco gancio (+)": {
         "Attacco barra": ("ATTACCO BARRA", "ATT.BARRA"),
         "Attacco multilame": ("ATTACCO MULTILAME", "ATT.MULTI"),
         "Attacco pannello forato": ("ATTACCO PANNELLO FORATO", "ATT.PANN.FOR")
     },
-    
     "Orientamento Destro / Sinistro (+)": {
         "Destra": ("DX", "DX"),
         "Sinistra": ("SX", "SX")
     },
-    
     "Posizioni multiple (+)": {
-        "2 posizioni": ("2 POS", "2P"),
-        "3 posizioni": ("3 POS", "3P")
+        "Posizioni 2": ("2 POS", "2P"),
+        "Posizioni 3": ("3 POS", "3P")
     },
-    
     "Altezza piede (+)": {
         "H90": ("H90", "H90"),
         "H100": ("H100", "H100"),
         "H150": ("H150", "H150")
     },
-    
     "Predisposto per montante (+)": {
         "L80": ("PRED X MONT L80", "XML80"),
         "L100/L120": ("PRED X MONT L100/L120", "XML100/L120")
     },
-    
     "Numero tasche (+)": {
         "1 Tasca": ("1 TASCA", "1 TASC"),
         "2 Tasche": ("2 TASCHE", "2 TASC")
     },
-    
     "Numero gradoni (+)": {
         "1 gradone": ("1 GRADONE", "1 GRAD"),
         "2 gradoni": ("2 GRADONI", "2 GRAD"),
         "3 gradoni": ("3 GRADONI", "3 GRAD")
     },
-    
     "Asimmetrica (+)": {
         "AS240": ("AS240", "AS240"),
         "AS340": ("AS340", "AS340"),
         "AS440": ("AS440", "AS440")
     },
-    
     "Lato della fresatura (+)": {
         "DX": ("FRESATURA LATO DX", "FRES.DX"),
         "SX": ("FRESATURA LATO SX", "FRES.SX"),
