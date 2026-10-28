@@ -8,9 +8,6 @@ import time
 from zoneinfo import ZoneInfo
 from database import *
 
-# =========================================================
-# 0. CONFIGURAZIONE PAGINA (Deve essere la prima istruzione Streamlit)
-# =========================================================
 st.set_page_config(page_title="Reg v4.0", layout="wide")
 
 
