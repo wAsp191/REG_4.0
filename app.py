@@ -410,10 +410,10 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
         
         stringa_commerciale_definitiva = " ".join([p for p in pezzi_comm if p]).upper()
 
-st.session_state['stringa_tecnica'] = stringa_tecnica_definitiva
-st.session_state['stringa_commerciale'] = stringa_commerciale_definitiva
-st.session_state['sync_needed'] = True  
-st.session_state['generazione_effettuata'] = True
+        st.session_state['stringa_tecnica'] = stringa_tecnica_definitiva
+        st.session_state['stringa_commerciale'] = stringa_commerciale_definitiva
+        st.session_state['sync_needed'] = True  
+        st.session_state['generazione_effettuata'] = True
 
 # =========================================================
 # 4. VISUALIZZAZIONE E MODIFICA RISULTATI (OUTPUT BOX)
