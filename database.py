@@ -39,8 +39,7 @@ SALES_PART_ARTICOLI = {
             ("FORATO", 1),
             ("LISCIO", 2)
         ]
-    }
-}
+    },
     "Anta": {
         "output_tech": "ANTA",
         "output_comm": "ANTA",
