@@ -339,18 +339,27 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
             
         dim_str = " ".join(dim_list)
 
-        pills_config_art = dati_art.get("pills_config", {})
+pills_config_art = dati_art.get("pills_config", {})
         tags_selezionati_utente = st.session_state.get('extra_tags', [])
         
-        # Funzione sicura per estrarre l'ordine indipendentemente dal formato nel DB (int, dict o tuple)
+        # Funzione ultra-robusta per estrarre l'ordine sia da dizionari che da liste/tuple
         def estrai_ordine(tag):
-            val = pills_config_art.get(tag, 99)
-            if isinstance(val, dict):
-                return val.get("ordine", 99)
-            elif isinstance(val, (int, float)):
-                return val
-            elif isinstance(val, (list, tuple)) and len(val) > 1:
-                return val[1]
+            if isinstance(pills_config_art, dict):
+                val = pills_config_art.get(tag, 99)
+                if isinstance(val, dict):
+                    return val.get("ordine", 99)
+                elif isinstance(val, (int, float)):
+                    return val
+                elif isinstance(val, (list, tuple)) and len(val) > 1:
+                    return val[1]
+                return 99
+            elif isinstance(pills_config_art, (list, tuple)):
+                # Se è una lista (es. [("FORATO", 1), ("LISCIO", 2)]), cerchiamo la tupla corrispondente
+                for item in pills_config_art:
+                    if isinstance(item, (list, tuple)) and len(item) >= 2:
+                        if item[0] == tag:
+                            return item[1]
+                return 99
             return 99
 
         pills_ordinati_utente = sorted(
