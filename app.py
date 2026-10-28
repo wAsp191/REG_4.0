@@ -9,16 +9,6 @@ import time
 from zoneinfo import ZoneInfo
 from database import *
 
-# ==============================================================================
-# APP.PY - REG Title Generator v2.0 (Architettura Server-Side / Modulare)
-# ==============================================================================
-
-import streamlit as st
-import pandas as pd
-
-# Import dal nostro modulo dati centralizzato
-from database import FINITURE_CONFIG, DATABASE, DATABASE_PILLS, SUB_OPTIONS_CONFIG
-
 # =========================================================
 # 1. CONFIGURAZIONE PAGINA, CREDENZIALI E STILE CSS
 # =========================================================
