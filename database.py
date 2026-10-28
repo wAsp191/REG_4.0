@@ -476,3 +476,200 @@ DATABASE = {
         "Articoli": LEGNO_ARTICOLI
     }
 }
+
+# ==============================================================================
+# DATABASE PILLS (SEMPLICI) - MASTER FINALE UNIFICATO E ORDINATO
+# Struttura: "Nome Visibile nella UI": ("Stringa Tecnica", "Stringa Commerciale")
+# ==============================================================================
+
+DATABASE_PILLS = {
+    "Angolo aperto": ("ANGOLO APERTO", "ANG.AP"),
+    "Angolo chiuso": ("ANGOLO CHIUSO", "ANG.CH"),
+    "Antisgancio": ("ANTISGANCIO", "ANTISG"),
+    "Antisismico": ("ANTISISMICO", "ANTISISM"),
+    "Anta": ("ANTA", "ANTA"),
+    "Antiurto": ("ANTIURTO", "ANT"),
+    "Asolato": ("ASOLATO", "ASOL"),
+    "Asolato/a": ("ASOLATO", "ASOL"),
+    "Attacco a pinza": ("ATTACCO A PINZA", "ATT.PINZA"),
+    "Attacco a seggiola": ("ATTACCO A SEGGIOLA", "ATT.SEG"),
+    "Attacco montante": ("ATTACCO MONTANTE", "ATT.MONT"),
+    "Biasolato": ("BIASOLATO", "BIASOL"),
+    "Bordi smussati": ("BORDI SMUSSATI", "B.SMUSS"),
+    "Completa di paracolpo ABS": ("COMPLETA DI PARACOLPO ABS", "PAR.ABS"),
+    "Con ante scorrevoli": ("CON ANTE SCORREVOLI", "ANT.SCORR"),
+    "Con batticarrello": ("CON BATTICARRELLO", "BATT.CARR"),
+    "Con bocchetta passacavi": ("CON BOCCHETTA PASSACAVI", "BOCCHETTA"),
+    "Con collegamento superiore": ("CON COLLEGAMENTO SUPERIORE", "COLL.SUP"),
+    "Con compensazioni removibili": ("CON COMPENSAZIONI REMOVIBILI", "COMP.REM"),
+    "Con componente saldato": ("CON COMPONENTE SALDATO", "SALD"),
+    "Con finestra": ("CON FINESTRA", "FIN"),
+    "Con foro serratura": ("C/N FORO SERRATURA", "FOR.SERR"),
+    "Con guide RAM": ("CON GUIDE RAM", "G.RAM"),
+    "Con illuminazione": ("CON ILLUMINAZIONE", "ILLUM"),
+    "Con inserti filettati": ("CON INSERTI FILETTATI", "INS"),
+    "Con lati bordati": ("CON LATI BORDATI", "L.BORD"),
+    "Con macchine di pagamento": ("CON MACCHINE DI PAGAMENTO", "MACCH.PAG"),
+    "Con mensole": ("CON MENSOLE", "MEN"),
+    "Con mensole saldate": ("CON MENSOLE SALDATE", "MEN.SALD"),
+    "Con portaprezzo": ("CON PORTAPREZZO", "PORTAPREZZO"),
+    "Con rinforzo": ("CON RINFORZO", "RINF"),
+    "Con ripiani": ("CON RIPIANI", "RIP"),
+    "Con ripiani inclinati": ("CON RIPIANI INCLINATI", "RIP.INCL"),
+    "Con ruote": ("CON RUOTE", "RUOTE"),
+    "Con scasso": ("CON SCASSO", "SCAS"),
+    "Con scritta": ("C/N SCRITTA", "+SCRITT"),
+    "Con serratura": ("CON SERRATURA", "SERR"),
+    "Con tasca oscillante": ("CON TASCA OSCILLANTE", "T.OSC"),
+    "Con viteria": ("CON VITERIA", "+VIT"),
+    "Con viteria saldata": ("CON VITERIA SALDATA", "VIT.SALD"),
+    "Dritto": ("DRITTO", "DRITT"),
+    "Forato": ("FORATO", "FOR"),
+    "Fresata": ("FRESATA", "FRES"),
+    "Fresato": ("FRESATO", "FRES"),
+    "Impilabile": ("IMPILABILE", "IMP"),
+    "In filo": ("IN FILO", "FILO"),
+    "In rete": ("IN RETE", "RETE"),
+    "Inclinato": ("INCLINATO", "INCL"),
+    "Liscio": ("LISCIO", "LISC"),
+    "Minirack": ("MINIRACK", "MINI"),
+    "Mobile": ("MOBILE", "MOB"),
+    "Multibarra": ("MULTIBARRA", "M.BAR"),
+    "Multilame": ("MULTILAME", "M.LAM"),
+    "Nervata": ("NERVATA", "NERV"),
+    "Per piani cottura": ("PER PIANI COTTURA", "P.COTT"),
+    "Per ripiano di base": ("PER RIPIANO DI BASE", "P.RIP.BASE"),
+    "Per ripiano in legno": ("PER RIPIANO IN LEGNO", "P.RIP.LEGNO"),
+    "Per ripiano in vetro": ("PER RIPIANO IN VETRO", "P.RIP.VETRO"),
+    "Piegato": ("PIEGATO", "PIEG"),
+    "Piegato-saldato": ("PIEGATO-SALDATO", "PIEG.SALD"),
+    "Portante": ("PORTANTE", "PORT"),
+    "Predisposta per guida RAM": ("PREDISPOSTA PER GUIDA RAM", "PRED.GUID.RAM"),
+    "Profilo a L": ("PROFILO A L", "PROF.L"),
+    "Profilo a U": ("PROFILO A U", "PROF.U"),
+    "Rasterizzato": ("RASTERIZZATO", "RAST."),
+    "Rasterizzata": ("RASTERIZZATA", "RAST."),
+    "Regolabile": ("REGOLABILE", "REG"),
+    "Rotante": ("ROTANTE", "ROT"),
+    "Scantonato": ("SCANTONATO", "SCANT"),
+    "Scorrevole": ("SCORREVOLE", "SCORR"),
+    "Scorrevoli": ("SCORREVOLI", "SCORR"),
+    "Statico": ("STATICO", "STAT"),
+    "Stondato": ("STOND", "STOND"),
+    "Verniciato": ("VERNICIATO", "VERN"),
+    "Zincato": ("ZINCATO", "ZN")
+}
+
+# ==============================================================================
+# CONFIGURAZIONE SUB-OPTIONS / PILLS MULTISCELTA (+)
+# ==============================================================================
+#     "Nome Opzione UI": ("Stringa Tecnica", "Stringa Commerciale")
+# ==============================================================================
+
+SUB_OPTIONS_CONFIG = {
+    "VPA (+)": {
+        "Serie S": ("VPA S", "VPA S"),
+        "Serie SS": ("VPA SS", "VPA SS"),
+        "Serie M": ("VPA M", "VPA M"),
+        "Serie L": ("VPA L", "VPA L")
+    },
+    
+    "Con distanziale (+)": {
+        "L100": ("S100", "S100"),
+        "L150": ("S150", "S150"),
+        "L200": ("S200", "S200"),
+        "L250": ("S250", "S250")
+    },
+    
+    "Numero diagonali (+)": {
+        "Doppie": ("DD", "DD"),
+        "Triple": ("DT", "TD"),
+        "Quadruple": ("DQ", "QD")
+    },
+    
+    "Sezione montante (+)": {
+        "L55": ("L55", "L55"),
+        "L80 Z/S": ("L80 Z/S", "L80 Z/S"),
+        "L80 Z/M": ("L80 Z/M", "L80 Z/M"),
+        "L100 Z/S": ("L100 Z/S", "L100 Z/S"),
+        "L100 Z/M": ("L100 Z/M", "L100 Z/M"),
+        "L120 Z/S": ("L120 Z/S", "L120 Z/S"),
+        "70X30": ("70X30", "70X30"),
+        "90X30": ("90X30", "90X30"),
+        "30X30": ("30X30", "30X30")
+    },
+    
+    "Tipologia di mensola saldata (+)": {
+        "Mensola saldata a filo superiore": ("MENSOLA FILO SUPERIORE", "MENS.FILO SUP"),
+        "Mensola saldata a filo inferiore": ("MENSOLA FILO INFERIORE", "MENS.FILO INF")
+    },
+    
+    "Compatibilità piede di base (+)": {
+        "altezze": {
+            "": ("", ""),
+            "H90": ("XP90", "90"),
+            "H100": ("XP100", "100"),
+            "H150": ("XP150", "150")
+        },
+        "lunghezze": {
+            "": ("", ""),
+            "L300": ("L300", "L300"),
+            "L350": ("L350", "L350"),
+            "L400": ("L400", "L400"),
+            "L450": ("L450", "L450"),
+            "L500": ("L500", "L500"),
+            "L550": ("L550", "L550"),
+            "L600": ("L600", "L600")
+        }
+    },
+    
+    "Attacco gancio (+)": {
+        "Attacco barra": ("ATTACCO BARRA", "ATT.BARRA"),
+        "Attacco multilame": ("ATTACCO MULTILAME", "ATT.MULTI"),
+        "Attacco pannello forato": ("ATTACCO PANNELLO FORATO", "ATT.PANN.FOR")
+    },
+    
+    "Orientamento Destro / Sinistro (+)": {
+        "Destra": ("DX", "DX"),
+        "Sinistra": ("SX", "SX")
+    },
+    
+    "Posizioni multiple (+)": {
+        "2 posizioni": ("2 POS", "2P"),
+        "3 posizioni": ("3 POS", "3P")
+    },
+    
+    "Altezza piede (+)": {
+        "H90": ("H90", "H90"),
+        "H100": ("H100", "H100"),
+        "H150": ("H150", "H150")
+    },
+    
+    "Predisposto per montante (+)": {
+        "L80": ("PRED X MONT L80", "XML80"),
+        "L100/L120": ("PRED X MONT L100/L120", "XML100/L120")
+    },
+    
+    "Numero tasche (+)": {
+        "1 Tasca": ("1 TASCA", "1 TASC"),
+        "2 Tasche": ("2 TASCHE", "2 TASC")
+    },
+    
+    "Numero gradoni (+)": {
+        "1 gradone": ("1 GRADONE", "1 GRAD"),
+        "2 gradoni": ("2 GRADONI", "2 GRAD"),
+        "3 gradoni": ("3 GRADONI", "3 GRAD")
+    },
+    
+    "Asimmetrica (+)": {
+        "AS240": ("AS240", "AS240"),
+        "AS340": ("AS340", "AS340"),
+        "AS440": ("AS440", "AS440")
+    },
+    
+    "Lato della fresatura (+)": {
+        "DX": ("FRESATURA LATO DX", "FRES.DX"),
+        "SX": ("FRESATURA LATO SX", "FRES.SX"),
+        "Centrale": ("FRESATURA CNT", "FRES.CTR")
+    }
+}
