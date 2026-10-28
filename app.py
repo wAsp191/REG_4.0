@@ -157,7 +157,7 @@ if st.session_state.get('reset_eseguito'):
 # Intestazione Centrata a pieno schermo
 st.markdown("""
     <div class="reg-title-container">
-        <h1 style="margin: 0; font-size: 2.2rem;">⚙️ REG - Title Generator</h1>
+        <h1 style="margin: 0; font-size: 2.2rem;">🎭 REG v4.0</h1>
         <p style='font-size: 0.9rem; color: gray; margin-top: 4px;'>Utente attivo: <b>{}</b></p>
     </div>
 """.format(st.session_state.utente_corrente), unsafe_allow_html=True)
