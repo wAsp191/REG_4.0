@@ -6,8 +6,9 @@ import pandas as pd
 import datetime
 import time
 from zoneinfo import ZoneInfo
-from database import *
 
+# Assicurati che 'database' esista nel tuo progetto, oppure aggiorna il nome del file
+from database import *
 from database_manager import carica_database, verifica_match_db, salva_su_excel
 
 # Dichiariamo la compatibilità qui per sicurezza assoluta anti-NameError
@@ -109,7 +110,7 @@ def check_authentication():
         col_spazio_sx, col_login_centro, col_spazio_dx = st.columns([1, 1.5, 1])
         with col_login_centro:
             with st.container(border=True):
-                st.markdown("<h2 style='text-align: center;'>🔐 Accesso - REG 2.0</h2>", unsafe_allow_html=True)
+                st.markdown("<h2 style='text-align: center;'>🔐 Accesso - REG 4.0</h2>", unsafe_allow_html=True)
                 st.markdown("<p style='text-align: center; color: gray; font-size: 0.9rem;'>Inserisci le tue credenziali</p>", unsafe_allow_html=True)
                 
                 with st.form("form_login"):
@@ -165,7 +166,7 @@ if st.session_state.get('reset_eseguito'):
 # 2. INTERFACCIA UTENTE (Layout & Logica)
 # =========================================================
 
-# Intestazione Centrata a pieno schermo con Maschera Teatrale
+# Intestazione Centrata a pieno schermo
 st.markdown("""
     <div class="reg-title-container">
         <h1 style="margin: 0; font-size: 2.2rem;">🎭 REG v4.0</h1>
@@ -180,11 +181,11 @@ with col_top_right:
 
 st.markdown("---")
 
-# Layout Principale a 2 Colonne (Colonna sinistra larga per le macro-categorie grandi)
+# Layout Principale a 2 Colonne
 col_left, col_workarea = st.columns([1.2, 3.2], gap="large")
 
 # =========================================================
-# COLONNA SINISTRA: MACRO CATEGORIE (Grandi)
+# COLONNA SINISTRA: MACRO CATEGORIE
 # =========================================================
 with col_left:
     st.subheader("📂 1. Categoria")
@@ -216,7 +217,7 @@ with col_workarea:
             placeholder="Seleziona un articolo...", 
             format_func=lambda x: f"🔧 {x}" if x else "Seleziona...", 
             key="selectbox_part",
-            label_visibility="collapsed"  # <-- Nasconde la scritta "Cerca Articolo:"
+            label_visibility="collapsed"
         )
 
     finitura_scelta = None
@@ -241,7 +242,6 @@ with col_workarea:
     if articolo_scelto:
         pills_config_articolo = dati_articolo.get("pills_config", {})
         
-        # Gestione flessibile: dizionario compatto {"FORATO": 1} o lista di tuple [("FORATO", 1)]
         if isinstance(pills_config_articolo, dict):
             pills_ordinati = sorted(
                 pills_config_articolo.keys(),
@@ -304,7 +304,6 @@ with col_workarea:
 
     st.text_input("Note libere / Specifiche extra:", key="extra_text")
 
-     # Nuova Sezione Compatibilità Finale (A scelta singola mutualmente esclusiva)
     st.markdown("---")
     st.subheader("🔗 5. Opzione di Compatibilità")
     compatibilita_scelta = st.selectbox(
@@ -312,7 +311,7 @@ with col_workarea:
         options=OPZIONI_COMPATIBILITA,
         format_func=lambda x: "Seleziona compatibilità..." if x == "" else x,
         key="select_compatibilita",
-        label_visibility="collapsed"  # <-- Nasconde la scritta "Seleziona compatibilità:"
+        label_visibility="collapsed"
     )
 
     st.checkbox("Aggiungi marcatura (UNI EN 1090-1)", key="check_1090")
@@ -322,7 +321,6 @@ with col_workarea:
 # =========================================================
 st.divider()
 
-# Lista dei pill in conflitto esclusivi per la macro categoria "SALES PART"
 PILLS_CONFLITTO_SALES_PART = [
     "Completa di paracolpo ABS",
     "Con batticarrello",
@@ -340,9 +338,8 @@ PILLS_CONFLITTO_SALES_PART = [
 ]
 
 if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
-    if 'articolo_scelto' in locals() and articolo_scelto:
+    if articolo_scelto:
         
-        # 1. CONTROLLO PRELIMINARE DEI CONFLITTI (Solo per SALES PART)
         tags_selezionati_utente = st.session_state.get('extra_tags', [])
         if macro_selezionata == "SALES PART":
             conflitti_trovati = [p for p in tags_selezionati_utente if p in PILLS_CONFLITTO_SALES_PART]
@@ -350,7 +347,7 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
                 st.session_state['generazione_effettuata'] = False
                 for pill_c in conflitti_trovati:
                     st.error(f"⚠️ **CONFLITTO BLOCCANTE**: Il pill **'{pill_c}'** non è compatibile con la macro-categoria **'SALES PART'**.")
-                st.stop( ) # Interrompe l'esecuzione e mostra l'errore all'utente
+                st.stop()
 
         articoli_macro = DATABASE.get(macro_selezionata, {}).get("Articoli", {})
         dati_art = articoli_macro.get(articolo_scelto, {})
@@ -392,7 +389,6 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
 
         pills_config_art = dati_art.get("pills_config", {})
         
-        # Funzione ultra-robusta per estrarre l'ordine sia da dizionari che da liste/tuple
         def estrai_ordine(tag):
             if isinstance(pills_config_art, dict):
                 val = pills_config_art.get(tag, 99)
@@ -453,7 +449,6 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
                     if t_val: lista_tech_pills.append(t_val)
                     if c_val: lista_comm_pills.append(c_val)
             else:
-                # Ricerca sicura case-insensitive in DATABASE_PILLS per evitare mismatch sulle maiuscole
                 pill_key = str(pill).strip()
                 tuple_pill = None
                 for k, v in DATABASE_PILLS.items():
@@ -474,7 +469,6 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
         note_libere = str(st.session_state.get("extra_text", "") or "").strip().upper()
         compatibilita_val = str(st.session_state.get("select_compatibilita", "") or "").strip().upper()
 
-        # Assemblaggio Stringa Tecnica Base
         pezzi_tech = [output_tech_base, finitura_tech_str] + lista_tech_pills
         if dim_str: pezzi_tech.append(dim_str)
         if note_libere: pezzi_tech.append(note_libere)
@@ -483,7 +477,6 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
             
         stringa_tecnica_base = " ".join([p for p in pezzi_tech if p]).upper()
         
-        # Accodamento compatibilità in coda con il trattino
         if compatibilita_val and compatibilita_val != "NONE":
             stringa_tecnica_definitiva = f"{stringa_tecnica_base} - {compatibilita_val}"
         else:
@@ -492,14 +485,12 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
         codice_trovato, stato_match = verifica_match_db(stringa_tecnica_definitiva)
         st.session_state['stato_match_db'] = (stato_match, codice_trovato)
 
-        # Assemblaggio Stringa Commerciale Base
         pezzi_comm = [output_comm_base, finitura_comm_str] + lista_comm_pills
         if dim_str: pezzi_comm.append(dim_str)
         if note_libere: pezzi_comm.append(note_libere)
         
         stringa_commerciale_base = " ".join([p for p in pezzi_comm if p]).upper()
         
-        # Accodamento compatibilità in coda con il trattino anche per la commerciale
         if compatibilita_val and compatibilita_val != "NONE":
             stringa_commerciale_definitiva = f"{stringa_commerciale_base} - {compatibilita_val}"
         else:
@@ -509,6 +500,8 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
         st.session_state['stringa_commerciale'] = stringa_commerciale_definitiva
         st.session_state['sync_needed'] = True  
         st.session_state['generazione_effettuata'] = True
+    else:
+        st.warning("⚠️ Seleziona un articolo prima di generare la stringa.")
 
 # =========================================================
 # 4. VISUALIZZAZIONE RISULTATI, MATCH & SALVATAGGIO DB
@@ -517,13 +510,12 @@ if st.session_state.get('generazione_effettuata', False):
     st.divider()
     st.markdown("### 📋 Risultato Generazione & Verifica DB")
     
-    # Recuperiamo l'esito del match calcolato nel Modulo 3
     stato_match, codice_esistente = st.session_state.get('stato_match_db', ("NUOVO", None))
     
     if stato_match == "ESATTO":
         st.warning(f"⚠️ **MATCH RILEVATO NEL DATABASE!** Questa stringa tecnica esiste già ed è associata al codice identificativo: **{codice_esistente}**")
     else:
-        st.success("✅ **NUOVA STRINGA UNICA**: Nessuna corrispondenza esatta trovata nel database Excel. Puoi procedere al salvataggio.")
+        st.success("✅ **NUOVA STRINGA UNICA**: Nessuna corrispondenza esatta trovata nel database Google Sheets. Puoi procedere al salvataggio.")
 
     col_out1, col_out2 = st.columns(2, gap="medium")
     
@@ -547,8 +539,7 @@ if st.session_state.get('generazione_effettuata', False):
     with st.container(border=True):
         st.markdown("#### 💾 Registra nel Database Google Sheets")
         
-        # Riduciamo a due colonne: una più larga per il codice, una per il bottone
-        col_id_input, col_btn_save = st.columns([3, 1], vertical_alignment="bottom")
+        col_id_input, col_btn_save = st.columns([3, 1])
         
         with col_id_input:
             codice_input_utente = st.text_input("Codice Identificativo Univoco:", placeholder="Es. ART-2026-001", key="input_codice_salvataggio")
@@ -560,7 +551,6 @@ if st.session_state.get('generazione_effettuata', False):
             if not codice_input_utente.strip():
                 st.error("❌ Inserisci un codice identificativo valido prima di salvare.")
             else:
-                # Chiamata pulita senza l'argomento utente
                 esito = salva_su_excel(
                     codice_input_utente.strip(), 
                     st.session_state.get('editable_tech'), 
