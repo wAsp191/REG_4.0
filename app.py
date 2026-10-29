@@ -299,7 +299,7 @@ with col_workarea:
     st.subheader("🔗 5. Opzione di Compatibilità")
     compatibilita_scelta = st.selectbox(
         options=OPZIONI_COMPATIBILITA,
-        "",
+        ""
         format_func=lambda x: "Seleziona compatibilità..." if x == "" else x,
         key="select_compatibilita"
     )
