@@ -576,3 +576,60 @@ if st.session_state.get('generazione_effettuata', False):
     # Reset del flag di sincronizzazione
     if st.session_state.get('sync_needed'):
         st.session_state['sync_needed'] = False
+
+# =========================================================
+# 5. VISUALIZZAZIONE RISULTATI, MATCH & SALVATAGGIO DB
+# =========================================================
+if st.session_state.get('generazione_effettuata', False):
+    st.divider()
+    st.markdown("### 📋 Risultato Generazione & Verifica DB")
+    
+    # Recuperiamo l'esito del match calcolato nel Modulo 3
+    stato_match, codice_esistente = st.session_state.get('stato_match_db', ("NUOVO", None))
+    
+    if stato_match == "ESATTO":
+        st.warning(f"⚠️ **MATCH RILEVATO NEL DATABASE!** Questa stringa tecnica esiste già ed è associata al codice identificativo: **{codice_esistente}**")
+    else:
+        st.success("✅ **NUOVA STRINGA UNICA**: Nessuna corrispondenza esatta trovata nel database Excel. Puoi procedere al salvataggio.")
+
+    col_out1, col_out2 = st.columns(2, gap="medium")
+    
+    with col_out1:
+        st.markdown("**Stringa Tecnica:**")
+        if 'editable_tech' not in st.session_state or st.session_state.get('sync_needed', False):
+            st.session_state['editable_tech'] = st.session_state.get('stringa_tecnica', '')
+        tech_val = st.text_input("Stringa Tecnica", key="editable_tech", label_visibility="collapsed")
+        
+    with col_out2:
+        st.markdown("**Stringa Commerciale:**")
+        if 'editable_comm' not in st.session_state or st.session_state.get('sync_needed', False):
+            st.session_state['editable_comm'] = st.session_state.get('stringa_commerciale', '')
+        comm_val = st.text_input("Stringa Commerciale", key="editable_comm", label_visibility="collapsed")
+
+    if st.session_state.get('sync_needed'):
+        st.session_state['sync_needed'] = False
+
+    # --- SEZIONE SALVATAGGIO NEL DATABASE EXCEL ---
+    st.markdown("---")
+    with st.container(border=True):
+        st.markdown("#### 💾 Registra nel Database Esempi (Excel)")
+        
+        col_id_input, col_btn_save = st.columns([2, 1], vertical_alignment="bottom")
+        with col_id_input:
+            codice_input_utente = st.text_input("Codice Identificativo Univoco:", placeholder="Es. ART-2026-001", key="input_codice_salvataggio")
+        
+        with col_btn_save:
+            btn_salva = st.button("📥 Imposta codice e salva", use_container_width=True)
+            
+        if btn_salva:
+            if not codice_input_utente.strip():
+                st.error("❌ Inserisci un codice identificativo valido prima di salvare.")
+            else:
+                # Salvataggio effettivo nel file Excel tramite il modulo manager
+                salva_su_excel(
+                    codice_input_utente.strip(), 
+                    st.session_state.get('editable_tech'), 
+                    st.session_state.get('editable_comm')
+                )
+                st.success(f"🎉 Articolo salvato con successo nel database Excel con codice: **{codice_input_utente.strip()}**!")
+                st.balloons()
