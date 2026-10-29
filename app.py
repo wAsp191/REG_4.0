@@ -294,12 +294,12 @@ with col_workarea:
     st.text_input("Note libere / Specifiche extra:", key="extra_text")
     st.checkbox("Aggiungi marcatura (UNI EN 1090-1)", key="check_1090")
 
-    # Nuova Sezione Compatibilità Finale (A scelta singola mutualmente esclusiva)
+     # Nuova Sezione Compatibilità Finale (A scelta singola mutualmente esclusiva)
     st.markdown("---")
     st.subheader("🔗 5. Opzione di Compatibilità")
     compatibilita_scelta = st.selectbox(
+        "Seleziona compatibilità:",
         options=OPZIONI_COMPATIBILITA,
-        ""
         format_func=lambda x: "Seleziona compatibilità..." if x == "" else x,
         key="select_compatibilita"
     )
