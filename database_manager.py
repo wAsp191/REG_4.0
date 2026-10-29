@@ -62,8 +62,12 @@ def salva_su_excel(codice_id, stringa_tech, stringa_comm, utente="Anonimo"):
             data_ora,
             str(utente).strip()
         ]
+        
+        # Eseguiamo l'append della riga
         ws.append_row(nuova_riga)
         return True
+        
     except Exception as e:
-        st.error(f"Errore durante il salvataggio su Google Sheets: {e}")
+        # Stampiamo il tipo esatto di errore e il dettaglio per un debug perfetto
+        st.error(f"Errore dettagliato Google Sheets ({type(e).__name__}): {e}")
         return False
