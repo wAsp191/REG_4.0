@@ -292,7 +292,6 @@ with col_workarea:
     with c_dim5: st.text_input("Spessore (SP):", key="dim_s")
 
     st.text_input("Note libere / Specifiche extra:", key="extra_text")
-    st.checkbox("Aggiungi marcatura (UNI EN 1090-1)", key="check_1090")
 
      # Nuova Sezione Compatibilità Finale (A scelta singola mutualmente esclusiva)
     st.markdown("---")
@@ -303,6 +302,8 @@ with col_workarea:
         format_func=lambda x: "Seleziona compatibilità..." if x == "" else x,
         key="select_compatibilita"
     )
+
+    st.checkbox("Aggiungi marcatura (UNI EN 1090-1)", key="check_1090")
     
 # =========================================================
 # 3. LOGICA DI GENERAZIONE (MOTORE DI CALCOLO)
