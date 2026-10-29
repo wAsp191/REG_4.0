@@ -8,7 +8,7 @@ import time
 from zoneinfo import ZoneInfo
 from database import *
 
-from database_manager import inizializza_excel_db, verifica_match_db, salva_su_excel
+from database_manager import carica_database, verifica_match_db, salva_su_excel
 
 # Dichiariamo la compatibilità qui per sicurezza assoluta anti-NameError
 OPZIONI_COMPATIBILITA = ["", "F25", "F25 BESPOKE", "F50", "F50 BESPOKE", "UNIVERSAL", "BC", "FORTISSIMO", "MINIRACK", "UNIMOB"]
