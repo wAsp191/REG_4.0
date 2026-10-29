@@ -54,7 +54,7 @@ def verifica_match_db(stringa_tech_generata):
     return None, "NUOVO"
 
 def salva_su_excel(codice_id, stringa_tech, stringa_comm, utente="Anonimo"):
-    """Aggiunge una nuova riga nel Google Sheet scrivendo direttamente sul range successivo."""
+    """Salvataggio blindato su Google Sheets con doppio meccanismo di sicurezza."""
     try:
         ws = get_google_sheet_connection()
         data_ora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -67,21 +67,38 @@ def salva_su_excel(codice_id, stringa_tech, stringa_comm, utente="Anonimo"):
             str(utente).strip()
         ]
         
-        # 1. Recuperiamo tutti i valori esistenti per contare le righe attuali
-        tutti_i_dati = ws.get_all_values()
-        prossima_riga = len(tutti_i_dati) + 1
-        
-        # 2. Definiamo il range esatto in cui scrivere (es. A2:E2 o successivo)
-        range_str = f"A{prossima_riga}:E{prossima_riga}"
-        
-        # 3. Scriviamo direttamente sul range saltando l'append_row nativo
-        ws.update(range_str, [nuova_riga], value_input_option="USER_ENTERED")
-        return True
-        
-    except Exception as e:
-        error_details = str(e)
-        if hasattr(e, 'response') and hasattr(e.response, 'text'):
-            error_details += f" | Contenuto risposta Google: {e.response.text}"
+        # PIANO A: Tentativo con append_row standard
+        try:
+            ws.append_row(nuova_riga, value_input_option="USER_ENTERED")
+            return True
+        except Exception as api_err:
+            # Se l'errore è il falso positivo del codice HTTP 200, l'operazione è comunque andata a buon fine
+            if "200" in str(api_err):
+                return True
+            raise api_err # Altrimenti passa al Piano B
             
-        st.error(f"🔍 Debug Errore Google Sheets: {error_details}")
-        return False
+    except Exception:
+        # PIANO B: Scrittura diretta calcolando la riga libera (Bypassa qualsiasi errore di gspread)
+        try:
+            ws = get_google_sheet_connection()
+            data_ora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            nuova_riga = [
+                str(codice_id).strip(), 
+                str(stringa_tech).strip().upper(), 
+                str(stringa_comm).strip().upper(), 
+                data_ora,
+                str(utente).strip()
+            ]
+            
+            tutti_i_dati = ws.get_all_values()
+            prossima_riga = len(tutti_i_dati) + 1
+            if prossima_riga < 2:
+                prossima_riga = 2 # Evita di sovrascrivere l'intestazione
+                
+            range_str = f"A{prossima_riga}:E{prossima_riga}"
+            ws.update(range_str, [nuova_riga], value_input_option="USER_ENTERED")
+            return True
+            
+        except Exception as e_critico:
+            st.error(f"Errore critico definitivo di scrittura su Google Sheets: {e_critico}")
+            return False
