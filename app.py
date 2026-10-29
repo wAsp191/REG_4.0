@@ -21,30 +21,31 @@ def inject_custom_css():
     st.markdown("""
         <style>
             .block-container {
-                padding-top: 2rem !important;
+                padding-top: 1.2rem !important;
                 padding-bottom: 0rem !important;
             }
+            /* Riduce lo spazio verticale tra gli elementi dentro i blocchi */
             [data-testid="stVerticalBlock"] > div {
                 flex-direction: column;
-                gap: 0.12rem !important;
+                gap: 0.04rem !important;
             }
             
             /* --- TITOLO CENTRATO --- */
             .reg-title-container {
                 text-align: center;
                 width: 100%;
-                margin-bottom: 1rem;
+                margin-bottom: 0.5rem;
             }
             
             /* --- MACRO CATEGORIE GRANDI A SINISTRA --- */
             div[data-testid="stRadio"] div[role="radiogroup"] label p {
-                font-size: 1.3rem !important;
+                font-size: 1.2rem !important;
                 font-weight: 700 !important;
-                padding: 8px 0px !important;
+                padding: 4px 0px !important;
             }
             div[data-testid="stRadio"] div[role="radiogroup"] label {
-                padding: 6px 10px !important;
-                margin-bottom: 8px !important;
+                padding: 4px 8px !important;
+                margin-bottom: 4px !important;
                 transition: all 0.2s ease;
             }
             div[data-testid="stRadio"] div[role="radiogroup"] label:hover {
@@ -52,24 +53,31 @@ def inject_custom_css():
                 border-radius: 8px;
             }
 
-            h2 { margin-bottom: -0.8rem !important; font-size: 1.2rem !important; }
-            h3 { margin-bottom: -0.5rem !important; font-size: 1.0rem !important; }
+            /* Compressione dei titoli per avvicinarli al contenuto sottostante */
+            h2 { margin-top: 0.2rem !important; margin-bottom: -0.9rem !important; font-size: 1.1rem !important; }
+            h3 { margin-top: 0.2rem !important; margin-bottom: -0.6rem !important; font-size: 0.95rem !important; }
+            
+            /* Linee divisorie più sottili e vicine */
             hr {
-                margin-top: 0.35rem !important;
-                margin-bottom: 0.35rem !important;
+                margin-top: 0.2rem !important;
+                margin-bottom: 0.2rem !important;
             }
+            
             div[data-baseweb="select"] > div, 
             div[data-testid="stTextInput"] > div > div > input {
                 padding-top: 0px !important;
                 padding-bottom: 0px !important;
-                min-height: 1.6rem !important;
+                min-height: 1.4rem !important;
             }
+            
             [data-testid="stWidgetLabel"] p {
-                font-size: 1.4rem !important;
+                font-size: 1.25rem !important;
                 font-weight: 700 !important;
+                margin-bottom: 0.1rem !important;
             }
+            
             [data-testid="stMarkdownContainer"] p {
-                font-size: 1.1rem !important;
+                font-size: 1.0rem !important;
             }
         </style>
     """, unsafe_allow_html=True)
