@@ -54,8 +54,8 @@ def inject_custom_css():
             }
 
             /* Compressione dei titoli per avvicinarli al contenuto sottostante */
-            h2 { margin-top: 0.2rem !important; margin-bottom: -0.6rem !important; font-size: 1.0rem !important; }
-            h3 { margin-top: 0.2rem !important; margin-bottom: -0.6rem !important; font-size: 0.85rem !important; }
+            h2 { margin-top: 0.1rem !important; margin-bottom: -0.5rem !important; font-size: 1.0rem !important; }
+            h3 { margin-top: 0.1rem !important; margin-bottom: -0.5rem !important; font-size: 0.85rem !important; }
             
             /* Linee divisorie più sottili e vicine */
             hr {
