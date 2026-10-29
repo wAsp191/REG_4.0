@@ -199,7 +199,7 @@ SALES_PART_ARTICOLI = {
             ("Angolo aperto", 10),
             ("Angolo chiuso", 11),
             ("Con scasso", 12),
-            ("Scantonato"2),
+            ("Scantonato", 2)
         ]
     },
     "Pannello frontale": {
