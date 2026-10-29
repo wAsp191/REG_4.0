@@ -16,13 +16,11 @@ def get_google_sheet_connection():
     
     sheet_name = st.secrets["sheet_config"]["sheet_name"]
     spreadsheet = client.open(sheet_name)
-    
-    # Seleziona in modo sicuro il primo foglio disponibile
     return spreadsheet.get_worksheet(0)
 
 def carica_database():
-    """Carica il database dal Google Sheet in un DataFrame Pandas in modo sicuro."""
-    expected_cols = ["Codice_Identificativo", "Stringa_Tecnica", "Stringa_Commerciale", "Data_Creazione", "Utente"]
+    """Carica il database dal Google Sheet in un DataFrame Pandas (4 colonne)."""
+    expected_cols = ["Codice_Identificativo", "Stringa_Tecnica", "Stringa_Commerciale", "Data_Creazione"]
     try:
         ws = get_google_sheet_connection()
         data = ws.get_all_records()
@@ -53,8 +51,8 @@ def verifica_match_db(stringa_tech_generata):
     
     return None, "NUOVO"
 
-def salva_su_excel(codice_id, stringa_tech, stringa_comm, utente="Anonimo"):
-    """Salvataggio blindato su Google Sheets con doppio meccanismo di sicurezza."""
+def salva_su_excel(codice_id, stringa_tech, stringa_comm):
+    """Salvataggio blindato su Google Sheets a 4 colonne."""
     try:
         ws = get_google_sheet_connection()
         data_ora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -63,8 +61,7 @@ def salva_su_excel(codice_id, stringa_tech, stringa_comm, utente="Anonimo"):
             str(codice_id).strip(), 
             str(stringa_tech).strip().upper(), 
             str(stringa_comm).strip().upper(), 
-            data_ora,
-            str(utente).strip()
+            data_ora
         ]
         
         # PIANO A: Tentativo con append_row standard
@@ -72,13 +69,12 @@ def salva_su_excel(codice_id, stringa_tech, stringa_comm, utente="Anonimo"):
             ws.append_row(nuova_riga, value_input_option="USER_ENTERED")
             return True
         except Exception as api_err:
-            # Se l'errore è il falso positivo del codice HTTP 200, l'operazione è comunque andata a buon fine
             if "200" in str(api_err):
                 return True
-            raise api_err # Altrimenti passa al Piano B
+            raise api_err 
             
     except Exception:
-        # PIANO B: Scrittura diretta calcolando la riga libera (Bypassa qualsiasi errore di gspread)
+        # PIANO B: Scrittura diretta calcolando la riga libera
         try:
             ws = get_google_sheet_connection()
             data_ora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -86,16 +82,16 @@ def salva_su_excel(codice_id, stringa_tech, stringa_comm, utente="Anonimo"):
                 str(codice_id).strip(), 
                 str(stringa_tech).strip().upper(), 
                 str(stringa_comm).strip().upper(), 
-                data_ora,
-                str(utente).strip()
+                data_ora
             ]
             
             tutti_i_dati = ws.get_all_values()
             prossima_riga = len(tutti_i_dati) + 1
             if prossima_riga < 2:
-                prossima_riga = 2 # Evita di sovrascrivere l'intestazione
+                prossima_riga = 2 
                 
-            range_str = f"A{prossima_riga}:E{prossima_riga}"
+            # Range limitato alle prime 4 colonne (A, B, C, D)
+            range_str = f"A{prossima_riga}:D{prossima_riga}"
             ws.update(range_str, [nuova_riga], value_input_option="USER_ENTERED")
             return True
             
