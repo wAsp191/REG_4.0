@@ -547,14 +547,11 @@ if st.session_state.get('generazione_effettuata', False):
     with st.container(border=True):
         st.markdown("#### 💾 Registra nel Database Google Sheets")
         
-        col_id_input, col_user_input, col_btn_save = st.columns([2, 1, 1], vertical_alignment="bottom")
+        # Riduciamo a due colonne: una più larga per il codice, una per il bottone
+        col_id_input, col_btn_save = st.columns([3, 1], vertical_alignment="bottom")
         
         with col_id_input:
             codice_input_utente = st.text_input("Codice Identificativo Univoco:", placeholder="Es. ART-2026-001", key="input_codice_salvataggio")
-            
-        with col_user_input:
-            # Utente che effettua l'operazione (modificabile o fisso per la demo)
-            utente_corrente = st.text_input("Utente:", value="Team_Tecnico", key="input_utente_salvataggio")
             
         with col_btn_save:
             btn_salva = st.button("📥 Imposta codice e salva", use_container_width=True)
@@ -563,13 +560,12 @@ if st.session_state.get('generazione_effettuata', False):
             if not codice_input_utente.strip():
                 st.error("❌ Inserisci un codice identificativo valido prima di salvare.")
             else:
-                # Salvataggio effettivo nel Google Sheet
+                # Chiamata pulita senza l'argomento utente
                 esito = salva_su_excel(
                     codice_input_utente.strip(), 
                     st.session_state.get('editable_tech'), 
-                    st.session_state.get('editable_comm'),
-                    utente_corrente.strip()
+                    st.session_state.get('editable_comm')
                 )
                 if esito:
-                    st.success(f"🎉 Articolo salvato con successo su Google Sheets da **{utente_corrente}** con codice: **{codice_input_utente.strip()}**!")
+                    st.success(f"🎉 Articolo salvato con successo con codice: **{codice_input_utente.strip()}**!")
                     st.balloons()
