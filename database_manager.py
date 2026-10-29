@@ -54,7 +54,7 @@ def verifica_match_db(stringa_tech_generata):
     return None, "NUOVO"
 
 def salva_su_excel(codice_id, stringa_tech, stringa_comm, utente="Anonimo"):
-    """Aggiunge una nuova riga nel Google Sheet con diagnostica avanzata dell'errore."""
+    """Aggiunge una nuova riga nel Google Sheet scrivendo direttamente sul range successivo."""
     try:
         ws = get_google_sheet_connection()
         data_ora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -67,12 +67,18 @@ def salva_su_excel(codice_id, stringa_tech, stringa_comm, utente="Anonimo"):
             str(utente).strip()
         ]
         
-        # Eseguiamo l'append
-        ws.append_row(nuova_riga, value_input_option="USER_ENTERED")
+        # 1. Recuperiamo tutti i valori esistenti per contare le righe attuali
+        tutti_i_dati = ws.get_all_values()
+        prossima_riga = len(tutti_i_dati) + 1
+        
+        # 2. Definiamo il range esatto in cui scrivere (es. A2:E2 o successivo)
+        range_str = f"A{prossima_riga}:E{prossima_riga}"
+        
+        # 3. Scriviamo direttamente sul range saltando l'append_row nativo
+        ws.update(range_str, [nuova_riga], value_input_option="USER_ENTERED")
         return True
         
     except Exception as e:
-        # Estraiamo il testo dettagliato della risposta HTTP di Google se disponibile
         error_details = str(e)
         if hasattr(e, 'response') and hasattr(e.response, 'text'):
             error_details += f" | Contenuto risposta Google: {e.response.text}"
