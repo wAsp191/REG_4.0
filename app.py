@@ -296,9 +296,8 @@ with col_workarea:
 
     # Nuova Sezione Compatibilità Finale (A scelta singola mutualmente esclusiva)
     st.markdown("---")
-    st.subheader("🔗 Opzione di Compatibilità Finale")
+    st.subheader("🔗 5. Opzione di Compatibilità")
     compatibilita_scelta = st.selectbox(
-        "Seleziona compatibilità:",
         options=OPZIONI_COMPATIBILITA,
         format_func=lambda x: "Seleziona compatibilità..." if x == "" else x,
         key="select_compatibilita"
