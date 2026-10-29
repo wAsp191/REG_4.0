@@ -335,6 +335,7 @@ with col_workarea:
 # =========================================================
 st.divider()
 
+# Lista dei pill in conflitto esclusivi per la macro categoria "SALES PART"
 PILLS_CONFLITTO_SALES_PART = [
     "Completa di paracolpo ABS",
     "Con batticarrello",
@@ -354,6 +355,7 @@ PILLS_CONFLITTO_SALES_PART = [
 if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
     if articolo_scelto:
         
+        # 1. CONTROLLO PRELIMINARE DEI CONFLITTI (Solo per SALES PART)
         tags_selezionati_utente = st.session_state.get('extra_tags', [])
         if macro_selezionata == "SALES PART":
             conflitti_trovati = [p for p in tags_selezionati_utente if p in PILLS_CONFLITTO_SALES_PART]
@@ -383,6 +385,7 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
                 finitura_tech_str = str(fin_scelta_ui).strip().upper()
                 finitura_comm_str = finitura_tech_str
 
+        # 2. GESTIONE DIMENSIONI
         dim_list = []
         L = str(st.session_state.get("dim_l", "") or "").strip()
         P = str(st.session_state.get("dim_p", "") or "").strip()
@@ -403,6 +406,7 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
 
         pills_config_art = dati_art.get("pills_config", {})
         
+        # 3. FUNZIONE DI ESTRAZIONE DELL'ORDINE (Con fallback sicuro a 99)
         def estrai_ordine(tag):
             if isinstance(pills_config_art, dict):
                 val = pills_config_art.get(tag, 99)
@@ -421,15 +425,23 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
                 return 99
             return 99
 
+        # Ordiniamo i tag selezionati in base al numero d'ordine configurato
         pills_ordinati_utente = sorted(
             tags_selezionati_utente,
             key=estrai_ordine
         )
         
-        lista_tech_pills = []
-        lista_comm_pills = []
+        # Liste separate per i pill PRIMA e DOPO le dimensioni
+        lista_tech_pills_prima = []
+        lista_tech_pills_dopo = []
+        lista_comm_pills_prima = []
+        lista_comm_pills_dopo = []
         
         for pill in pills_ordinati_utente:
+            num_ordine = estrai_ordine(pill)
+            
+            t_val, c_val = "", ""
+            
             if pill in SUB_OPTIONS_CONFIG or f"{pill} (+)" in SUB_OPTIONS_CONFIG:
                 key_sub = pill if pill in SUB_OPTIONS_CONFIG else f"{pill} (+)"
                 config_sub = SUB_OPTIONS_CONFIG[key_sub]
@@ -447,8 +459,7 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
                     
                     if piede_parts:
                         res_piede = f"XP{''.join(piede_parts)}"
-                        lista_tech_pills.append(res_piede)
-                        lista_comm_pills.append(res_piede)
+                        t_val, c_val = res_piede, res_piede
                 else:
                     scelta_utente = st.session_state.get(f"dyn_val_{pill}", "")
                     valore_mappato = config_sub.get(scelta_utente, ("", ""))
@@ -459,9 +470,6 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
                     else:
                         t_val = str(valore_mappato).strip().upper()
                         c_val = t_val
-                        
-                    if t_val: lista_tech_pills.append(t_val)
-                    if c_val: lista_comm_pills.append(c_val)
             else:
                 pill_key = str(pill).strip()
                 tuple_pill = None
@@ -471,20 +479,32 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
                         break
                 
                 if tuple_pill and isinstance(tuple_pill, (tuple, list)) and len(tuple_pill) >= 2:
-                    t_pill = str(tuple_pill[0]).strip().upper()
-                    c_pill = str(tuple_pill[1]).strip().upper()
+                    t_val = str(tuple_pill[0]).strip().upper()
+                    c_val = str(tuple_pill[1]).strip().upper()
                 else:
-                    t_pill = pill_key.upper()
-                    c_pill = pill_key.upper()
+                    t_val = pill_key.upper()
+                    c_val = pill_key.upper()
+
+            # SMISTAMENTO BASATO SUL NUMERO D'ORDINE (< 50 prima, >= 50 dopo)
+            if t_val:
+                if num_ordine >= 50:
+                    lista_tech_pills_dopo.append(t_val)
+                else:
+                    lista_tech_pills_prima.append(t_val)
                     
-                if t_pill: lista_tech_pills.append(t_pill)
-                if c_pill and c_pill != "NONE": lista_comm_pills.append(c_pill)
+            if c_val and c_val != "NONE":
+                if num_ordine >= 50:
+                    lista_comm_pills_dopo.append(c_val)
+                else:
+                    lista_comm_pills_prima.append(c_val)
 
         note_libere = str(st.session_state.get("extra_text", "") or "").strip().upper()
         compatibilita_val = str(st.session_state.get("select_compatibilita", "") or "").strip().upper()
 
-        pezzi_tech = [output_tech_base, finitura_tech_str] + lista_tech_pills
+        # 4. ASSEMBLAGGIO STRINGA TECNICA DEFINITIVA
+        pezzi_tech = [output_tech_base, finitura_tech_str] + lista_tech_pills_prima
         if dim_str: pezzi_tech.append(dim_str)
+        pezzi_tech.extend(lista_tech_pills_dopo)  # Accodamento pills post-dimensioni
         if note_libere: pezzi_tech.append(note_libere)
         if st.session_state.get("check_1090"):
             pezzi_tech.append("(UNI EN 1090-1)")
@@ -496,11 +516,14 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
         else:
             stringa_tecnica_definitiva = stringa_tecnica_base
 
+        # Verifica sul database (con unpacking a 3 valori corretto)
         codice_trovato, stato_match, percentuale = verifica_match_db(stringa_tecnica_definitiva)
         st.session_state['stato_match_db'] = (stato_match, codice_trovato, percentuale)
 
-        pezzi_comm = [output_comm_base, finitura_comm_str] + lista_comm_pills
+        # 5. ASSEMBLAGGIO STRINGA COMMERCIALE DEFINITIVA
+        pezzi_comm = [output_comm_base, finitura_comm_str] + lista_comm_pills_prima
         if dim_str: pezzi_comm.append(dim_str)
+        pezzi_comm.extend(lista_comm_pills_dopo)  # Accodamento pills post-dimensioni
         if note_libere: pezzi_comm.append(note_libere)
         
         stringa_commerciale_base = " ".join([p for p in pezzi_comm if p]).upper()
