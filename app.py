@@ -39,8 +39,8 @@ def inject_custom_css():
             
             /* --- MACRO CATEGORIE GRANDI A SINISTRA --- */
             div[data-testid="stRadio"] div[role="radiogroup"] label p {
-                font-size: 1.2rem !important;
-                font-weight: 700 !important;
+                font-size: 1.4rem !important;
+                font-weight: 800 !important;
                 padding: 4px 0px !important;
             }
             div[data-testid="stRadio"] div[role="radiogroup"] label {
