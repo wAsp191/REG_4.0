@@ -392,11 +392,31 @@ PACKAGE_PART_SPECIFICI = {
 # DATABASE ARTICOLI: LEGNO
 # ==============================================================================
 LEGNO_ARTICOLI = {
-    "Anta": {
-        "output_tech": "ANTA_LEGNO",
+   "Anta": {
+        "output_tech": "ANTA",
         "output_comm": "ANTA IN LEGNO",
         "ha_finitura": True,
-        "pills_config": {}
+        "pills_config": [
+            ("Bordi smussati", 6),
+            ("Compatibilità piede di base (+)", 4),
+            ("Con bocchetta passacavi", 5),
+            ("Con compensazioni removibili", 7),
+            ("Con lati bordati", 9),
+            ("Con mensole", 4),
+            ("Con scasso", 3),
+            ("Con viteria", 8),
+            ("Dritto", 9),
+            ("Forata", 10),
+            ("Fresata", 11),
+            ("Inclinata", 12),
+            ("Lato della fresatura (+)", 2),
+            ("Liscia", 2),
+            ("Orientamento Destro / Sinistro (+)", 1),
+            ("Regolabile", 3),
+            ("Scantonata", 2),
+            ("Scantonato", 2),
+            ("Scorrevole", 4)
+        ]
     },
     "Asta in legno": {
         "output_tech": "ASTA_LEGNO",
