@@ -54,7 +54,7 @@ def verifica_match_db(stringa_tech_generata):
     return None, "NUOVO"
 
 def salva_su_excel(codice_id, stringa_tech, stringa_comm, utente="Anonimo"):
-    """Aggiunge una nuova riga direttamente nel Google Sheet gestendo correttamente il protocollo di scrittura."""
+    """Aggiunge una nuova riga nel Google Sheet con diagnostica avanzata dell'errore."""
     try:
         ws = get_google_sheet_connection()
         data_ora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -67,10 +67,15 @@ def salva_su_excel(codice_id, stringa_tech, stringa_comm, utente="Anonimo"):
             str(utente).strip()
         ]
         
-        # Specifichiamo value_input_option="USER_ENTERED" per evitare conflitti di parsing con Google API
+        # Eseguiamo l'append
         ws.append_row(nuova_riga, value_input_option="USER_ENTERED")
         return True
         
     except Exception as e:
-        st.error(f"Errore critico durante la scrittura su Google Sheets: {e}")
+        # Estraiamo il testo dettagliato della risposta HTTP di Google se disponibile
+        error_details = str(e)
+        if hasattr(e, 'response') and hasattr(e.response, 'text'):
+            error_details += f" | Contenuto risposta Google: {e.response.text}"
+            
+        st.error(f"🔍 Debug Errore Google Sheets: {error_details}")
         return False
