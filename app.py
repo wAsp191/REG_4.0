@@ -64,8 +64,8 @@ def inject_custom_css():
 
             /* 5. INTESTAZIONI DI SEZIONE (H2 e H3) */
             /* Comprime i margini sopra e sotto i titoli delle varie sezioni (es. Categoria, Articolo, Dimensioni) */
-            h2 { margin-top: 0rem !important; margin-bottom: -0.5rem !important; font-size: 0.95rem !important; }
-            h3 { margin-top: 0rem !important; margin-bottom: -0.5rem !important; font-size: 0.9rem !important; }
+            h2 { margin-top: 0rem !important; margin-bottom: -0.9rem !important; font-size: 0.95rem !important; }
+            h3 { margin-top: 0rem !important; margin-bottom: -0.9rem !important; font-size: 0.9rem !important; }
             
             /* 6. LINEE DIVISORIE (HR) */
             /* Avvicina i divisori orizzontali riducendone lo spessore visivo e lo spazio occupato */
