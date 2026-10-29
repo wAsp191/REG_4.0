@@ -320,9 +320,36 @@ with col_workarea:
 # =========================================================
 st.divider()
 
+# Lista dei pill in conflitto esclusivi per la macro categoria "SALES PART"
+PILLS_CONFLITTO_SALES_PART = [
+    "Completa di paracolpo ABS",
+    "Con batticarrello",
+    "Con bocchetta passacavi",
+    "Con compensazioni removibili",
+    "Con guide RAM",
+    "Con illuminazione",
+    "Con mensole",
+    "Con ripiani",
+    "Con ripiani inclinati",
+    "Con ruote",
+    "Con serratura",
+    "Con viteria",
+    "Con distanziale (+)"
+]
+
 if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
     if 'articolo_scelto' in locals() and articolo_scelto:
         
+        # 1. CONTROLLO PRELIMINARE DEI CONFLITTI (Solo per SALES PART)
+        tags_selezionati_utente = st.session_state.get('extra_tags', [])
+        if macro_selezionata == "SALES PART":
+            conflitti_trovati = [p for p in tags_selezionati_utente if p in PILLS_CONFLITTO_SALES_PART]
+            if conflitti_trovati:
+                st.session_state['generazione_effettuata'] = False
+                for pill_c in conflitti_trovati:
+                    st.error(f"⚠️ **CONFLITTO BLOCCANTE**: Il pill **'{pill_c}'** non è compatibile con la macro-categoria **'SALES PART'**.")
+                st.stop( ) # Interrompe l'esecuzione e mostra l'errore all'utente
+
         articoli_macro = DATABASE.get(macro_selezionata, {}).get("Articoli", {})
         dati_art = articoli_macro.get(articolo_scelto, {})
         
@@ -362,7 +389,6 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
         dim_str = " ".join(dim_list)
 
         pills_config_art = dati_art.get("pills_config", {})
-        tags_selezionati_utente = st.session_state.get('extra_tags', [])
         
         # Funzione ultra-robusta per estrarre l'ordine sia da dizionari che da liste/tuple
         def estrai_ordine(tag):
