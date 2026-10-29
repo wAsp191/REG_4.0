@@ -8,6 +8,8 @@ import time
 from zoneinfo import ZoneInfo
 from database import *
 
+from database_manager import inizializza_excel_db, verifica_match_db, salva_su_excel
+
 # Dichiariamo la compatibilità qui per sicurezza assoluta anti-NameError
 OPZIONI_COMPATIBILITA = ["", "F25", "F25 BESPOKE", "F50", "F50 BESPOKE", "UNIVERSAL", "BC", "FORTISSIMO", "MINIRACK", "UNIMOB"]
 
@@ -486,6 +488,9 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
             stringa_tecnica_definitiva = f"{stringa_tecnica_base} - {compatibilita_val}"
         else:
             stringa_tecnica_definitiva = stringa_tecnica_base
+
+        codice_trovato, stato_match = verifica_match_db(stringa_tecnica_definitiva)
+        st.session_state['stato_match_db'] = (stato_match, codice_trovato)
 
         # Assemblaggio Stringa Commerciale Base
         pezzi_comm = [output_comm_base, finitura_comm_str] + lista_comm_pills
