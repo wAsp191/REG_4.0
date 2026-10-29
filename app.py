@@ -27,14 +27,14 @@ def inject_custom_css():
             /* Riduce lo spazio verticale tra gli elementi dentro i blocchi */
             [data-testid="stVerticalBlock"] > div {
                 flex-direction: column;
-                gap: 0.04rem !important;
+                gap: 0.06rem !important;
             }
             
             /* --- TITOLO CENTRATO --- */
             .reg-title-container {
                 text-align: center;
                 width: 100%;
-                margin-bottom: 0.8rem;
+                margin-bottom: 0.5rem;
             }
             
             /* --- MACRO CATEGORIE GRANDI A SINISTRA --- */
