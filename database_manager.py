@@ -3,6 +3,7 @@ import pandas as pd
 import gspread
 from google.oauth2.service_account import Credentials
 import datetime
+from difflib import SequenceMatcher
 
 def get_google_sheet_connection():
     """Connessione sicura e blindata a Google Sheets tramite st.secrets."""
@@ -35,21 +36,39 @@ def carica_database():
     except Exception:
         return pd.DataFrame(columns=expected_cols)
 
-def verifica_match_db(stringa_tech_generata):
-    """Controlla se la stringa tecnica generata esiste già nel Google Sheet."""
+def calcola_somiglianza(str1, str2):
+    """Calcola la percentuale di somiglianza tra due stringhe (da 0 a 100)."""
+    return round(SequenceMatcher(None, str1.strip().upper(), str2.strip().upper()).ratio() * 100, 1)
+
+def verifica_match_db(stringa_tech_generata, soglia_attenzione=85.0):
+    """
+    Controlla il database calcolando una percentuale di somiglianza.
+    Restituisce: (codice_esistente, stato, percentuale)
+    Stati possibili: "ESATTO" (100%), "SIMILE" (>= soglia), "NUOVO" (< soglia)
+    """
     df = carica_database()
     if df.empty:
-        return None, "NUOVO"
+        return None, "NUOVO", 0.0
     
     stringa_pulita = str(stringa_tech_generata).strip().upper()
-    df['Tech_Clean'] = df['Stringa_Tecnica'].astype(str).str.strip().str.upper()
     
-    match = df[df['Tech_Clean'] == stringa_pulita]
-    if not match.empty:
-        codice_esistente = match.iloc[0]['Codice_Identificativo']
-        return codice_esistente, "ESATTO"
+    miglior_match = None
+    max_percentuale = 0.0
     
-    return None, "NUOVO"
+    for _, row in df.iterrows():
+        db_stringa = str(row['Stringa_Tecnica']).strip().upper()
+        perc = calcola_somiglianza(stringa_pulita, db_stringa)
+        
+        if perc > max_percentuale:
+            max_percentuale = perc
+            miglior_match = row['Codice_Identificativo']
+            
+    if max_percentuale == 100.0:
+        return miglior_match, "ESATTO", 100.0
+    elif max_percentuale >= soglia_attenzione:
+        return miglior_match, "SIMILE", max_percentuale
+    
+    return None, "NUOVO", max_percentuale
 
 def salva_su_excel(codice_id, stringa_tech, stringa_comm):
     """Salvataggio blindato su Google Sheets a 4 colonne."""
@@ -64,7 +83,6 @@ def salva_su_excel(codice_id, stringa_tech, stringa_comm):
             data_ora
         ]
         
-        # PIANO A: Tentativo con append_row standard
         try:
             ws.append_row(nuova_riga, value_input_option="USER_ENTERED")
             return True
@@ -74,7 +92,6 @@ def salva_su_excel(codice_id, stringa_tech, stringa_comm):
             raise api_err 
             
     except Exception:
-        # PIANO B: Scrittura diretta calcolando la riga libera
         try:
             ws = get_google_sheet_connection()
             data_ora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -82,7 +99,7 @@ def salva_su_excel(codice_id, stringa_tech, stringa_comm):
                 str(codice_id).strip(), 
                 str(stringa_tech).strip().upper(), 
                 str(stringa_comm).strip().upper(), 
-                data_ora
+            data_ora
             ]
             
             tutti_i_dati = ws.get_all_values()
@@ -90,7 +107,6 @@ def salva_su_excel(codice_id, stringa_tech, stringa_comm):
             if prossima_riga < 2:
                 prossima_riga = 2 
                 
-            # Range limitato alle prime 4 colonne (A, B, C, D)
             range_str = f"A{prossima_riga}:D{prossima_riga}"
             ws.update(range_str, [nuova_riga], value_input_option="USER_ENTERED")
             return True
