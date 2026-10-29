@@ -181,18 +181,13 @@ if st.session_state.get('reset_eseguito'):
 # 2. INTERFACCIA UTENTE (Layout & Logica)
 # =========================================================
 
-# Intestazione Centrata a pieno schermo
+# Intestazione Centrata ultra-compatta (senza colonne sprecate per il reset)
 st.markdown("""
     <div class="reg-title-container">
-        <h1 style="margin: 0; font-size: 2.2rem;">🎭 REG v4.0</h1>
-        <p style='font-size: 0.9rem; color: gray; margin-top: 4px;'>Utente attivo: <b>{}</b></p>
+        <h1 style="margin: 0; font-size: 2.0rem;">🎭 REG v4.0</h1>
+        <p style='font-size: 0.85rem; color: gray; margin-top: 2px;'>Utente attivo: <b>{}</b></p>
     </div>
 """.format(st.session_state.utente_corrente), unsafe_allow_html=True)
-
-# Pulsante di reset posizionato in alto a destra
-col_top_left, col_top_right = st.columns([5, 1])
-with col_top_right:
-    st.button("🔄 AZZERA", on_click=activate_reset, use_container_width=True)
 
 st.markdown("---")
 
@@ -200,9 +195,13 @@ st.markdown("---")
 col_left, col_workarea = st.columns([1.2, 3.2], gap="large")
 
 # =========================================================
-# COLONNA SINISTRA: MACRO CATEGORIE
+# COLONNA SINISTRA: RESET + MACRO CATEGORIE
 # =========================================================
 with col_left:
+    # 💡 SPIANHIAMO QUI IL TASTO AZZERA: È perfetto in cima alla colonna sinistra!
+    st.button("🔄 AZZERA CONFIGURAZIONE", on_click=activate_reset, use_container_width=True)
+    st.markdown("---")
+    
     st.subheader("📂 1. Categoria")
     mappa_estetica = {
         "SALES PART": "⚙️ SALES PART",
