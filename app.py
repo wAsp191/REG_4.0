@@ -26,7 +26,7 @@ def inject_custom_css():
             /* 1. CONTENITORE PRINCIPALE DELLA PAGINA */
             /* Riduce drasticamente i margini superiori e inferiori della pagina Streamlit */
             .block-container {
-                padding-top: 1.2rem !important;
+                padding-top: 1.5rem !important;
                 padding-bottom: 0rem !important;
             }
             
