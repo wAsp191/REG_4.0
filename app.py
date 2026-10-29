@@ -256,24 +256,21 @@ with col_workarea:
     if articolo_scelto:
         pills_config_articolo = dati_articolo.get("pills_config", {})
         
+        # 1. Estraiamo i nomi dei pills e li ordiniamo ALFABETICAMENTE per la tendina (UI)
         if isinstance(pills_config_articolo, dict):
-            pills_ordinati = sorted(
-                pills_config_articolo.keys(),
-                key=lambda x: pills_config_articolo[x].get("ordine", pills_config_articolo[x]) 
-                if isinstance(pills_config_articolo[x], dict) else pills_config_articolo[x]
-            )
+            pills_ordinati_ui = sorted(list(pills_config_articolo.keys()))
         elif isinstance(pills_config_articolo, (list, tuple)):
-            pills_ordinati = [p[0] for p in sorted(pills_config_articolo, key=lambda x: x[1])]
+            pills_ordinati_ui = sorted([p[0] for p in pills_config_articolo if isinstance(p, (list, tuple)) and len(p) > 0])
         else:
-            pills_ordinati = []
+            pills_ordinati_ui = []
             
-        if pills_ordinati:
+        if pills_ordinati_ui:
             col_pills_sel, col_pills_dyn = st.columns([1.7, 1.3], gap="medium")
             
             with col_pills_sel:
                 tag_selezionati = st.multiselect(
                     "Seleziona Caratteristiche:",
-                    options=pills_ordinati,
+                    options=pills_ordinati_ui, # <--- Ora la lista è ordinata alfabeticamente a schermo!
                     key="extra_tags",
                     placeholder="Scegli le caratteristiche..."
                 )
