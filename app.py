@@ -213,7 +213,8 @@ with col_workarea:
             index=None, 
             placeholder="Seleziona un articolo...", 
             format_func=lambda x: f"🔧 {x}" if x else "Seleziona...", 
-            key="selectbox_part"
+            key="selectbox_part",
+            label_visibility="collapsed"  # <-- Nasconde la scritta "Cerca Articolo:"
         )
 
     finitura_scelta = None
@@ -308,7 +309,8 @@ with col_workarea:
         "Seleziona compatibilità:",
         options=OPZIONI_COMPATIBILITA,
         format_func=lambda x: "Seleziona compatibilità..." if x == "" else x,
-        key="select_compatibilita"
+        key="select_compatibilita",
+        label_visibility="collapsed"  # <-- Nasconde la scritta "Seleziona compatibilità:"
     )
 
     st.checkbox("Aggiungi marcatura (UNI EN 1090-1)", key="check_1090")
