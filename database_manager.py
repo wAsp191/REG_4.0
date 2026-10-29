@@ -5,7 +5,7 @@ from google.oauth2.service_account import Credentials
 import datetime
 
 def get_google_sheet_connection():
-    """Connessione sicura a Google Sheets tramite st.secrets."""
+    """Connessione sicura e blindata a Google Sheets tramite st.secrets."""
     scope = [
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive"
@@ -16,22 +16,26 @@ def get_google_sheet_connection():
     
     sheet_name = st.secrets["sheet_config"]["sheet_name"]
     spreadsheet = client.open(sheet_name)
+    
+    # Seleziona in modo sicuro il primo foglio disponibile
     return spreadsheet.get_worksheet(0)
 
 def carica_database():
-    """Carica il database dal Google Sheet in un DataFrame Pandas."""
+    """Carica il database dal Google Sheet in un DataFrame Pandas in modo sicuro."""
+    expected_cols = ["Codice_Identificativo", "Stringa_Tecnica", "Stringa_Commerciale", "Data_Creazione", "Utente"]
     try:
         ws = get_google_sheet_connection()
         data = ws.get_all_records()
-        df = pd.DataFrame(data)
         
-        expected_cols = ["Codice_Identificativo", "Stringa_Tecnica", "Stringa_Commerciale", "Data_Creazione", "Utente"]
+        if not data:
+            return pd.DataFrame(columns=expected_cols)
+            
+        df = pd.DataFrame(data)
         if df.empty or not all(col in df.columns for col in expected_cols):
             return pd.DataFrame(columns=expected_cols)
         return df
-    except Exception as e:
-        st.error(f"Errore di connessione al database Google Sheets: {e}")
-        return pd.DataFrame(columns=["Codice_Identificativo", "Stringa_Tecnica", "Stringa_Commerciale", "Data_Creazione", "Utente"])
+    except Exception:
+        return pd.DataFrame(columns=expected_cols)
 
 def verifica_match_db(stringa_tech_generata):
     """Controlla se la stringa tecnica generata esiste già nel Google Sheet."""
@@ -50,7 +54,7 @@ def verifica_match_db(stringa_tech_generata):
     return None, "NUOVO"
 
 def salva_su_excel(codice_id, stringa_tech, stringa_comm, utente="Anonimo"):
-    """Aggiunge una nuova riga direttamente nel Google Sheet includendo l'utente."""
+    """Aggiunge una nuova riga direttamente nel Google Sheet gestendo correttamente il protocollo di scrittura."""
     try:
         ws = get_google_sheet_connection()
         data_ora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -63,11 +67,10 @@ def salva_su_excel(codice_id, stringa_tech, stringa_comm, utente="Anonimo"):
             str(utente).strip()
         ]
         
-        # Eseguiamo l'append della riga
-        ws.append_row(nuova_riga)
+        # Specifichiamo value_input_option="USER_ENTERED" per evitare conflitti di parsing con Google API
+        ws.append_row(nuova_riga, value_input_option="USER_ENTERED")
         return True
         
     except Exception as e:
-        # Stampiamo il tipo esatto di errore e il dettaglio per un debug perfetto
-        st.error(f"Errore dettagliato Google Sheets ({type(e).__name__}): {e}")
+        st.error(f"Errore critico durante la scrittura su Google Sheets: {e}")
         return False
