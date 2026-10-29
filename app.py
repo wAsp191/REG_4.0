@@ -41,7 +41,7 @@ def inject_custom_css():
             div[data-testid="stRadio"] div[role="radiogroup"] label p {
                 font-size: 1.4rem !important;
                 font-weight: 800 !important;
-                padding: 4px 0px !important;
+                padding: 3px 0px !important;
             }
             div[data-testid="stRadio"] div[role="radiogroup"] label {
                 padding: 4px 8px !important;
