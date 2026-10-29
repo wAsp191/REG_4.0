@@ -26,7 +26,7 @@ def inject_custom_css():
             /* 1. CONTENITORE PRINCIPALE DELLA PAGINA */
             /* Riduce drasticamente i margini superiori e inferiori della pagina Streamlit */
             .block-container {
-                padding-top: 0.8rem !important;
+                padding-top: 1rem !important;
                 padding-bottom: 0rem !important;
             }
             
@@ -34,7 +34,7 @@ def inject_custom_css():
             /* Accorcia lo spazio verticale tra un blocco di elementi e il successivo */
             [data-testid="stVerticalBlock"] > div {
                 flex-direction: column;
-                gap: 0.02rem !important;
+                gap: 0.015rem !important;
             }
             
             /* 3. TITOLO CENTRATO E SOTTOSTANTE */
@@ -42,13 +42,13 @@ def inject_custom_css():
             .reg-title-container {
                 text-align: center;
                 width: 100%;
-                margin-bottom: 0.2rem !important;
+                margin-bottom: 0.05rem !important;
             }
             
             /* 4. MACRO CATEGORIE (RADIO BUTTON A SINISTRA) */
             /* Riduce l'ingombro dei pulsanti radio laterali per le categorie */
             div[data-testid="stRadio"] div[role="radiogroup"] label p {
-                font-size: 1.3rem !important;
+                font-size: 1.2rem !important;
                 font-weight: 800 !important;
                 padding: 2px 0px !important;
             }
