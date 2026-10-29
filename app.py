@@ -23,64 +23,79 @@ st.set_page_config(page_title="Reg v4.0", layout="wide")
 def inject_custom_css():
     st.markdown("""
         <style>
+            /* 1. CONTENITORE PRINCIPALE DELLA PAGINA */
+            /* Riduce drasticamente i margini superiori e inferiori della pagina Streamlit */
             .block-container {
-                padding-top: 1.2rem !important;
+                padding-top: 0.8rem !important;
                 padding-bottom: 0rem !important;
             }
-            /* Riduce lo spazio verticale tra gli elementi dentro i blocchi */
+            
+            /* 2. SPAZIATURA DEI BLOCCHI VERTICALI (Stack) */
+            /* Accorcia lo spazio verticale tra un blocco di elementi e il successivo */
             [data-testid="stVerticalBlock"] > div {
                 flex-direction: column;
-                gap: 0.06rem !important;
+                gap: 0.02rem !important;
             }
             
-            /* --- TITOLO CENTRATO --- */
+            /* 3. TITOLO CENTRATO E SOTTOSTANTE */
+            /* Compatta l'area del titolo principale e del sottotitolo utente */
             .reg-title-container {
                 text-align: center;
                 width: 100%;
-                margin-bottom: 0.5rem;
+                margin-bottom: 0.2rem !important;
             }
             
-            /* --- MACRO CATEGORIE GRANDI A SINISTRA --- */
+            /* 4. MACRO CATEGORIE (RADIO BUTTON A SINISTRA) */
+            /* Riduce l'ingombro dei pulsanti radio laterali per le categorie */
             div[data-testid="stRadio"] div[role="radiogroup"] label p {
-                font-size: 1.4rem !important;
+                font-size: 1.3rem !important;
                 font-weight: 800 !important;
-                padding: 3px 0px !important;
+                padding: 2px 0px !important;
             }
             div[data-testid="stRadio"] div[role="radiogroup"] label {
-                padding: 4px 8px !important;
-                margin-bottom: 4px !important;
+                padding: 2px 6px !important;
+                margin-bottom: 2px !important;
                 transition: all 0.2s ease;
             }
             div[data-testid="stRadio"] div[role="radiogroup"] label:hover {
                 background-color: rgba(255, 255, 255, 0.05);
-                border-radius: 8px;
+                border-radius: 6px;
             }
 
-            /* Compressione dei titoli per avvicinarli al contenuto sottostante */
-            h2 { margin-top: 0.05rem !important; margin-bottom: -0.4rem !important; font-size: 1.0rem !important; }
-            h3 { margin-top: 0.05rem !important; margin-bottom: -0.4rem !important; font-size: 0.95rem !important; }
+            /* 5. INTESTAZIONI DI SEZIONE (H2 e H3) */
+            /* Comprime i margini sopra e sotto i titoli delle varie sezioni (es. Categoria, Articolo, Dimensioni) */
+            h2 { margin-top: 0rem !important; margin-bottom: -0.5rem !important; font-size: 0.95rem !important; }
+            h3 { margin-top: 0rem !important; margin-bottom: -0.5rem !important; font-size: 0.9rem !important; }
             
-            /* Linee divisorie più sottili e vicine */
+            /* 6. LINEE DIVISORIE (HR) */
+            /* Avvicina i divisori orizzontali riducendone lo spessore visivo e lo spazio occupato */
             hr {
-                margin-top: 0.2rem !important;
-                margin-bottom: 0.2rem !important;
+                margin-top: 0.1rem !important;
+                margin-bottom: 0.1rem !important;
             }
             
+            /* 7. COMPRESSIONE MENÙ A TENDINA E INPUT DI TESTO (SELECTIONS & INPUTS) */
+            /* Riducono l'altezza interna (padding e min-height) di selectbox e text_input per renderli più sottili e compatti */
             div[data-baseweb="select"] > div, 
             div[data-testid="stTextInput"] > div > div > input {
                 padding-top: 0px !important;
                 padding-bottom: 0px !important;
-                min-height: 1.4rem !important;
+                min-height: 1.2rem !important;
+                height: 1.8rem !important;
             }
             
+            /* 8. ETICHETTE DEI WIDGET */
+            /* Diminuisce lo spazio e la dimensione dei testi sopra i campi di input */
             [data-testid="stWidgetLabel"] p {
-                font-size: 1.25rem !important;
+                font-size: 1.1rem !important;
                 font-weight: 700 !important;
-                margin-bottom: 0.1rem !important;
+                margin-bottom: 0.05rem !important;
             }
             
+            /* 9. CONTENITORI MARKDOWN GENERALI */
+            /* Uniforma la dimensione dei testi descrittivi per guadagnare coerenza visiva */
             [data-testid="stMarkdownContainer"] p {
-                font-size: 1.0rem !important;
+                font-size: 0.95rem !important;
             }
         </style>
     """, unsafe_allow_html=True)
