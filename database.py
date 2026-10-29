@@ -183,10 +183,24 @@ SALES_PART_ARTICOLI = {
         "pills_config": {}
     },
     "Pannello di rivestimento": {
-        "output_tech": "PANNELLO_RIVESTIMENTO",
+        "output_tech": "PANN RIV",
         "output_comm": "PANNELLO RIVESTIMENTO",
         "ha_finitura": True,
-        "pills_config": {}
+        "pills_config": [
+            ("Antisgancio", 6),
+            ("Attacco montante", 5),
+            ("Con componente saldato", 7),
+            ("Con viteria", 9),
+            ("Forato", 4),
+            ("Liscio", 3),
+            ("Orientamento Destro / Sinistro (+)", 1),
+            ("Predisposto per montante (+)", 8),
+            ("Con finestra", 9),
+            ("Angolo aperto", 10),
+            ("Angolo chiuso", 11),
+            ("Con scasso", 12),
+            ("Scantonato"2),
+        ]
     },
     "Pannello frontale": {
         "output_tech": "PANNELLO_FRONTALE",
