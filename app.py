@@ -34,7 +34,7 @@ def inject_custom_css():
             .reg-title-container {
                 text-align: center;
                 width: 100%;
-                margin-bottom: 0.3rem;
+                margin-bottom: 0.8rem;
             }
             
             /* --- MACRO CATEGORIE GRANDI A SINISTRA --- */
