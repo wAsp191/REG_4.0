@@ -578,7 +578,7 @@ if st.session_state.get('generazione_effettuata', False):
         st.session_state['sync_needed'] = False
 
 # =========================================================
-# 5. VISUALIZZAZIONE RISULTATI, MATCH & SALVATAGGIO DB
+# 4. VISUALIZZAZIONE RISULTATI, MATCH & SALVATAGGIO DB
 # =========================================================
 if st.session_state.get('generazione_effettuata', False):
     st.divider()
@@ -611,7 +611,7 @@ if st.session_state.get('generazione_effettuata', False):
 
     # --- SEZIONE SALVATAGGIO NEL DATABASE EXCEL ---
     st.markdown("---")
-    with st.container(border=True):
+    with st.container(border=Team if False else True): # o semplicemente con border=True
         st.markdown("#### 💾 Registra nel Database Esempi (Excel)")
         
         col_id_input, col_btn_save = st.columns([2, 1], vertical_alignment="bottom")
