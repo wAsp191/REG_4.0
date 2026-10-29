@@ -510,12 +510,15 @@ if st.session_state.get('generazione_effettuata', False):
     st.divider()
     st.markdown("### 📋 Risultato Generazione & Verifica DB")
     
-    stato_match, codice_esistente = st.session_state.get('stato_match_db', ("NUOVO", None))
+    # Recuperiamo l'esito del match esteso (stato, codice, percentuale)
+    stato_match, codice_esistente, percentuale = st.session_state.get('stato_match_db', ("NUOVO", None, 0.0))
     
     if stato_match == "ESATTO":
-        st.warning(f"⚠️ **MATCH RILEVATO NEL DATABASE!** Questa stringa tecnica esiste già ed è associata al codice identificativo: **{codice_esistente}**")
+        st.warning(f"⚠️ **MATCH ESATTO AL 100% NEL DATABASE!** Questa configurazione esiste già ed è associata al codice: **{codice_esistente}**")
+    elif stato_match == "SIMILE":
+        st.info(f"🔍 **ALTA SOMIGLIANZA RILEVATA ({percentage}%):** Questa stringa è molto simile all'articolo registrato sotto il codice **{codice_esistente}**. Verifica che non si tratti di un duplicato.")
     else:
-        st.success("✅ **NUOVA STRINGA UNICA**: Nessuna corrispondenza esatta trovata nel database Google Sheets. Puoi procedere al salvataggio.")
+        st.success("✅ **CONFIGURAZIONE UNICA**: Nessuna forte somiglianza trovata nel database Google Sheets. Puoi procedere al salvataggio.")
 
     col_out1, col_out2 = st.columns(2, gap="medium")
     
@@ -534,7 +537,7 @@ if st.session_state.get('generazione_effettuata', False):
     if st.session_state.get('sync_needed'):
         st.session_state['sync_needed'] = False
 
-    # --- SEZIONE SALVATAGGIO NEL GOOGLE SHEET ---
+    # --- SEZIONE SALVATAGGIO NEL GOOGLE SHEET (Senza palloncini) ---
     st.markdown("---")
     with st.container(border=True):
         st.markdown("#### 💾 Registra nel Database Google Sheets")
@@ -557,5 +560,5 @@ if st.session_state.get('generazione_effettuata', False):
                     st.session_state.get('editable_comm')
                 )
                 if esito:
-                    st.success(f"🎉 Articolo salvato con successo con codice: **{codice_input_utente.strip()}**!")
-                    st.balloons()
+                    # Messaggio di conferma professionale senza animazioni superflue
+                    st.success(f"✔️ Articolo registrato correttamente con codice: **{codice_input_utente.strip()}**.")
