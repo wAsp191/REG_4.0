@@ -482,8 +482,8 @@ if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
         else:
             stringa_tecnica_definitiva = stringa_tecnica_base
 
-        codice_trovato, stato_match = verifica_match_db(stringa_tecnica_definitiva)
-        st.session_state['stato_match_db'] = (stato_match, codice_trovato)
+        codice_trovato, stato_match, percentuale = verifica_match_db(stringa_tecnica_definitiva)
+        st.session_state['stato_match_db'] = (stato_match, codice_trovato, percentuale)
 
         pezzi_comm = [output_comm_base, finitura_comm_str] + lista_comm_pills
         if dim_str: pezzi_comm.append(dim_str)
@@ -516,7 +516,7 @@ if st.session_state.get('generazione_effettuata', False):
     if stato_match == "ESATTO":
         st.warning(f"⚠️ **MATCH ESATTO AL 100% NEL DATABASE!** Questa configurazione esiste già ed è associata al codice: **{codice_esistente}**")
     elif stato_match == "SIMILE":
-        st.info(f"🔍 **ALTA SOMIGLIANZA RILEVATA ({percentage}%):** Questa stringa è molto simile all'articolo registrato sotto il codice **{codice_esistente}**. Verifica che non si tratti di un duplicato.")
+        st.info(f"🔍 **ALTA SOMIGLIANZA RILEVATA ({percentuale}%):** Questa stringa è molto simile all'articolo registrato sotto il codice **{codice_esistente}**. Verifica che non si tratti di un duplicato.")
     else:
         st.success("✅ **CONFIGURAZIONE UNICA**: Nessuna forte somiglianza trovata nel database Google Sheets. Puoi procedere al salvataggio.")
 
