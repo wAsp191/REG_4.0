@@ -40,7 +40,7 @@ st.set_page_config(page_title="Reg v4.0", layout="wide")
 def inject_custom_css():
     st.markdown("""
         <style>
-            /* 1. CONTENITORE PRINCIPALE: Diamo il giusto spazio in alto per non tagliare il titolo */
+            /* 1. CONTENITORE PRINCIPALE: Spazio corretto in alto per non tagliare il titolo */
             .block-container {
                 padding-top: 2.2rem !important;
                 padding-bottom: 0rem !important;
@@ -197,31 +197,34 @@ col_input, col_output = st.columns([1.8, 1.2], gap="large")
 # COLONNA SINISTRA: MASCHERA DI INPUT E CONFIGURAZIONE
 # =========================================================
 with col_input:
-    # Sezione 1: Selezione Articolo & Finitura disposte in verticale
+    # Sezione 1: Selezione Articolo & Finitura affiancate per risparmiare spazio verticale
     st.subheader("🛠️ 1. Selezione Articolo & Finitura")
+    c_art, c_fin = st.columns([1.5, 1])
     
     elenco_articoli = sorted(list(DATABASE_ARTICOLI.keys())) if 'DATABASE_ARTICOLI' in globals() else []
     
-    articolo_scelto = st.selectbox(
-        "Cerca Articolo:", 
-        options=elenco_articoli, 
-        index=None, 
-        placeholder="Seleziona un articolo...", 
-        format_func=lambda x: f"🔧 {x}" if x else "Seleziona...", 
-        key="selectbox_part"
-    )
+    with c_art:
+        articolo_scelto = st.selectbox(
+            "Cerca Articolo:", 
+            options=elenco_articoli, 
+            index=None, 
+            placeholder="Seleziona un articolo...", 
+            format_func=lambda x: f"🔧 {x}" if x else "Seleziona...", 
+            key="selectbox_part"
+        )
 
     finitura_scelta = None
     dati_articolo = DATABASE_ARTICOLI.get(articolo_scelto, {}) if articolo_scelto else {}
     ha_finitura = dati_articolo.get("ha_finitura", False)
     
-    if articolo_scelto and ha_finitura:
-        finitura_scelta = st.selectbox(
-            "Finitura / Materiale:",
-            options=list(FINITURE_CONFIG.keys()),
-            index=0,
-            key="select_finitura"
-        )
+    with c_fin:
+        if articolo_scelto and ha_finitura:
+            finitura_scelta = st.selectbox(
+                "Finitura / Materiale:",
+                options=list(FINITURE_CONFIG.keys()),
+                index=0,
+                key="select_finitura"
+            )
 
     st.markdown("---")
     
@@ -491,10 +494,10 @@ with col_output:
             st.markdown("""
                 Benvenuto nel nuovo configuratore unificato! Segui questi semplici passi:
                 
-                1. **Seleziona l'Articolo**: Scegli il componente desiderato dalla tendina principale a sinistra (inclusi i componenti in legno contrassegnati da `(LEGNO)`).
-                2. **Configura Finitura & Pills**: Se l'articolo lo prevede, seleziona la finitura (es. *VERNICIABILE* imposterà automaticamente la configurazione su `COLOUR`, altrimenti sarà `0`). Spunta le caratteristiche desiderate.
-                3. **Inserisci Dimensioni & Note**: Digita le quote (usa pure il punto o la virgola, il sistema normalizzerà automaticamente).
-                4. **Genera**: Clicca sul tasto rosso **GENERA STRINGA FINALE** per calcolare in automatico il *Part Type*, la configurazione e verificare l'eventuale presenza di match nel database di Google Sheets.
+                1. **Seleziona l'Articolo & Finitura**: Scegli il componente dalla tendina a sinistra (inclusi i componenti in legno contrassegnati da `(LEGNO)`). Se previsto, seleziona la finitura (*VERNICIABILE* imposterà la configurazione su `COLOUR`, altrimenti `0`).
+                2. **Configura i Pills**: Spunta le caratteristiche desiderate.
+                3. **Inserisci Dimensioni & Note**: Digita le quote (il sistema normalizzerà automaticamente il punto in virgola).
+                4. **Genera**: Clicca sul tasto **GENERA STRINGA FINALE** per calcolare in automatico il *Part Type*, la configurazione e verificare l'eventuale match su Google Sheets.
             """)
     else:
         st.markdown("---")
