@@ -284,8 +284,7 @@ SALES_PART_ARTICOLI = {
         "tipologie_config": {
             "DI BASE": ("BAS", "DI BASE"),
             "IN FILO": ("FIL", "IN FILO"),
-            "TOP": ("TOP", "TOP")
-        },
+            "TOP": ("TOP", "TOP")},
         "pills_config": [
             ("Con componente saldato", 52),
             ("Con viteria", 51),
