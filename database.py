@@ -209,7 +209,7 @@ SALES_PART_ARTICOLI = {
         "output_tech": "PANN RIV",
         "output_comm": "PANNELLO RIVESTIMENTO",
         "ha_finitura": True,
-        "disabled_dims": ["P"],
+        "disabled_dims": ["P", "D"],
         "pills_config": [
             ("Antisgancio", 6),
             ("Attacco montante", 5),
