@@ -492,12 +492,11 @@ with col_output:
         with st.container(border=True):
             st.markdown("### 📖 Modalità d'uso - REG v4.0")
             st.markdown("""
-                Benvenuto nel nuovo configuratore unificato! Segui questi semplici passi:
                 
-                1. **Seleziona l'Articolo & Finitura**: Scegli il componente dalla tendina a sinistra (inclusi i componenti in legno contrassegnati da `(LEGNO)`). Se previsto, seleziona la finitura (*VERNICIABILE* imposterà la configurazione su `COLOUR`, altrimenti `0`).
+                1. **Seleziona l'Articolo & Finitura**: Scegli il componente dalla tendina a sinistra (inclusi i componenti contrassegnati da `(LEGNO)`). Se previsto, seleziona la finitura (es. *VERNICIABILE*).
                 2. **Configura i Pills**: Spunta le caratteristiche desiderate.
                 3. **Inserisci Dimensioni & Note**: Digita le quote (il sistema normalizzerà automaticamente il punto in virgola).
-                4. **Genera**: Clicca sul tasto **GENERA STRINGA FINALE** per calcolare in automatico il *Part Type*, la configurazione e verificare l'eventuale match su Google Sheets.
+                4. **Genera**: Clicca sul tasto **GENERA STRINGA FINALE** per calcolare in automatico il *Part Type*, la *Configurazione* e verificare l'eventuale match sul Database.
             """)
     else:
         st.markdown("---")
