@@ -183,7 +183,7 @@ st.markdown("""
 st.markdown("---")
 
 # Layout Principale (Sinistra: Input & Configurazione | Destra: Output & Generazione)
-col_input, col_output = st.columns([1.8, 1.2], gap="large")
+col_input, col_output = st.columns([1.7, 1.3], gap="large")
 
 # =========================================================
 # COLONNA SINISTRA: MASCHERA DI INPUT E CONFIGURAZIONE
