@@ -11,6 +11,23 @@ from zoneinfo import ZoneInfo
 from database import *
 from database_manager import carica_database, verifica_match_db, salva_su_excel
 
+# Lista di pills che, se selezionati, convertono il Part Type in PACKAGE PART
+PILLS_FORZA_PACKAGE = [
+    "Completa di paracolpo ABS",
+    "Con batticarrello",
+    "Con bocchetta passacavi",
+    "Con compensazioni removibili",
+    "Con guide RAM",
+    "Con illuminazione",
+    "Con mensole",
+    "Con ripiani",
+    "Con ripiani inclinati",
+    "Con ruote",
+    "Con serratura",
+    "Con viteria",
+    "Con distanziale (+)"
+]
+
 # Compatibilità anti-NameError
 OPZIONI_COMPATIBILITA = ["", "F25", "F25 BESPOKE", "F50", "F50 BESPOKE", "UNIVERSAL", "BC", "FORTISSIMO", "MINIRACK", "UNIMOB", "STAND-ALONE"]
 
@@ -307,9 +324,21 @@ with col_output:
             output_comm_base = dati_art.get("output_comm", articolo_scelto.upper())
             ha_finitura = dati_art.get("ha_finitura", False)
             
-            # AUTOMAZIONI NATIVE ESTRATTE DALL'ARTICOLO
+            # -----------------------------------------------------------------
+            # 1. RILEVAMENTO AUTOMATICO PART TYPE (Con Override da Pills)
+            # -----------------------------------------------------------------
             part_type_automatico = dati_art.get("part_type", "SALES PART")
-            configurazione_automatica = "COLOUR" if (ha_finitura and st.session_state.get("select_finitura")) else "0"
+            if any(p in tags_selezionati_utente for p in PILLS_FORZA_PACKAGE):
+                part_type_automatico = "PACKAGE PART"
+
+            # -----------------------------------------------------------------
+            # 2. REGOLA CONFIGURAZIONE (COLOUR se VERNICIABILE, altrimenti 0)
+            # -----------------------------------------------------------------
+            fin_scelta_ui = st.session_state.get("select_finitura", "")
+            if ha_finitura and str(fin_scelta_ui).strip().upper() == "VERNICIABILE":
+                configurazione_automatica = "COLOUR"
+            else:
+                configurazione_automatica = "0"
             
             st.session_state['part_type_calcolato'] = part_type_automatico
             st.session_state['config_calcolata'] = configurazione_automatica
@@ -317,8 +346,7 @@ with col_output:
             finitura_tech_str = ""
             finitura_comm_str = ""
             
-            if ha_finitura:
-                fin_scelta_ui = st.session_state.get("select_finitura", "")
+            if ha_finitura and fin_scelta_ui:
                 tuple_fin = FINITURE_CONFIG.get(fin_scelta_ui, ("", ""))
                 if isinstance(tuple_fin, (tuple, list)) and len(tuple_fin) >= 2:
                     finitura_tech_str = str(tuple_fin[0]).strip().upper()
@@ -327,22 +355,28 @@ with col_output:
                     finitura_tech_str = str(fin_scelta_ui).strip().upper()
                     finitura_comm_str = finitura_tech_str
 
-            # GESTIONE DIMENSIONI
+            # -----------------------------------------------------------------
+            # 3. GESTIONE DIMENSIONI CON NORMALIZZAZIONE PUNTO -> VIRGOLA
+            # -----------------------------------------------------------------
+            def normalizza_dim(valore):
+                if not valore:
+                    return ""
+                return str(valore).strip().replace('.', ',')
+
             dim_list = []
-            L = str(st.session_state.get("dim_l", "") or "").strip()
-            P = str(st.session_state.get("dim_p", "") or "").strip()
-            H = str(st.session_state.get("dim_h", "") or "").strip()
-            D = str(st.session_state.get("dim_dia", "") or "").strip()
-            S = str(st.session_state.get("dim_s", "") or "").strip()
+            L = normalizza_dim(st.session_state.get("dim_l", ""))
+            P = normalizza_dim(st.session_state.get("dim_p", ""))
+            H = normalizza_dim(st.session_state.get("dim_h", ""))
+            D = normalizza_dim(st.session_state.get("dim_dia", ""))
+            S = normalizza_dim(st.session_state.get("dim_s", ""))
 
             if L: dim_list.append(f"L{L.upper()}")
             if P: dim_list.append(f"P{P.upper()}")
             if H: dim_list.append(f"H{H.upper()}")
             if D: dim_list.append(f"Ø{D.upper()}")
             if S:
-                s_clean = S.upper().replace(".", "").strip()
-                s_val = s_clean if s_clean.startswith("SP") else f"SP {s_clean}"
-                dim_list.append(s_val)
+                s_clean = S.upper().replace("SP", "").strip()
+                dim_list.append(f"SP {s_clean}")
                 
             dim_str = " ".join(dim_list)
 
