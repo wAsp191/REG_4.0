@@ -154,7 +154,8 @@ def activate_reset():
         'stringa_commerciale': "",
         'generazione_effettuata': False
     }
-    text_keys = ['dim_l', 'dim_p', 'dim_h', 'dim_dia', 'dim_s', 'extra_text', 'select_finitura', 'select_tipologia', 'select_compatibilita']
+    # Rimosso 'dim_s'
+    text_keys = ['dim_l', 'dim_p', 'dim_h', 'dim_dia', 'extra_text', 'select_finitura', 'select_tipologia', 'select_compatibilita']
     for key, val in defaults.items():
         st.session_state[key] = val
     for key in text_keys:
@@ -308,14 +309,21 @@ with col_input:
 
     st.markdown("---")
     
-    # Sezione 3: Dimensioni e Note
+    # Sezione 3: Dimensioni e Note (Senza SP e con gestione campi disabilitati per articolo)
     st.subheader("📏 3. Dimensioni e Note")
-    c_dim1, c_dim2, c_dim3, c_dim4, c_dim5 = st.columns(5)
-    with c_dim1: st.text_input("Lunghezza (L):", key="dim_l")
-    with c_dim2: st.text_input("Profondità (P):", key="dim_p")
-    with c_dim3: st.text_input("Altezza (H):", key="dim_h")
-    with c_dim4: st.text_input("Diametro (Ø):", key="dim_dia")
-    with c_dim5: st.text_input("Spessore (SP):", key="dim_s")
+    
+    disabled_dims = dati_articolo.get("disabled_dims", [])
+    
+    # Reset automatico del valore se il campo diventa disabilitato per l'articolo corrente
+    for dim_key, dim_code in [("dim_l", "L"), ("dim_p", "P"), ("dim_h", "H"), ("dim_dia", "Ø")]:
+        if dim_code in disabled_dims and st.session_state.get(dim_key, ""):
+            st.session_state[dim_key] = ""
+
+    c_dim1, c_dim2, c_dim3, c_dim4 = st.columns(4)
+    with c_dim1: st.text_input("Lunghezza (L):", key="dim_l", disabled=("L" in disabled_dims))
+    with c_dim2: st.text_input("Profondità (P):", key="dim_p", disabled=("P" in disabled_dims))
+    with c_dim3: st.text_input("Altezza (H):", key="dim_h", disabled=("H" in disabled_dims))
+    with c_dim4: st.text_input("Diametro (Ø):", key="dim_dia", disabled=("Ø" in disabled_dims))
 
     st.text_input("Note libere / Specifiche extra:", key="extra_text")
 
@@ -399,7 +407,7 @@ with col_output:
                     finitura_tech_str = str(fin_scelta_ui).strip().upper()
                     finitura_comm_str = finitura_tech_str
 
-            # 5. GESTIONE DIMENSIONI CON NORMALIZZAZIONE PUNTO -> VIRGOLA
+            # 5. GESTIONE DIMENSIONI CON NORMALIZZAZIONE PUNTO -> VIRGOLA (Senza SP)
             def normalizza_dim(valore):
                 if not valore:
                     return ""
@@ -410,15 +418,11 @@ with col_output:
             P = normalizza_dim(st.session_state.get("dim_p", ""))
             H = normalizza_dim(st.session_state.get("dim_h", ""))
             D = normalizza_dim(st.session_state.get("dim_dia", ""))
-            S = normalizza_dim(st.session_state.get("dim_s", ""))
 
             if L: dim_list.append(f"L{L.upper()}")
             if P: dim_list.append(f"P{P.upper()}")
             if H: dim_list.append(f"H{H.upper()}")
             if D: dim_list.append(f"Ø{D.upper()}")
-            if S:
-                s_clean = S.upper().replace("SP", "").strip()
-                dim_list.append(f"SP {s_clean}")
                 
             dim_str = " ".join(dim_list)
 
@@ -546,9 +550,9 @@ with col_output:
             st.markdown("""
                 Benvenuto nel nuovo configuratore unificato! Segui questi semplici passi:
                 
-                1. **Seleziona l'Articolo**: Scegli il componente dalla tendina a sinistra (inclusi i componenti in legno contrassegnati da `(LEGNO)`). Se previsto, appariranno i menu di **Tipologia** e **Finitura**.
+                1. **Seleziona l'Articolo**: Scegli il componente dalla tendina a sinistra. Se previsto, appariranno i menu di **Tipologia** e **Finitura**.
                 2. **Configura i Pills**: Spunta le caratteristiche desiderate.
-                3. **Inserisci Dimensioni & Note**: Digita le quote (il sistema normalizzerà automaticamente il punto in virgola).
+                3. **Inserisci Dimensioni & Note**: Digita le quote necessarie (il sistema normalizzerà automaticamente il punto in virgola e disabiliterà i campi non pertinenti all'articolo).
                 4. **Genera**: Clicca sul tasto **GENERA STRINGA FINALE** per calcolare in automatico il *Part Type*, la configurazione e verificare l'eventuale match su Google Sheets.
             """)
     else:
