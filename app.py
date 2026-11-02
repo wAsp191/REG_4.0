@@ -53,7 +53,7 @@ def inject_custom_css():
             .reg-title-container {
                 text-align: center;
                 width: 100%;
-                margin-bottom: 0rem !important;
+                margin-bottom: 0.5rem !important;
             }
             
             /* 4. INTESTAZIONI DI SEZIONE (H2 e H3): Riduciamo font e margini */
