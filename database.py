@@ -274,12 +274,26 @@ SALES_PART_ARTICOLI = {
         "ha_finitura": True,
         "pills_config": {}
     },
-    "Ripiano": {
+   "Ripiano": {
         "part_type": "SALES PART",
-        "output_tech": "RIPIANO",
+        "output_tech": "RIP",
         "output_comm": "RIPIANO",
         "ha_finitura": True,
-        "pills_config": {}
+        "ha_tipologia": True,
+        "tipologie_config": {
+            "DI BASE": ("BAS", "DI BASE"),
+            "IN FILO": ("FIL", "IN FILO"),
+            "TOP": ("TOP", "TOP")
+        },
+        "pills_config": [
+            ("Con componente saldato", 7),
+            ("Con viteria", 9),
+            ("Forato", 4),
+            ("Liscio", 3),
+            ("Orientamento Destro / Sinistro (+)", 1),
+            ("Con scasso", 12),
+            ("Scantonato", 2)
+        ]
     },
     "Schienale": {
         "part_type": "SALES PART",
