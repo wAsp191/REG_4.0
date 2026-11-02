@@ -7,11 +7,11 @@ import datetime
 import time
 from zoneinfo import ZoneInfo
 
-# Assicurati che 'database' esista nel tuo progetto, oppure aggiorna il nome del file
+# Assicurati che 'database' e 'database_manager' esistano nel tuo progetto
 from database import *
 from database_manager import carica_database, verifica_match_db, salva_su_excel
 
-# Dichiariamo la compatibilità qui per sicurezza assoluta anti-NameError
+# Compatibilità anti-NameError
 OPZIONI_COMPATIBILITA = ["", "F25", "F25 BESPOKE", "F50", "F50 BESPOKE", "UNIVERSAL", "BC", "FORTISSIMO", "MINIRACK", "UNIMOB"]
 
 st.set_page_config(page_title="Reg v4.0", layout="wide")
@@ -24,58 +24,35 @@ def inject_custom_css():
     st.markdown("""
         <style>
             /* 1. CONTENITORE PRINCIPALE DELLA PAGINA */
-            /* Riduce drasticamente i margini superiori e inferiori della pagina Streamlit */
             .block-container {
                 padding-top: 1.5rem !important;
                 padding-bottom: 0rem !important;
             }
             
             /* 2. SPAZIATURA DEI BLOCCHI VERTICALI (Stack) */
-            /* Accorcia lo spazio verticale tra un blocco di elementi e il successivo */
             [data-testid="stVerticalBlock"] > div {
                 flex-direction: column;
                 gap: 0.015rem !important;
             }
             
             /* 3. TITOLO CENTRATO E SOTTOSTANTE */
-            /* Compatta l'area del titolo principale e del sottotitolo utente */
             .reg-title-container {
                 text-align: center;
                 width: 100%;
                 margin-bottom: 0.05rem !important;
             }
             
-            /* 4. MACRO CATEGORIE (RADIO BUTTON A SINISTRA) */
-            /* Riduce l'ingombro dei pulsanti radio laterali per le categorie */
-            div[data-testid="stRadio"] div[role="radiogroup"] label p {
-                font-size: 1.2rem !important;
-                font-weight: 800 !important;
-                padding: 2px 0px !important;
-            }
-            div[data-testid="stRadio"] div[role="radiogroup"] label {
-                padding: 2px 6px !important;
-                margin-bottom: 2px !important;
-                transition: all 0.2s ease;
-            }
-            div[data-testid="stRadio"] div[role="radiogroup"] label:hover {
-                background-color: rgba(255, 255, 255, 0.05);
-                border-radius: 6px;
-            }
-
-            /* 5. INTESTAZIONI DI SEZIONE (H2 e H3) */
-            /* Comprime i margini sopra e sotto i titoli delle varie sezioni (es. Categoria, Articolo, Dimensioni) */
+            /* 4. INTESTAZIONI DI SEZIONE (H2 e H3) */
             h2 { margin-top: 0rem !important; margin-bottom: -0.5rem !important; font-size: 0.95rem !important; }
             h3 { margin-top: 0rem !important; margin-bottom: -0.5rem !important; font-size: 0.9rem !important; }
             
-            /* 6. LINEE DIVISORIE (HR) */
-            /* Avvicina i divisori orizzontali riducendone lo spessore visivo e lo spazio occupato */
+            /* 5. LINEE DIVISORIE (HR) */
             hr {
                 margin-top: 0.1rem !important;
                 margin-bottom: 0.1rem !important;
             }
             
-            /* 7. COMPRESSIONE MENÙ A TENDINA E INPUT DI TESTO (SELECTIONS & INPUTS) */
-            /* Riducono l'altezza interna (padding e min-height) di selectbox e text_input per renderli più sottili e compatti */
+            /* 6. COMPRESSIONE MENÙ A TENDINA E INPUT DI TESTO */
             div[data-baseweb="select"] > div, 
             div[data-testid="stTextInput"] > div > div > input {
                 padding-top: 0px !important;
@@ -84,16 +61,14 @@ def inject_custom_css():
                 height: 1.8rem !important;
             }
             
-            /* 8. ETICHETTE DEI WIDGET */
-            /* Diminuisce lo spazio e la dimensione dei testi sopra i campi di input */
+            /* 7. ETICHETTE DEI WIDGET */
             [data-testid="stWidgetLabel"] p {
                 font-size: 1.1rem !important;
                 font-weight: 700 !important;
                 margin-bottom: 0.05rem !important;
             }
             
-            /* 9. CONTENITORI MARKDOWN GENERALI */
-            /* Uniforma la dimensione dei testi descrittivi per guadagnare coerenza visiva */
+            /* 8. CONTENITORI MARKDOWN GENERALI */
             [data-testid="stMarkdownContainer"] p {
                 font-size: 0.95rem !important;
             }
@@ -178,10 +153,9 @@ if st.session_state.get('reset_eseguito'):
 
 
 # =========================================================
-# 2. INTERFACCIA UTENTE (Layout & Logica)
+# HEADER E LAYOUT PRINCIPALE A 2 COLONNE
 # =========================================================
 
-# Intestazione Centrata ultra-compatta (senza colonne sprecate per il reset)
 st.markdown("""
     <div class="reg-title-container">
         <h1 style="margin: 0; font-size: 2.0rem;">🎭 REG v4.0</h1>
@@ -191,42 +165,28 @@ st.markdown("""
 
 st.markdown("---")
 
-# Layout Principale a 2 Colonne
-col_left, col_workarea = st.columns([1.2, 3.2], gap="large")
+# Layout Principale (Sinistra: Input & Configurazione | Destra: Output & Generazione)
+col_input, col_output = st.columns([1.5, 1.5], gap="large")
 
 # =========================================================
-# COLONNA SINISTRA: RESET + MACRO CATEGORIE
+# COLONNA SINISTRA: MASCHERA DI INPUT E CONFIGURAZIONE
 # =========================================================
-with col_left:
-    # 💡 SPIANHIAMO QUI IL TASTO AZZERA: È perfetto in cima alla colonna sinistra!
+with col_input:
+    # Pulsante Azzera collocato in alto a sinistra per ottimizzare lo spazio
     st.button("🔄 AZZERA CONFIGURAZIONE", on_click=activate_reset, use_container_width=True)
     st.markdown("---")
     
-    st.subheader("📂 1. Categoria")
-    mappa_estetica = {
-        "SALES PART": "⚙️ SALES PART",
-        "PACKAGE PART": "📦 PACKAGE PART", 
-        "LEGNO": "🪵 LEGNO"
-    }
-    macro_selezionata = st.radio(
-        "Seleziona categoria:", 
-        options=list(DATABASE.keys()), 
-        format_func=lambda x: mappa_estetica.get(x, x), 
-        key="radio_macro", 
-        label_visibility="collapsed"
-    )
-
-# Colonna Destra: Workarea Configurazione
-with col_workarea:
-    st.subheader("🛠️ 2. Selezione Articolo & Finitura")
+    # Sezione 1: Selezione Articolo Unificata & Finitura
+    st.subheader("🛠️ 1. Selezione Articolo & Finitura")
     c_art, c_fin = st.columns([1.5, 1])
     
-    articoli_categoria = DATABASE.get(macro_selezionata, {}).get("Articoli", {})
+    # Recuperiamo gli articoli dal Database globale unificato
+    elenco_articoli = sorted(list(DATABASE_ARTICOLI.keys())) if 'DATABASE_ARTICOLI' in globals() else []
     
     with c_art:
         articolo_scelto = st.selectbox(
             "Cerca Articolo:", 
-            options=sorted(list(articoli_categoria.keys())), 
+            options=elenco_articoli, 
             index=None, 
             placeholder="Seleziona un articolo...", 
             format_func=lambda x: f"🔧 {x}" if x else "Seleziona...", 
@@ -235,32 +195,31 @@ with col_workarea:
         )
 
     finitura_scelta = None
-    if articolo_scelto:
-        dati_articolo = articoli_categoria.get(articolo_scelto, {})
-        ha_finitura = dati_articolo.get("ha_finitura", False)
-        
-        with c_fin:
-            if ha_finitura:
-                finitura_scelta = st.selectbox(
-                    "Finitura / Materiale:",
-                    options=list(FINITURE_CONFIG.keys()),
-                    index=0,
-                    key="select_finitura"
-                )
+    dati_articolo = DATABASE_ARTICOLI.get(articolo_scelto, {}) if articolo_scelto else {}
+    ha_finitura = dati_articolo.get("ha_finitura", False)
+    
+    with c_fin:
+        if articolo_scelto and ha_finitura:
+            finitura_scelta = st.selectbox(
+                "Finitura / Materiale:",
+                options=list(FINITURE_CONFIG.keys()),
+                index=0,
+                key="select_finitura"
+            )
 
     st.markdown("---")
     
-    # Sezione 3: Caratteristiche & Pills ordinati
-    st.subheader("✨ 3. Caratteristiche & Pills")
+    # Sezione 2: Caratteristiche & Pills
+    st.subheader("✨ 2. Caratteristiche & Pills")
     
     if articolo_scelto:
-        pills_config_articolo = dati_articolo.get("pills_config", {})
+        pills_config_articolo = dati_articolo.get("pills_config", [])
         
-        # 1. Estraiamo i nomi dei pills e li ordiniamo ALFABETICAMENTE per la tendina (UI)
+        # Estraiamo i nomi dei pills e li ordiniamo ALFABETICAMENTE per la UI
         if isinstance(pills_config_articolo, dict):
             pills_ordinati_ui = sorted(list(pills_config_articolo.keys()))
         elif isinstance(pills_config_articolo, (list, tuple)):
-            pills_ordinati_ui = sorted([p[0] for p in pills_config_articolo if isinstance(p, (list, tuple)) and len(p) > 0])
+            pills_ordinati_ui = sorted([p[0] if isinstance(p, (list, tuple)) else str(p) for p in pills_config_articolo])
         else:
             pills_ordinati_ui = []
             
@@ -270,7 +229,7 @@ with col_workarea:
             with col_pills_sel:
                 tag_selezionati = st.multiselect(
                     "Seleziona Caratteristiche:",
-                    options=pills_ordinati_ui, # <--- Ora la lista è ordinata alfabeticamente a schermo!
+                    options=pills_ordinati_ui,
                     key="extra_tags",
                     placeholder="Scegli le caratteristiche..."
                 )
@@ -300,12 +259,12 @@ with col_workarea:
         else:
             st.info("ℹ️ Nessuna caratteristica speciale configurata per questo articolo.")
     else:
-        st.info("👈 Seleziona un articolo in alto per configurarne le caratteristiche.")
+        st.info("👆 Seleziona un articolo in alto per configurarne le caratteristiche.")
 
     st.markdown("---")
     
-    # Sezione 4: Dimensioni e Note
-    st.subheader("📏 4. Dimensioni e Note")
+    # Sezione 3: Dimensioni e Note
+    st.subheader("📏 3. Dimensioni e Note")
     c_dim1, c_dim2, c_dim3, c_dim4, c_dim5 = st.columns(5)
     with c_dim1: st.text_input("Lunghezza (L):", key="dim_l")
     with c_dim2: st.text_input("Profondità (P):", key="dim_p")
@@ -316,7 +275,8 @@ with col_workarea:
     st.text_input("Note libere / Specifiche extra:", key="extra_text")
 
     st.markdown("---")
-    st.subheader("🔗 5. Opzione di Compatibilità")
+    # Sezione 4: Opzione di Compatibilità
+    st.subheader("🔗 4. Opzione di Compatibilità")
     compatibilita_scelta = st.selectbox(
         "Seleziona compatibilità:",
         options=OPZIONI_COMPATIBILITA,
@@ -326,273 +286,234 @@ with col_workarea:
     )
 
     st.checkbox("Aggiungi marcatura (UNI EN 1090-1)", key="check_1090")
+
+
+# =========================================================
+# COLONNA DESTRA: GENERAZIONE, AUTOMAZIONI & RISULTATI
+# =========================================================
+with col_output:
+    st.subheader("🚀 Output & Generazione")
+    st.markdown("---")
     
-# =========================================================
-# 3. LOGICA DI GENERAZIONE (MOTORE DI CALCOLO)
-# =========================================================
-st.divider()
-
-# Lista dei pill in conflitto esclusivi per la macro categoria "SALES PART"
-PILLS_CONFLITTO_SALES_PART = [
-    "Completa di paracolpo ABS",
-    "Con batticarrello",
-    "Con bocchetta passacavi",
-    "Con compensazioni removibili",
-    "Con guide RAM",
-    "Con illuminazione",
-    "Con mensole",
-    "Con ripiani",
-    "Con ripiani inclinati",
-    "Con ruote",
-    "Con serratura",
-    "Con viteria",
-    "Con distanziale (+)"
-]
-
-if st.button("🚀 GENERA STRINGA FINALE", use_container_width=True):
-    if articolo_scelto:
-        
-        # 1. CONTROLLO PRELIMINARE DEI CONFLITTI (Solo per SALES PART)
-        tags_selezionati_utente = st.session_state.get('extra_tags', [])
-        if macro_selezionata == "SALES PART":
-            conflitti_trovati = [p for p in tags_selezionati_utente if p in PILLS_CONFLITTO_SALES_PART]
-            if conflitti_trovati:
-                st.session_state['generazione_effettuata'] = False
-                for pill_c in conflitti_trovati:
-                    st.error(f"⚠️ **CONFLITTO BLOCCANTE**: Il pill **'{pill_c}'** non è compatibile con la macro-categoria **'SALES PART'**.")
-                st.stop()
-
-        articoli_macro = DATABASE.get(macro_selezionata, {}).get("Articoli", {})
-        dati_art = articoli_macro.get(articolo_scelto, {})
-        
-        output_tech_base = dati_art.get("output_tech", articolo_scelto.upper())
-        output_comm_base = dati_art.get("output_comm", articolo_scelto.upper())
-        ha_finitura = dati_art.get("ha_finitura", False)
-        
-        finitura_tech_str = ""
-        finitura_comm_str = ""
-        
-        if ha_finitura:
-            fin_scelta_ui = st.session_state.get("select_finitura", "")
-            tuple_fin = FINITURE_CONFIG.get(fin_scelta_ui, ("", ""))
-            if isinstance(tuple_fin, (tuple, list)) and len(tuple_fin) >= 2:
-                finitura_tech_str = str(tuple_fin[0]).strip().upper()
-                finitura_comm_str = str(tuple_fin[1]).strip().upper()
-            else:
-                finitura_tech_str = str(fin_scelta_ui).strip().upper()
-                finitura_comm_str = finitura_tech_str
-
-        # 2. GESTIONE DIMENSIONI
-        dim_list = []
-        L = str(st.session_state.get("dim_l", "") or "").strip()
-        P = str(st.session_state.get("dim_p", "") or "").strip()
-        H = str(st.session_state.get("dim_h", "") or "").strip()
-        D = str(st.session_state.get("dim_dia", "") or "").strip()
-        S = str(st.session_state.get("dim_s", "") or "").strip()
-
-        if L: dim_list.append(f"L{L.upper()}")
-        if P: dim_list.append(f"P{P.upper()}")
-        if H: dim_list.append(f"H{H.upper()}")
-        if D: dim_list.append(f"Ø{D.upper()}")
-        if S:
-            s_clean = S.upper().replace(".", "").strip()
-            s_val = s_clean if s_clean.startswith("SP") else f"SP {s_clean}"
-            dim_list.append(s_val)
+    # Pulsante principale di generazione
+    btn_genera = st.button("🚀 GENERA STRINGA FINALE", type="primary", use_container_width=True)
+    
+    if btn_genera:
+        if articolo_scelto:
+            dati_art = DATABASE_ARTICOLI.get(articolo_scelto, {})
+            tags_selezionati_utente = st.session_state.get('extra_tags', [])
             
-        dim_str = " ".join(dim_list)
-
-        pills_config_art = dati_art.get("pills_config", {})
-        
-        # 3. FUNZIONE DI ESTRAZIONE DELL'ORDINE (Con fallback sicuro a 99)
-        def estrai_ordine(tag):
-            if isinstance(pills_config_art, dict):
-                val = pills_config_art.get(tag, 99)
-                if isinstance(val, dict):
-                    return val.get("ordine", 99)
-                elif isinstance(val, (int, float)):
-                    return val
-                elif isinstance(val, (list, tuple)) and len(val) > 1:
-                    return val[1]
-                return 99
-            elif isinstance(pills_config_art, (list, tuple)):
-                for item in pills_config_art:
-                    if isinstance(item, (list, tuple)) and len(item) >= 2:
-                        if item[0] == tag:
-                            return item[1]
-                return 99
-            return 99
-
-        # Ordiniamo i tag selezionati in base al numero d'ordine configurato
-        pills_ordinati_utente = sorted(
-            tags_selezionati_utente,
-            key=estrai_ordine
-        )
-        
-        # Liste separate per i pill PRIMA e DOPO le dimensioni
-        lista_tech_pills_prima = []
-        lista_tech_pills_dopo = []
-        lista_comm_pills_prima = []
-        lista_comm_pills_dopo = []
-        
-        for pill in pills_ordinati_utente:
-            num_ordine = estrai_ordine(pill)
+            output_tech_base = dati_art.get("output_tech", articolo_scelto.upper())
+            output_comm_base = dati_art.get("output_comm", articolo_scelto.upper())
+            ha_finitura = dati_art.get("ha_finitura", False)
             
-            t_val, c_val = "", ""
+            # AUTOMAZIONI NATIVE ESTRATTE DALL'ARTICOLO
+            part_type_automatico = dati_art.get("part_type", "SALES PART")
+            configurazione_automatica = "COLOUR" if (ha_finitura and st.session_state.get("select_finitura")) else "0"
             
-            if pill in SUB_OPTIONS_CONFIG or f"{pill} (+)" in SUB_OPTIONS_CONFIG:
-                key_sub = pill if pill in SUB_OPTIONS_CONFIG else f"{pill} (+)"
-                config_sub = SUB_OPTIONS_CONFIG[key_sub]
-                
-                if "Compatibilità piede di base" in pill:
-                    scelta_alt = st.session_state.get(f"dyn_alt_{pill}", "")
-                    scelta_lung = st.session_state.get(f"dyn_lung_{pill}", "")
-                    
-                    h_num = str(scelta_alt).replace("H", "").strip() if scelta_alt else ""
-                    l_num = str(scelta_lung).replace("L", "").strip() if scelta_lung else ""
-                    
-                    piede_parts = []
-                    if h_num: piede_parts.append(h_num)
-                    if l_num: piede_parts.append(f"L{l_num}")
-                    
-                    if piede_parts:
-                        res_piede = f"XP{''.join(piede_parts)}"
-                        t_val, c_val = res_piede, res_piede
+            st.session_state['part_type_calcolato'] = part_type_automatico
+            st.session_state['config_calcolata'] = configurazione_automatica
+            
+            finitura_tech_str = ""
+            finitura_comm_str = ""
+            
+            if ha_finitura:
+                fin_scelta_ui = st.session_state.get("select_finitura", "")
+                tuple_fin = FINITURE_CONFIG.get(fin_scelta_ui, ("", ""))
+                if isinstance(tuple_fin, (tuple, list)) and len(tuple_fin) >= 2:
+                    finitura_tech_str = str(tuple_fin[0]).strip().upper()
+                    finitura_comm_str = str(tuple_fin[1]).strip().upper()
                 else:
-                    scelta_utente = st.session_state.get(f"dyn_val_{pill}", "")
-                    valore_mappato = config_sub.get(scelta_utente, ("", ""))
-                    
-                    if isinstance(valore_mappato, (tuple, list)) and len(valore_mappato) >= 2:
-                        t_val = str(valore_mappato[0]).strip().upper()
-                        c_val = str(valore_mappato[1]).strip().upper()
-                    else:
-                        t_val = str(valore_mappato).strip().upper()
-                        c_val = t_val
-            else:
-                pill_key = str(pill).strip()
-                tuple_pill = None
+                    finitura_tech_str = str(fin_scelta_ui).strip().upper()
+                    finitura_comm_str = finitura_tech_str
+
+            # GESTIONE DIMENSIONI
+            dim_list = []
+            L = str(st.session_state.get("dim_l", "") or "").strip()
+            P = str(st.session_state.get("dim_p", "") or "").strip()
+            H = str(st.session_state.get("dim_h", "") or "").strip()
+            D = str(st.session_state.get("dim_dia", "") or "").strip()
+            S = str(st.session_state.get("dim_s", "") or "").strip()
+
+            if L: dim_list.append(f"L{L.upper()}")
+            if P: dim_list.append(f"P{P.upper()}")
+            if H: dim_list.append(f"H{H.upper()}")
+            if D: dim_list.append(f"Ø{D.upper()}")
+            if S:
+                s_clean = S.upper().replace(".", "").strip()
+                s_val = s_clean if s_clean.startswith("SP") else f"SP {s_clean}"
+                dim_list.append(s_val)
+                
+            dim_str = " ".join(dim_list)
+
+            pills_config_art = dati_art.get("pills_config", {})
+            
+            # FUNZIONE ESTRAZIONE ORDINE DAL DATABASE PILLS / CONFIG ARTICOLO
+            def estrai_ordine(tag):
+                if isinstance(pills_config_art, dict):
+                    val = pills_config_art.get(tag, 99)
+                    if isinstance(val, dict): return val.get("ordine", 99)
+                    elif isinstance(val, (int, float)): return val
+                    elif isinstance(val, (list, tuple)) and len(val) > 1: return val[1]
+                elif isinstance(pills_config_art, (list, tuple)):
+                    for item in pills_config_art:
+                        if isinstance(item, (list, tuple)) and len(item) >= 2 and item[0] == tag:
+                            return item[1]
+                
+                # Fallback interrogazione Database Globale Pills
+                pill_key = str(tag).strip()
                 for k, v in DATABASE_PILLS.items():
                     if k.strip().lower() == pill_key.lower():
-                        tuple_pill = v
-                        break
-                
-                if tuple_pill and isinstance(tuple_pill, (tuple, list)) and len(tuple_pill) >= 2:
-                    t_val = str(tuple_pill[0]).strip().upper()
-                    c_val = str(tuple_pill[1]).strip().upper()
-                else:
-                    t_val = pill_key.upper()
-                    c_val = pill_key.upper()
+                        if isinstance(v, (tuple, list)) and len(v) >= 3:
+                            return v[2]
+                return 99
 
-            # SMISTAMENTO BASATO SUL NUMERO D'ORDINE (< 50 prima, >= 50 dopo)
-            if t_val:
-                if num_ordine >= 50:
-                    lista_tech_pills_dopo.append(t_val)
-                else:
-                    lista_tech_pills_prima.append(t_val)
-                    
-            if c_val and c_val != "NONE":
-                if num_ordine >= 50:
-                    lista_comm_pills_dopo.append(c_val)
-                else:
-                    lista_comm_pills_prima.append(c_val)
-
-        note_libere = str(st.session_state.get("extra_text", "") or "").strip().upper()
-        compatibilita_val = str(st.session_state.get("select_compatibilita", "") or "").strip().upper()
-
-        # 4. ASSEMBLAGGIO STRINGA TECNICA DEFINITIVA
-        pezzi_tech = [output_tech_base, finitura_tech_str] + lista_tech_pills_prima
-        if dim_str: pezzi_tech.append(dim_str)
-        pezzi_tech.extend(lista_tech_pills_dopo)  # Accodamento pills post-dimensioni
-        if note_libere: pezzi_tech.append(note_libere)
-        if st.session_state.get("check_1090"):
-            pezzi_tech.append("(UNI EN 1090-1)")
+            pills_ordinati_utente = sorted(tags_selezionati_utente, key=estrai_ordine)
             
-        stringa_tecnica_base = " ".join([p for p in pezzi_tech if p]).upper()
-        
-        if compatibilita_val and compatibilita_val != "NONE":
-            stringa_tecnica_definitiva = f"{stringa_tecnica_base} - {compatibilita_val}"
+            lista_tech_pills_prima, lista_tech_pills_dopo = [], []
+            lista_comm_pills_prima, lista_comm_pills_dopo = [], []
+            
+            for pill in pills_ordinati_utente:
+                num_ordine = estrai_ordine(pill)
+                t_val, c_val = "", ""
+                
+                if pill in SUB_OPTIONS_CONFIG or f"{pill} (+)" in SUB_OPTIONS_CONFIG:
+                    key_sub = pill if pill in SUB_OPTIONS_CONFIG else f"{pill} (+)"
+                    config_sub = SUB_OPTIONS_CONFIG[key_sub]
+                    
+                    if "Compatibilità piede di base" in pill:
+                        scelta_alt = st.session_state.get(f"dyn_alt_{pill}", "")
+                        scelta_lung = st.session_state.get(f"dyn_lung_{pill}", "")
+                        h_num = str(scelta_alt).replace("H", "").strip() if scelta_alt else ""
+                        l_num = str(scelta_lung).replace("L", "").strip() if scelta_lung else ""
+                        piede_parts = []
+                        if h_num: piede_parts.append(h_num)
+                        if l_num: piede_parts.append(f"L{l_num}")
+                        if piede_parts:
+                            res_piede = f"XP{''.join(piede_parts)}"
+                            t_val, c_val = res_piede, res_piede
+                    else:
+                        scelta_utente = st.session_state.get(f"dyn_val_{pill}", "")
+                        valore_mappato = config_sub.get(scelta_utente, ("", ""))
+                        if isinstance(valore_mappato, (tuple, list)) and len(valore_mappato) >= 2:
+                            t_val = str(valore_mappato[0]).strip().upper()
+                            c_val = str(valore_mappato[1]).strip().upper()
+                        else:
+                            t_val = str(valore_mappato).strip().upper()
+                            c_val = t_val
+                else:
+                    pill_key = str(pill).strip()
+                    tuple_pill = None
+                    for k, v in DATABASE_PILLS.items():
+                        if k.strip().lower() == pill_key.lower():
+                            tuple_pill = v
+                            break
+                    
+                    if tuple_pill and isinstance(tuple_pill, (tuple, list)) and len(tuple_pill) >= 2:
+                        t_val = str(tuple_pill[0]).strip().upper()
+                        c_val = str(tuple_pill[1]).strip().upper()
+                    else:
+                        t_val = pill_key.upper()
+                        c_val = pill_key.upper()
+
+                # SMISTAMENTO IN BASE ALL'ORDINE (< 50 prima, >= 50 dopo)
+                if t_val:
+                    if num_ordine >= 50: lista_tech_pills_dopo.append(t_val)
+                    else: lista_tech_pills_prima.append(t_val)
+                        
+                if c_val and c_val != "NONE":
+                    if num_ordine >= 50: lista_comm_pills_dopo.append(c_val)
+                    else: lista_comm_pills_prima.append(c_val)
+
+            note_libere = str(st.session_state.get("extra_text", "") or "").strip().upper()
+            compatibilita_val = str(st.session_state.get("select_compatibilita", "") or "").strip().upper()
+
+            # ASSEMBLAGGIO STRINGA TECNICA
+            pezzi_tech = [output_tech_base, finitura_tech_str] + lista_tech_pills_prima
+            if dim_str: pezzi_tech.append(dim_str)
+            pezzi_tech.extend(lista_tech_pills_dopo)
+            if note_libere: pezzi_tech.append(note_libere)
+            if st.session_state.get("check_1090"): pezzi_tech.append("(UNI EN 1090-1)")
+                
+            stringa_tecnica_base = " ".join([p for p in pezzi_tech if p]).upper()
+            stringa_tecnica_definitiva = f"{stringa_tecnica_base} - {compatibilita_val}" if (compatibilita_val and compatibilita_val != "NONE") else stringa_tecnica_base
+
+            # MATCH DATABASE
+            codice_trovato, stato_match, percentuale = verifica_match_db(stringa_tecnica_definitiva)
+            st.session_state['stato_match_db'] = (stato_match, codice_trovato, percentuale)
+
+            # ASSEMBLAGGIO STRINGA COMMERCIALE
+            pezzi_comm = [output_comm_base, finitura_comm_str] + lista_comm_pills_prima
+            if dim_str: pezzi_comm.append(dim_str)
+            pezzi_comm.extend(lista_comm_pills_dopo)
+            if note_libere: pezzi_comm.append(note_libere)
+            
+            stringa_commerciale_base = " ".join([p for p in pezzi_comm if p]).upper()
+            stringa_commerciale_definitiva = f"{stringa_commerciale_base} - {compatibilita_val}" if (compatibilita_val and compatibilita_val != "NONE") else stringa_commerciale_base
+
+            st.session_state['stringa_tecnica'] = stringa_tecnica_definitiva
+            st.session_state['stringa_commerciale'] = stringa_commerciale_definitiva
+            st.session_state['sync_needed'] = True  
+            st.session_state['generazione_effettuata'] = True
         else:
-            stringa_tecnica_definitiva = stringa_tecnica_base
+            st.warning("⚠️ Seleziona un articolo nella colonna di sinistra prima di generare.")
 
-        # Verifica sul database (con unpacking a 3 valori corretto)
-        codice_trovato, stato_match, percentuale = verifica_match_db(stringa_tecnica_definitiva)
-        st.session_state['stato_match_db'] = (stato_match, codice_trovato, percentuale)
+    # VISUALIZZAZIONE RISULTATI E SALVATAGGIO
+    if st.session_state.get('generazione_effettuata', False):
+        st.markdown("---")
+        st.markdown("### 📋 Dettagli Generazione")
+        
+        # BOX AUTOMAZIONI AUTOMATICHE
+        c_p1, c_p2 = st.columns(2)
+        with c_p1:
+            st.info(f"⚙️ **Part Type:** `{st.session_state.get('part_type_calcolato', 'SALES PART')}`")
+        with c_p2:
+            st.info(f"🎨 **Configurazione:** `{st.session_state.get('config_calcolata', '0')}`")
 
-        # 5. ASSEMBLAGGIO STRINGA COMMERCIALE DEFINITIVA
-        pezzi_comm = [output_comm_base, finitura_comm_str] + lista_comm_pills_prima
-        if dim_str: pezzi_comm.append(dim_str)
-        pezzi_comm.extend(lista_comm_pills_dopo)  # Accodamento pills post-dimensioni
-        if note_libere: pezzi_comm.append(note_libere)
+        # RILEVAMENTO MATCH GOOGLE SHEETS
+        stato_match, codice_esistente, percentuale = st.session_state.get('stato_match_db', ("NUOVO", None, 0.0))
         
-        stringa_commerciale_base = " ".join([p for p in pezzi_comm if p]).upper()
-        
-        if compatibilita_val and compatibilita_val != "NONE":
-            stringa_commerciale_definitiva = f"{stringa_commerciale_base} - {compatibilita_val}"
+        if stato_match == "ESATTO":
+            st.warning(f"⚠️ **MATCH ESATTO AL 100%!** Codice esistente: **{codice_esistente}**")
+        elif stato_match == "SIMILE":
+            st.info(f"🔍 **ALTA SOMIGLIANZA ({percentuale}%):** Codice simile: **{codice_esistente}**")
         else:
-            stringa_commerciale_definitiva = stringa_commerciale_base
+            st.success("✅ **CONFIGURAZIONE UNICA**: Nessun duplicato trovato nel database.")
 
-        st.session_state['stringa_tecnica'] = stringa_tecnica_definitiva
-        st.session_state['stringa_commerciale'] = stringa_commerciale_definitiva
-        st.session_state['sync_needed'] = True  
-        st.session_state['generazione_effettuata'] = True
-    else:
-        st.warning("⚠️ Seleziona un articolo prima di generare la stringa.")
-
-# =========================================================
-# 4. VISUALIZZAZIONE RISULTATI, MATCH & SALVATAGGIO DB
-# =========================================================
-if st.session_state.get('generazione_effettuata', False):
-    st.divider()
-    st.markdown("### 📋 Risultato Generazione & Verifica DB")
-    
-    # Recuperiamo l'esito del match esteso (stato, codice, percentuale)
-    stato_match, codice_esistente, percentuale = st.session_state.get('stato_match_db', ("NUOVO", None, 0.0))
-    
-    if stato_match == "ESATTO":
-        st.warning(f"⚠️ **MATCH ESATTO AL 100% NEL DATABASE!** Questa configurazione esiste già ed è associata al codice: **{codice_esistente}**")
-    elif stato_match == "SIMILE":
-        st.info(f"🔍 **ALTA SOMIGLIANZA RILEVATA ({percentuale}%):** Questa stringa è molto simile all'articolo registrato sotto il codice **{codice_esistente}**. Verifica che non si tratti di un duplicato.")
-    else:
-        st.success("✅ **CONFIGURAZIONE UNICA**: Nessuna forte somiglianza trovata nel database Google Sheets. Puoi procedere al salvataggio.")
-
-    col_out1, col_out2 = st.columns(2, gap="medium")
-    
-    with col_out1:
         st.markdown("**Stringa Tecnica:**")
         if 'editable_tech' not in st.session_state or st.session_state.get('sync_needed', False):
             st.session_state['editable_tech'] = st.session_state.get('stringa_tecnica', '')
         tech_val = st.text_input("Stringa Tecnica", key="editable_tech", label_visibility="collapsed")
         
-    with col_out2:
         st.markdown("**Stringa Commerciale:**")
         if 'editable_comm' not in st.session_state or st.session_state.get('sync_needed', False):
             st.session_state['editable_comm'] = st.session_state.get('stringa_commerciale', '')
         comm_val = st.text_input("Stringa Commerciale", key="editable_comm", label_visibility="collapsed")
 
-    if st.session_state.get('sync_needed'):
-        st.session_state['sync_needed'] = False
+        if st.session_state.get('sync_needed'):
+            st.session_state['sync_needed'] = False
 
-    # --- SEZIONE SALVATAGGIO NEL GOOGLE SHEET (Senza palloncini) ---
-    st.markdown("---")
-    with st.container(border=True):
-        st.markdown("#### 💾 Registra nel Database Google Sheets")
-        
-        col_id_input, col_btn_save = st.columns([3, 1])
-        
-        with col_id_input:
-            codice_input_utente = st.text_input("Codice Identificativo Univoco:", placeholder="Es. ART-2026-001", key="input_codice_salvataggio")
+        # REGISTRAZIONE DB GOOGLE SHEETS
+        st.markdown("---")
+        with st.container(border=True):
+            st.markdown("#### 💾 Registra nel Database Google Sheets")
             
-        with col_btn_save:
-            btn_salva = st.button("📥 Imposta codice e salva", use_container_width=True)
+            col_id_input, col_btn_save = st.columns([2.5, 1.5])
             
-        if btn_salva:
-            if not codice_input_utente.strip():
-                st.error("❌ Inserisci un codice identificativo valido prima di salvare.")
-            else:
-                esito = salva_su_excel(
-                    codice_input_utente.strip(), 
-                    st.session_state.get('editable_tech'), 
-                    st.session_state.get('editable_comm')
-                )
-                if esito:
-                    # Messaggio di conferma professionale senza animazioni superflue
-                    st.success(f"✔️ Articolo registrato correttamente con codice: **{codice_input_utente.strip()}**.")
+            with col_id_input:
+                codice_input_utente = st.text_input("Codice Identificativo:", placeholder="Es. ART-2026-001", key="input_codice_salvataggio")
+                
+            with col_btn_save:
+                btn_salva = st.button("📥 Salva Codice", use_container_width=True)
+                
+            if btn_salva:
+                if not codice_input_utente.strip():
+                    st.error("❌ Inserisci un codice valido.")
+                else:
+                    esito = salva_su_excel(
+                        codice_input_utente.strip(), 
+                        st.session_state.get('editable_tech'), 
+                        st.session_state.get('editable_comm')
+                    )
+                    if esito:
+                        st.success(f"✔️ Registrato correttamente: **{codice_input_utente.strip()}**.")
