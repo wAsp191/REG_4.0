@@ -170,7 +170,7 @@ if st.session_state.get('reset_eseguito'):
 
 
 # =========================================================
-# HEADER E LAYOUT PRINCIPALE A 2 COLONNE
+# HEADER E LAYOUT PRINCIPALE A 2 COLONNE (Proporzione 1.8 a 1.2)
 # =========================================================
 
 st.markdown("""
@@ -182,43 +182,38 @@ st.markdown("""
 
 st.markdown("---")
 
-# Layout Principale (Sinistra: Input & Configurazione | Destra: Output & Generazione)
-col_input, col_output = st.columns([1.7, 1.3], gap="large")
+# Layout Principale con colonna sinistra più ampia
+col_input, col_output = st.columns([1.8, 1.2], gap="large")
 
 # =========================================================
 # COLONNA SINISTRA: MASCHERA DI INPUT E CONFIGURAZIONE
 # =========================================================
 with col_input:
-    # Nota: Il tasto Azzera è stato spostato a destra, quindi qui possiamo rimuoverlo o lasciarlo pulito.
+    # Sezione 1: Selezione Articolo & Finitura disposte in verticale
     st.subheader("🛠️ 1. Selezione Articolo & Finitura")
-    c_art, c_fin = st.columns([1.5, 1])
     
-    # Recuperiamo gli articoli dal Database globale unificato
     elenco_articoli = sorted(list(DATABASE_ARTICOLI.keys())) if 'DATABASE_ARTICOLI' in globals() else []
     
-    with c_art:
-        articolo_scelto = st.selectbox(
-            "Cerca Articolo:", 
-            options=elenco_articoli, 
-            index=None, 
-            placeholder="Seleziona un articolo...", 
-            format_func=lambda x: f"🔧 {x}" if x else "Seleziona...", 
-            key="selectbox_part",
-            label_visibility="collapsed"
-        )
+    articolo_scelto = st.selectbox(
+        "Cerca Articolo:", 
+        options=elenco_articoli, 
+        index=None, 
+        placeholder="Seleziona un articolo...", 
+        format_func=lambda x: f"🔧 {x}" if x else "Seleziona...", 
+        key="selectbox_part"
+    )
 
     finitura_scelta = None
     dati_articolo = DATABASE_ARTICOLI.get(articolo_scelto, {}) if articolo_scelto else {}
     ha_finitura = dati_articolo.get("ha_finitura", False)
     
-    with c_fin:
-        if articolo_scelto and ha_finitura:
-            finitura_scelta = st.selectbox(
-                "Finitura / Materiale:",
-                options=list(FINITURE_CONFIG.keys()),
-                index=0,
-                key="select_finitura"
-            )
+    if articolo_scelto and ha_finitura:
+        finitura_scelta = st.selectbox(
+            "Finitura / Materiale:",
+            options=list(FINITURE_CONFIG.keys()),
+            index=0,
+            key="select_finitura"
+        )
 
     st.markdown("---")
     
@@ -228,7 +223,6 @@ with col_input:
     if articolo_scelto:
         pills_config_articolo = dati_articolo.get("pills_config", [])
         
-        # Estraiamo i nomi dei pills e li ordiniamo ALFABETICAMENTE per la UI
         if isinstance(pills_config_articolo, dict):
             pills_ordinati_ui = sorted(list(pills_config_articolo.keys()))
         elif isinstance(pills_config_articolo, (list, tuple)):
@@ -294,21 +288,20 @@ with col_input:
         "Seleziona compatibilità:",
         options=OPZIONI_COMPATIBILITA,
         format_func=lambda x: "Seleziona compatibilità..." if x == "" else x,
-        key="select_compatibilita",
-        label_visibility="collapsed"
+        key="select_compatibilita"
     )
 
     st.checkbox("Aggiungi marcatura (UNI EN 1090-1)", key="check_1090")
 
 
 # =========================================================
-# COLONNA DESTRA: GENERAZIONE, AUTOMAZIONI & RISULTATI
+# COLONNA DESTRA: GENERAZIONE, GUIDA DINAMICA & RISULTATI
 # =========================================================
 with col_output:
     st.subheader("🚀 Output & Generazione")
     st.markdown("---")
     
-    # 🎯 POSIZIONAMENTO AFFIANCATO: Genera Stringa (sx) + Azzera (dx)
+    # Pulsanti Genera e Azzera affiancati in alto
     col_btn_gen, col_btn_res = st.columns([3, 1], gap="small")
     
     with col_btn_gen:
@@ -326,16 +319,12 @@ with col_output:
             output_comm_base = dati_art.get("output_comm", articolo_scelto.upper())
             ha_finitura = dati_art.get("ha_finitura", False)
             
-            # -----------------------------------------------------------------
             # 1. RILEVAMENTO AUTOMATICO PART TYPE (Con Override da Pills)
-            # -----------------------------------------------------------------
             part_type_automatico = dati_art.get("part_type", "SALES PART")
             if any(p in tags_selezionati_utente for p in PILLS_FORZA_PACKAGE):
                 part_type_automatico = "PACKAGE PART"
 
-            # -----------------------------------------------------------------
             # 2. REGOLA CONFIGURAZIONE (COLOUR se VERNICIABILE, altrimenti 0)
-            # -----------------------------------------------------------------
             fin_scelta_ui = st.session_state.get("select_finitura", "")
             if ha_finitura and str(fin_scelta_ui).strip().upper() == "VERNICIABILE":
                 configurazione_automatica = "COLOUR"
@@ -357,9 +346,7 @@ with col_output:
                     finitura_tech_str = str(fin_scelta_ui).strip().upper()
                     finitura_comm_str = finitura_tech_str
 
-            # -----------------------------------------------------------------
             # 3. GESTIONE DIMENSIONI CON NORMALIZZAZIONE PUNTO -> VIRGOLA
-            # -----------------------------------------------------------------
             def normalizza_dim(valore):
                 if not valore:
                     return ""
@@ -384,7 +371,6 @@ with col_output:
 
             pills_config_art = dati_art.get("pills_config", {})
             
-            # FUNZIONE ESTRAZIONE ORDINE DAL DATABASE PILLS / CONFIG ARTICOLO
             def estrai_ordine(tag):
                 if isinstance(pills_config_art, dict):
                     val = pills_config_art.get(tag, 99)
@@ -396,7 +382,6 @@ with col_output:
                         if isinstance(item, (list, tuple)) and len(item) >= 2 and item[0] == tag:
                             return item[1]
                 
-                # Fallback interrogazione Database Globale Pills
                 pill_key = str(tag).strip()
                 for k, v in DATABASE_PILLS.items():
                     if k.strip().lower() == pill_key.lower():
@@ -452,7 +437,6 @@ with col_output:
                         t_val = pill_key.upper()
                         c_val = pill_key.upper()
 
-                # SMISTAMENTO IN BASE ALL'ORDINE (< 50 prima, >= 50 dopo)
                 if t_val:
                     if num_ordine >= 50: lista_tech_pills_dopo.append(t_val)
                     else: lista_tech_pills_prima.append(t_val)
@@ -464,7 +448,6 @@ with col_output:
             note_libere = str(st.session_state.get("extra_text", "") or "").strip().upper()
             compatibilita_val = str(st.session_state.get("select_compatibilita", "") or "").strip().upper()
 
-            # ASSEMBLAGGIO STRINGA TECNICA
             pezzi_tech = [output_tech_base, finitura_tech_str] + lista_tech_pills_prima
             if dim_str: pezzi_tech.append(dim_str)
             pezzi_tech.extend(lista_tech_pills_dopo)
@@ -474,11 +457,9 @@ with col_output:
             stringa_tecnica_base = " ".join([p for p in pezzi_tech if p]).upper()
             stringa_tecnica_definitiva = f"{stringa_tecnica_base} - {compatibilita_val}" if (compatibilita_val and compatibilita_val != "NONE") else stringa_tecnica_base
 
-            # MATCH DATABASE
             codice_trovato, stato_match, percentuale = verifica_match_db(stringa_tecnica_definitiva)
             st.session_state['stato_match_db'] = (stato_match, codice_trovato, percentuale)
 
-            # ASSEMBLAGGIO STRINGA COMMERCIALE
             pezzi_comm = [output_comm_base, finitura_comm_str] + lista_comm_pills_prima
             if dim_str: pezzi_comm.append(dim_str)
             pezzi_comm.extend(lista_comm_pills_dopo)
@@ -494,19 +475,29 @@ with col_output:
         else:
             st.warning("⚠️ Seleziona un articolo nella colonna di sinistra prima di generare.")
 
-    # VISUALIZZAZIONE RISULTATI E SALVATAGGIO
-    if st.session_state.get('generazione_effettuata', False):
+    # GESTIONE VISIVA DELLO SPAZIO DESTRA: GUIDA D'USO OPPURE RISULTATI
+    if not st.session_state.get('generazione_effettuata', False):
+        st.markdown("---")
+        with st.container(border=True):
+            st.markdown("### 📖 Modalità d'uso - REG v4.0")
+            st.markdown("""
+                Benvenuto nel nuovo configuratore unificato! Segui questi semplici passi:
+                
+                1. **Seleziona l'Articolo**: Scegli il componente desiderato dalla tendina principale a sinistra (inclusi i componenti in legno contrassegnati da `(LEGNO)`).
+                2. **Configura Finitura & Pills**: Se l'articolo lo prevede, seleziona la finitura (es. *VERNICIABILE* imposterà automaticamente la configurazione su `COLOUR`, altrimenti sarà `0`). Spunta le caratteristiche desiderate.
+                3. **Inserisci Dimensioni & Note**: Digita le quote (usa pure il punto o la virgola, il sistema normalizzerà automaticamente).
+                4. **Genera**: Clicca sul tasto rosso **GENERA STRINGA FINALE** per calcolare in automatico il *Part Type*, la configurazione e verificare l'eventuale presenza di match nel database di Google Sheets.
+            """)
+    else:
         st.markdown("---")
         st.markdown("### 📋 Dettagli Generazione")
         
-        # BOX AUTOMAZIONI AUTOMATICHE
         c_p1, c_p2 = st.columns(2)
         with c_p1:
             st.info(f"⚙️ **Part Type:** `{st.session_state.get('part_type_calcolato', 'SALES PART')}`")
         with c_p2:
             st.info(f"🎨 **Configurazione:** `{st.session_state.get('config_calcolata', '0')}`")
 
-        # RILEVAMENTO MATCH GOOGLE SHEETS
         stato_match, codice_esistente, percentuale = st.session_state.get('stato_match_db', ("NUOVO", None, 0.0))
         
         if stato_match == "ESATTO":
@@ -529,7 +520,6 @@ with col_output:
         if st.session_state.get('sync_needed'):
             st.session_state['sync_needed'] = False
 
-        # REGISTRAZIONE DB GOOGLE SHEETS
         st.markdown("---")
         with st.container(border=True):
             st.markdown("#### 💾 Registra nel Database Google Sheets")
