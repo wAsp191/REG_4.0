@@ -3,7 +3,7 @@
 # ==============================================================================
 FINITURE_CONFIG = {
     # Metalli
-    "DECAPATA": ("", ""),
+    "VERNICIABILE": ("", ""),
     "ZINCATO": ("ZN", "ZINC"),
     "INOX": ("INOX", "INOX"),
     "INOX S/B": ("INOX S/B", "INOX S/B"),
