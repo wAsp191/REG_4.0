@@ -12,7 +12,7 @@ from database import *
 from database_manager import carica_database, verifica_match_db, salva_su_excel
 
 # Compatibilità anti-NameError
-OPZIONI_COMPATIBILITA = ["", "F25", "F25 BESPOKE", "F50", "F50 BESPOKE", "UNIVERSAL", "BC", "FORTISSIMO", "MINIRACK", "UNIMOB"]
+OPZIONI_COMPATIBILITA = ["", "F25", "F25 BESPOKE", "F50", "F50 BESPOKE", "UNIVERSAL", "BC", "FORTISSIMO", "MINIRACK", "UNIMOB", "STAND-ALONE"]
 
 st.set_page_config(page_title="Reg v4.0", layout="wide")
 
