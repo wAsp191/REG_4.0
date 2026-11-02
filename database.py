@@ -35,6 +35,7 @@ OPZIONI_COMPATIBILITA = ["", "F25", "F25 BESPOKE", "F50", "F50 BESPOKE", "UNIVER
 # ==============================================================================
 SALES_PART_ARTICOLI = {
     "Adattatore": {
+        "part_type": "SALES PART",
         "output_tech": "ADATT",
         "output_comm": "ADATTATORE",
         "ha_finitura": True,
@@ -57,132 +58,154 @@ SALES_PART_ARTICOLI = {
         ]
     },
     "Anta": {
+        "part_type": "SALES PART",
         "output_tech": "ANTA",
         "output_comm": "ANTA",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Canalina passa cavi": {
+        "part_type": "SALES PART",
         "output_tech": "CANALINA_PASSA_CAVI",
         "output_comm": "CANALINA PASSA CAVI",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Cesto in filo": {
+        "part_type": "SALES PART",
         "output_tech": "CESTO_FILO",
         "output_comm": "CESTO IN FILO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Chiusura": {
+        "part_type": "SALES PART",
         "output_tech": "CHIUSURA",
         "output_comm": "CHIUSURA",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Cielino": {
+        "part_type": "SALES PART",
         "output_tech": "CIELINO",
         "output_comm": "CIELINO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Compensazione": {
+        "part_type": "SALES PART",
         "output_tech": "COMPENSAZIONE",
         "output_comm": "COMPENSAZIONE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Coprimontante": {
+        "part_type": "SALES PART",
         "output_tech": "COPRIMONTANTE",
         "output_comm": "COPRIMONTANTE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Copripiede": {
+        "part_type": "SALES PART",
         "output_tech": "COPRIPIEDE",
         "output_comm": "COPRIPIEDE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Coprischienale": {
+        "part_type": "SALES PART",
         "output_tech": "COPRISCHIENALE",
         "output_comm": "COPRISCHIENALE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Corrente": {
+        "part_type": "SALES PART",
         "output_tech": "CORRENTE",
         "output_comm": "CORRENTE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Diagonale": {
+        "part_type": "SALES PART",
         "output_tech": "DIAGONALE",
         "output_comm": "DIAGONALE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Distanziale": {
+        "part_type": "SALES PART",
         "output_tech": "DISTANZIALE",
         "output_comm": "DISTANZIALE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Divisorio": {
+        "part_type": "SALES PART",
         "output_tech": "DIVISORIO",
         "output_comm": "DIVISORIO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Fiancata laterale": {
+        "part_type": "SALES PART",
         "output_tech": "FIANCATA_LATERALE",
         "output_comm": "FIANCATA LATERALE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Filo": {
+        "part_type": "SALES PART",
         "output_tech": "FILO",
         "output_comm": "FILO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Frontalino": {
+        "part_type": "SALES PART",
         "output_tech": "FRONTALINO",
         "output_comm": "FRONTALINO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Frontale": {
+        "part_type": "SALES PART",
         "output_tech": "FRONTALE",
         "output_comm": "FRONTALE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Gancio": {
+        "part_type": "SALES PART",
         "output_tech": "GANCIO",
         "output_comm": "GANCIO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Mensola": {
+        "part_type": "SALES PART",
         "output_tech": "MENSOLA",
         "output_comm": "MENSOLA",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Montante": {
+        "part_type": "SALES PART",
         "output_tech": "MONTANTE",
         "output_comm": "MONTANTE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Pannello": {
+        "part_type": "SALES PART",
         "output_tech": "PANNELLO",
         "output_comm": "PANNELLO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Pannello di rivestimento": {
+        "part_type": "SALES PART",
         "output_tech": "PANN RIV",
         "output_comm": "PANNELLO RIVESTIMENTO",
         "ha_finitura": True,
@@ -203,96 +226,112 @@ SALES_PART_ARTICOLI = {
         ]
     },
     "Pannello frontale": {
+        "part_type": "SALES PART",
         "output_tech": "PANNELLO_FRONTALE",
         "output_comm": "PANNELLO FRONTALE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Pedana di base": {
+        "part_type": "SALES PART",
         "output_tech": "PEDANA_BASE",
         "output_comm": "PEDANA DI BASE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Piastra di fissaggio": {
+        "part_type": "SALES PART",
         "output_tech": "PIASTRA_FISSAGGIO",
         "output_comm": "PIASTRA FISSAGGIO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Piede di base": {
+        "part_type": "SALES PART",
         "output_tech": "PIEDE_BASE",
         "output_comm": "PIEDE DI BASE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Profilo": {
+        "part_type": "SALES PART",
         "output_tech": "PROFILO",
         "output_comm": "PROFILO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Protezione": {
+        "part_type": "SALES PART",
         "output_tech": "PROTEZIONE",
         "output_comm": "PROTEZIONE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Rinforzo": {
+        "part_type": "SALES PART",
         "output_tech": "RINFORZO",
         "output_comm": "RINFORZO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Ripiano": {
+        "part_type": "SALES PART",
         "output_tech": "RIPIANO",
         "output_comm": "RIPIANO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Schienale": {
+        "part_type": "SALES PART",
         "output_tech": "SCHIENALE",
         "output_comm": "SCHIENALE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Staffa": {
+        "part_type": "SALES PART",
         "output_tech": "STAFFA",
         "output_comm": "STAFFA",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Tamponamento": {
+        "part_type": "SALES PART",
         "output_tech": "TAMPONAMENTO",
         "output_comm": "TAMPONAMENTO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Tappo": {
+        "part_type": "SALES PART",
         "output_tech": "TAPPO",
         "output_comm": "TAPPO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Traversino": {
+        "part_type": "SALES PART",
         "output_tech": "TRAVERSINO",
         "output_comm": "TRAVERSINO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Tubolare": {
+        "part_type": "SALES PART",
         "output_tech": "TUBOLARE",
         "output_comm": "TUBOLARE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Vasca": {
+        "part_type": "SALES PART",
         "output_tech": "VASCA",
         "output_comm": "VASCA",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Zoccolatura": {
+        "part_type": "SALES PART",
         "output_tech": "ZOCCOLATURA",
         "output_comm": "ZOCCOLATURA",
         "ha_finitura": True,
@@ -304,84 +343,98 @@ SALES_PART_ARTICOLI = {
 # ==============================================================================
 PACKAGE_PART_SPECIFICI = {
     "Avancassa": {
+        "part_type": "PACKAGE PART",
         "output_tech": "AVANCASSA",
         "output_comm": "AVANCASSA",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Banco espositore": {
+        "part_type": "PACKAGE PART",
         "output_tech": "BANCO_ESPOSITORE",
         "output_comm": "BANCO ESPOSITORE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Cancelletto": {
+        "part_type": "PACKAGE PART",
         "output_tech": "CANCELLETTO",
         "output_comm": "CANCELLETTO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Cassa pagamento automatico": {
+        "part_type": "PACKAGE PART",
         "output_tech": "CASSA_PAGAMENTO_AUTOMATICO",
         "output_comm": "CASSA PAGAMENTO AUTOMATICO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Cassetto estraibile": {
+        "part_type": "PACKAGE PART",
         "output_tech": "CASSETTO_ESTRAIBILE",
         "output_comm": "CASSETTO ESTRAIBILE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Cassettiera": {
+        "part_type": "PACKAGE PART",
         "output_tech": "CASSETTIERA",
         "output_comm": "CASSETTIERA",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Controventatura": {
+        "part_type": "PACKAGE PART",
         "output_tech": "CONTROVENTATURA",
         "output_comm": "CONTROVENTATURA",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Espositore": {
+        "part_type": "PACKAGE PART",
         "output_tech": "ESPOSITORE",
         "output_comm": "ESPOSITORE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Espositore a gradoni": {
+        "part_type": "PACKAGE PART",
         "output_tech": "ESPOSITORE_GRADONI",
         "output_comm": "ESPOSITORE A GRADONI",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Espositore riviste": {
+        "part_type": "PACKAGE PART",
         "output_tech": "ESPOSITORE_RIVISTE",
         "output_comm": "ESPOSITORE RIVISTE",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Spalla": {
+        "part_type": "PACKAGE PART",
         "output_tech": "SPALLA",
         "output_comm": "SPALLA",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Telaio saldato": {
+        "part_type": "PACKAGE PART",
         "output_tech": "TELAIO_SALDATO",
         "output_comm": "TELAIO SALDATO",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Totem": {
+        "part_type": "PACKAGE PART",
         "output_tech": "TOTEM",
         "output_comm": "TOTEM",
         "ha_finitura": True,
         "pills_config": {}
     },
     "Vetrina": {
+        "part_type": "PACKAGE PART",
         "output_tech": "VETRINA",
         "output_comm": "VETRINA",
         "ha_finitura": True,
@@ -392,7 +445,8 @@ PACKAGE_PART_SPECIFICI = {
 # DATABASE ARTICOLI: LEGNO
 # ==============================================================================
 LEGNO_ARTICOLI = {
-   "Anta": {
+    "Anta (LEGNO)": {
+        "part_type": "SALES PART",
         "output_tech": "ANTA",
         "output_comm": "ANTA IN LEGNO",
         "ha_finitura": True,
@@ -418,94 +472,89 @@ LEGNO_ARTICOLI = {
             ("Scorrevole", 4)
         ]
     },
-    "Asta in legno": {
+    "Asta (LEGNO)": {
+        "part_type": "SALES PART",
         "output_tech": "ASTA_LEGNO",
         "output_comm": "ASTA IN LEGNO",
         "ha_finitura": True,
         "pills_config": {}
     },
-    "Cielino": {
+    "Cielino (LEGNO)": {
+        "part_type": "SALES PART",
         "output_tech": "CIELINO_LEGNO",
         "output_comm": "CIELINO LEGNO",
         "ha_finitura": True,
         "pills_config": {}
     },
-    "Compensazione": {
+    "Compensazione (LEGNO)": {
+        "part_type": "SALES PART",
         "output_tech": "COMPENSAZIONE_LEGNO",
         "output_comm": "COMPENSAZIONE LEGNO",
         "ha_finitura": True,
         "pills_config": {}
     },
-    "Copripiede": {
+    "Copripiede (LEGNO)": {
+        "part_type": "SALES PART",
         "output_tech": "COPRIPIEDE_LEGNO",
         "output_comm": "COPRIPIEDE LEGNO",
         "ha_finitura": True,
         "pills_config": {}
     },
-    "Coprimontante": {
+    "Coprimontante (LEGNO)": {
+        "part_type": "SALES PART",
         "output_tech": "COPRIMONTANTE_LEGNO",
         "output_comm": "COPRIMONTANTE LEGNO",
         "ha_finitura": True,
         "pills_config": {}
     },
-    "Coprischienale": {
+    "Coprischienale (LEGNO)": {
+        "part_type": "SALES PART",
         "output_tech": "COPRISCHIENALE_LEGNO",
         "output_comm": "COPRISCHIENALE LEGNO",
         "ha_finitura": True,
         "pills_config": {}
     },
-    "Fiancata laterale": {
+    "Fiancata laterale (LEGNO)": {
+        "part_type": "SALES PART",
         "output_tech": "FIANCATA_LATERALE_LEGNO",
         "output_comm": "FIANCATA LATERALE LEGNO",
         "ha_finitura": True,
         "pills_config": {}
     },
-    "Pannello": {
+    "Pannello (LEGNO)": {
+        "part_type": "SALES PART",
         "output_tech": "PANNELLO_LEGNO",
         "output_comm": "PANNELLO LEGNO",
         "ha_finitura": True,
         "pills_config": {}
     },
-    "Ripiano": {
+    "Ripiano (LEGNO)": {
+        "part_type": "SALES PART",
         "output_tech": "RIPIANO_LEGNO",
         "output_comm": "RIPIANO LEGNO",
         "ha_finitura": True,
         "pills_config": {}
     },
-    "Schienale": {
+    "Schienale (LEGNO)": {
+        "part_type": "SALES PART",
         "output_tech": "SCHIENALE_LEGNO",
         "output_comm": "SCHIENALE LEGNO",
         "ha_finitura": True,
         "pills_config": {}
     },
-    "Tamponamento": {
+    "Tamponamento (LEGNO)": {
+        "part_type": "SALES PART",
         "output_tech": "TAMPONAMENTO_LEGNO",
         "output_comm": "TAMPONAMENTO LEGNO",
         "ha_finitura": True,
         "pills_config": {}
     },
-    "Zoccolatura": {
+    "Zoccolatura (LEGNO)": {
+        "part_type": "SALES PART",
         "output_tech": "ZOCCOLATURA_LEGNO",
         "output_comm": "ZOCCOLATURA LEGNO",
         "ha_finitura": True,
         "pills_config": {}
-    }
-}
-# ==============================================================================
-# MASTER DATABASE ARTICOLI
-# ==============================================================================
-DATABASE = {
-    "SALES PART": {
-        "macro_name": "SALES PART",
-        "Articoli": SALES_PART_ARTICOLI
-    },
-    "PACKAGE PART": {
-        "macro_name": "PACKAGE PART",
-        "Articoli": SALES_PART_ARTICOLI | PACKAGE_PART_SPECIFICI
-    },
-    "LEGNO": {
-        "macro_name": "LEGNO",
-        "Articoli": LEGNO_ARTICOLI
     }
 }
 # ==============================================================================
