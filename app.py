@@ -33,65 +33,69 @@ OPZIONI_COMPATIBILITA = ["", "F25", "F25 BESPOKE", "F50", "F50 BESPOKE", "UNIVER
 
 st.set_page_config(page_title="Reg v4.0", layout="wide")
 
+# =========================================================
+# 1. FUNZIONI DI SUPPORTO (CSS, AUTH & RESET)
+# =========================================================
+
 def inject_custom_css():
     st.markdown("""
         <style>
-            /* 1. CONTENITORE PRINCIPALE DELLA PAGINA: Azzeriamo i padding superiore e inferiore */
+            /* 1. CONTENITORE PRINCIPALE: Diamo il giusto spazio in alto per non tagliare il titolo */
             .block-container {
-                padding-top: 0.5rem !important;
+                padding-top: 2.2rem !important;
                 padding-bottom: 0rem !important;
                 max-width: 100% !important;
             }
             
-            /* 2. SPAZIATURA DEI BLOCCHI VERTICALI (Stack): Riduciamo quasi a zero il gap tra gli elementi */
+            /* 2. SPAZIATURA DEI BLOCCHI VERTICALI (Stack) */
             [data-testid="stVerticalBlock"] > div {
                 flex-direction: column;
-                gap: 0.005rem !important;
+                gap: 0.002rem !important;
             }
             
-            /* 3. TITOLO CENTRATO E SOTTOSTANTE: Minimo ingombro verticale */
+            /* 3. TITOLO CENTRATO E SOTTOSTANTE */
             .reg-title-container {
                 text-align: center;
                 width: 100%;
-                margin-bottom: 0.5rem !important;
+                margin-bottom: 0.2rem !important;
             }
             
-            /* 4. INTESTAZIONI DI SEZIONE (H2 e H3): Riduciamo font e margini */
-            h2 { margin-top: 0rem !important; margin-bottom: -0.8rem !important; font-size: 0.85rem !important; }
-            h3 { margin-top: 0rem !important; margin-bottom: -0.8rem !important; font-size: 0.8rem !important; }
+            /* 4. INTESTAZIONI DI SEZIONE (H2 e H3) */
+            h2 { margin-top: 0rem !important; margin-bottom: -0.9rem !important; font-size: 0.85rem !important; }
+            h3 { margin-top: 0rem !important; margin-bottom: -0.9rem !important; font-size: 0.8rem !important; }
             
-            /* 5. LINEE DIVISORIE (HR): Quasi invisibili nello spazio verticale */
+            /* 5. LINEE DIVISORIE (HR) */
             hr {
-                margin-top: 0.05rem !important;
-                margin-bottom: 0.05rem !important;
+                margin-top: 0.02rem !important;
+                margin-bottom: 0.02rem !important;
             }
             
-            /* 6. COMPRESSIONE MENÙ A TENDINA E INPUT DI TESTO: Più sottili (altezza 1.5rem) */
+            /* 6. COMPRESSIONE MENÙ A TENDINA E INPUT DI TESTO */
             div[data-baseweb="select"] > div, 
             div[data-testid="stTextInput"] > div > div > input {
                 padding-top: 0px !important;
                 padding-bottom: 0px !important;
-                min-height: 1.0rem !important;
-                height: 1.5rem !important;
+                min-height: 0.9rem !important;
+                height: 1.4rem !important;
             }
             
-            /* 7. ETICHETTE DEI WIDGET: Font più compatto per guadagnare pixel preziosi */
+            /* 7. ETICHETTE DEI WIDGET */
             [data-testid="stWidgetLabel"] p {
-                font-size: 0.95rem !important;
+                font-size: 0.9rem !important;
                 font-weight: 600 !important;
                 margin-bottom: 0rem !important;
             }
             
             /* 8. CONTENITORI MARKDOWN GENERALI */
             [data-testid="stMarkdownContainer"] p {
-                font-size: 0.85rem !important;
+                font-size: 0.8rem !important;
             }
 
-            /* 9. RIDUZIONE EXTRA PER I CONTENITORI CON BORDER (es. la Guida o il Box Salvataggio) */
+            /* 9. RIDUZIONE EXTRA PER I BOX CONTAINER (Guida e Salvataggio) */
             div[data-testid="stVerticalBlock"] div[data-testid="stExpander"], 
             div[data-testid="stContainer"] {
-                padding-top: 0.2rem !important;
-                padding-bottom: 0.2rem !important;
+                padding-top: 0.1rem !important;
+                padding-bottom: 0.1rem !important;
             }
         </style>
     """, unsafe_allow_html=True)
