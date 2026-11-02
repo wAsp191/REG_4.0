@@ -189,11 +189,7 @@ col_input, col_output = st.columns([1.5, 1.5], gap="large")
 # COLONNA SINISTRA: MASCHERA DI INPUT E CONFIGURAZIONE
 # =========================================================
 with col_input:
-    # Pulsante Azzera collocato in alto a sinistra per ottimizzare lo spazio
-    st.button("🔄 AZZERA CONFIGURAZIONE", on_click=activate_reset, use_container_width=True)
-    st.markdown("---")
-    
-    # Sezione 1: Selezione Articolo Unificata & Finitura
+    # Nota: Il tasto Azzera è stato spostato a destra, quindi qui possiamo rimuoverlo o lasciarlo pulito.
     st.subheader("🛠️ 1. Selezione Articolo & Finitura")
     c_art, c_fin = st.columns([1.5, 1])
     
@@ -312,8 +308,14 @@ with col_output:
     st.subheader("🚀 Output & Generazione")
     st.markdown("---")
     
-    # Pulsante principale di generazione
-    btn_genera = st.button("🚀 GENERA STRINGA FINALE", type="primary", use_container_width=True)
+    # 🎯 POSIZIONAMENTO AFFIANCATO: Genera Stringa (sx) + Azzera (dx)
+    col_btn_gen, col_btn_res = st.columns([3, 1], gap="small")
+    
+    with col_btn_gen:
+        btn_genera = st.button("🚀 GENERA STRINGA FINALE", type="primary", use_container_width=True)
+        
+    with col_btn_res:
+        st.button("🔄 AZZERA", on_click=activate_reset, use_container_width=True, type="secondary")
     
     if btn_genera:
         if articolo_scelto:
