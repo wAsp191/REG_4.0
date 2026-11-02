@@ -154,7 +154,7 @@ def activate_reset():
         'stringa_commerciale': "",
         'generazione_effettuata': False
     }
-    text_keys = ['dim_l', 'dim_p', 'dim_h', 'dim_dia', 'dim_s', 'extra_text', 'select_finitura', 'select_compatibilita']
+    text_keys = ['dim_l', 'dim_p', 'dim_h', 'dim_dia', 'dim_s', 'extra_text', 'select_finitura', 'select_tipologia', 'select_compatibilita']
     for key, val in defaults.items():
         st.session_state[key] = val
     for key in text_keys:
@@ -197,33 +197,60 @@ col_input, col_output = st.columns([1.8, 1.2], gap="large")
 # COLONNA SINISTRA: MASCHERA DI INPUT E CONFIGURAZIONE
 # =========================================================
 with col_input:
-    # Sezione 1: Selezione Articolo & Finitura affiancate per risparmiare spazio verticale
-    st.subheader("🛠️ 1. Selezione Articolo & Finitura")
-    c_art, c_fin = st.columns([1.5, 1])
+    st.subheader("🛠️ 1. Selezione Articolo, Tipologia & Finitura")
     
     elenco_articoli = sorted(list(DATABASE_ARTICOLI.keys())) if 'DATABASE_ARTICOLI' in globals() else []
     
-    with c_art:
-        articolo_scelto = st.selectbox(
-            "Cerca Articolo:", 
-            options=elenco_articoli, 
-            index=None, 
-            placeholder="Seleziona un articolo...", 
-            format_func=lambda x: f"🔧 {x}" if x else "Seleziona...", 
-            key="selectbox_part"
-        )
+    # Selezione Articolo principale
+    articolo_scelto = st.selectbox(
+        "Cerca Articolo:", 
+        options=elenco_articoli, 
+        index=None, 
+        placeholder="Seleziona un articolo...", 
+        format_func=lambda x: f"🔧 {x}" if x else "Seleziona...", 
+        key="selectbox_part"
+    )
 
-    finitura_scelta = None
     dati_articolo = DATABASE_ARTICOLI.get(articolo_scelto, {}) if articolo_scelto else {}
     ha_finitura = dati_articolo.get("ha_finitura", False)
-    
-    with c_fin:
-        if articolo_scelto and ha_finitura:
+    ha_tipologia = dati_articolo.get("ha_tipologia", False)
+
+    finitura_scelta = None
+    tipologia_scelta = None
+
+    # Gestione dinamica di Finitura e Tipologia affiancate se presenti
+    if articolo_scelto:
+        if ha_finitura and ha_tipologia:
+            c_fin, c_tip = st.columns(2)
+            with c_fin:
+                finitura_scelta = st.selectbox(
+                    "Finitura / Materiale:",
+                    options=list(FINITURE_CONFIG.keys()),
+                    index=0,
+                    key="select_finitura"
+                )
+            with c_tip:
+                tipologie_disponibili = list(dati_articolo.get("tipologie_config", {}).keys())
+                tipologia_scelta = st.selectbox(
+                    "Tipologia:",
+                    options=tipologie_disponibili,
+                    index=0,
+                    key="select_tipologia"
+                )
+        elif ha_finitura:
             finitura_scelta = st.selectbox(
                 "Finitura / Materiale:",
                 options=list(FINITURE_CONFIG.keys()),
                 index=0,
                 key="select_finitura"
+            )
+        elif ha_tipologia:
+            tipologie_disponibili = list(dati_articolo.get("tipologie_config", {}).keys())
+            tipologia_scelta = st.selectbox(
+                "Tipologia:",
+                options=tipologie_disponibili,
+                index=0,
+                key="select_tipologia"
             )
 
     st.markdown("---")
@@ -329,6 +356,7 @@ with col_output:
             output_tech_base = dati_art.get("output_tech", articolo_scelto.upper())
             output_comm_base = dati_art.get("output_comm", articolo_scelto.upper())
             ha_finitura = dati_art.get("ha_finitura", False)
+            ha_tipologia = dati_art.get("ha_tipologia", False)
             
             # 1. RILEVAMENTO AUTOMATICO PART TYPE (Con Override da Pills)
             part_type_automatico = dati_art.get("part_type", "SALES PART")
@@ -345,9 +373,23 @@ with col_output:
             st.session_state['part_type_calcolato'] = part_type_automatico
             st.session_state['config_calcolata'] = configurazione_automatica
             
+            # 3. ESTRAZIONE TIPOLOGIA
+            tipologia_tech_str = ""
+            tipologia_comm_str = ""
+            if ha_tipologia:
+                tip_scelta_ui = st.session_state.get("select_tipologia", "")
+                dict_tipi = dati_art.get("tipologie_config", {})
+                tuple_tip = dict_tipi.get(tip_scelta_ui, ("", ""))
+                if isinstance(tuple_tip, (tuple, list)) and len(tuple_tip) >= 2:
+                    tipologia_tech_str = str(tuple_tip[0]).strip().upper()
+                    tipologia_comm_str = str(tuple_tip[1]).strip().upper()
+                else:
+                    tipologia_tech_str = str(tip_scelta_ui).strip().upper()
+                    tipologia_comm_str = tipologia_tech_str
+
+            # 4. ESTRAZIONE FINITURA
             finitura_tech_str = ""
             finitura_comm_str = ""
-            
             if ha_finitura and fin_scelta_ui:
                 tuple_fin = FINITURE_CONFIG.get(fin_scelta_ui, ("", ""))
                 if isinstance(tuple_fin, (tuple, list)) and len(tuple_fin) >= 2:
@@ -357,7 +399,7 @@ with col_output:
                     finitura_tech_str = str(fin_scelta_ui).strip().upper()
                     finitura_comm_str = finitura_tech_str
 
-            # 3. GESTIONE DIMENSIONI CON NORMALIZZAZIONE PUNTO -> VIRGOLA
+            # 5. GESTIONE DIMENSIONI CON NORMALIZZAZIONE PUNTO -> VIRGOLA
             def normalizza_dim(valore):
                 if not valore:
                     return ""
@@ -459,7 +501,12 @@ with col_output:
             note_libere = str(st.session_state.get("extra_text", "") or "").strip().upper()
             compatibilita_val = str(st.session_state.get("select_compatibilita", "") or "").strip().upper()
 
-            pezzi_tech = [output_tech_base, finitura_tech_str] + lista_tech_pills_prima
+            # ASSEMBLAGGIO STRINGA TECNICA (Base -> Tipologia -> Finitura -> Pills prima)
+            pezzi_tech = [output_tech_base]
+            if tipologia_tech_str: pezzi_tech.append(tipologia_tech_str)
+            if finitura_tech_str: pezzi_tech.append(finitura_tech_str)
+            pezzi_tech.extend(lista_tech_pills_prima)
+            
             if dim_str: pezzi_tech.append(dim_str)
             pezzi_tech.extend(lista_tech_pills_dopo)
             if note_libere: pezzi_tech.append(note_libere)
@@ -471,7 +518,12 @@ with col_output:
             codice_trovato, stato_match, percentuale = verifica_match_db(stringa_tecnica_definitiva)
             st.session_state['stato_match_db'] = (stato_match, codice_trovato, percentuale)
 
-            pezzi_comm = [output_comm_base, finitura_comm_str] + lista_comm_pills_prima
+            # ASSEMBLAGGIO STRINGA COMMERCIALE
+            pezzi_comm = [output_comm_base]
+            if tipologia_comm_str: pezzi_comm.append(tipologia_comm_str)
+            if finitura_comm_str: pezzi_comm.append(finitura_comm_str)
+            pezzi_comm.extend(lista_comm_pills_prima)
+            
             if dim_str: pezzi_comm.append(dim_str)
             pezzi_comm.extend(lista_comm_pills_dopo)
             if note_libere: pezzi_comm.append(note_libere)
@@ -492,11 +544,12 @@ with col_output:
         with st.container(border=True):
             st.markdown("### 📖 Modalità d'uso - REG v4.0")
             st.markdown("""
+                Benvenuto nel nuovo configuratore unificato! Segui questi semplici passi:
                 
-                1. **Seleziona l'Articolo & Finitura**: Scegli il componente dalla tendina a sinistra (inclusi i componenti contrassegnati da `(LEGNO)`). Se previsto, seleziona la finitura (es. *VERNICIABILE*).
+                1. **Seleziona l'Articolo**: Scegli il componente dalla tendina a sinistra (inclusi i componenti in legno contrassegnati da `(LEGNO)`). Se previsto, appariranno i menu di **Tipologia** e **Finitura**.
                 2. **Configura i Pills**: Spunta le caratteristiche desiderate.
                 3. **Inserisci Dimensioni & Note**: Digita le quote (il sistema normalizzerà automaticamente il punto in virgola).
-                4. **Genera**: Clicca sul tasto **GENERA STRINGA FINALE** per calcolare in automatico il *Part Type*, la *Configurazione* e verificare l'eventuale match sul Database.
+                4. **Genera**: Clicca sul tasto **GENERA STRINGA FINALE** per calcolare in automatico il *Part Type*, la configurazione e verificare l'eventuale match su Google Sheets.
             """)
     else:
         st.markdown("---")
