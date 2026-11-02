@@ -286,13 +286,13 @@ SALES_PART_ARTICOLI = {
             "TOP": ("TOP", "TOP")
         },
         "pills_config": [
-            ("Con componente saldato", 7),
-            ("Con viteria", 9),
-            ("Forato", 4),
+            ("Con componente saldato", 52),
+            ("Con viteria", 51),
+            ("Forato", 2),
             ("Liscio", 3),
             ("Orientamento Destro / Sinistro (+)", 1),
-            ("Con scasso", 12),
-            ("Scantonato", 2)
+            ("Con scasso", 5),
+            ("Scantonato", 4)
         ]
     },
     "Schienale": {
