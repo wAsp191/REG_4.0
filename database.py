@@ -618,13 +618,20 @@ PACKAGE_PART_SPECIFICI = {
     },
     "Controventatura": {
         "part_type": "PACKAGE PART",
-        "output_tech": "CONTROVENTATURA",
+        "output_tech": "CT60",
         "output_comm": "CONTROVENTATURA",
         "ha_finitura": True,
-        "ha_tipologia": False,
-        "tipologie_config": {},
+        "ha_tipologia": True,
+        "tipologie_config": {
+            "MURALE": ("M", "MURALE"),
+            "GONDOLA": ("G", "GONDOLA")
+        },
         "disabled_dims": ["Ø"],
-        "pills_config": {}
+        "pills_config": [
+            ("Numero diagonali (+)", 1),
+            ("Con distanziale (+)", 51),
+            ("Predisposto per montante (+)", 2)
+        ]
     },
     "Espositore": {
         "part_type": "PACKAGE PART",
