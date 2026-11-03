@@ -658,7 +658,8 @@ PACKAGE_PART_SPECIFICI = {
         "tipologie_config": {
             "RETTA": ("RET", "RETTA"),
             "LVA": ("LVA", "LVA"),
-            "DI TESTATA": ("SING", "SINGOLE")
+            "DI TESTATA/SINGOLA": ("SING", "SINGOLE"),
+            "PORSA": ("PORSA", "PORSA")
         },
         "disabled_dims": ["Ø"],
         "pills_config": {}
