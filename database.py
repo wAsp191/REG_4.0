@@ -679,7 +679,7 @@ PACKAGE_PART_SPECIFICI = {
         },
         "disabled_dims": ["Ø", "P"],
         "pills_config": [
-             ("Antisismico", 2),
+             ("Antisismica", 2),
              ("Asimmetrica (+)", 51),
              ("Verniciata", 1)
              ]
