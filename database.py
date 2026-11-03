@@ -662,13 +662,13 @@ PACKAGE_PART_SPECIFICI = {
             "PORSA": ("PORSA", "PORSA")
         },
         "disabled_dims": ["Ø"],
-        "pills_config": {
+        "pills_config": [
             ("Compatibilità piede di base (+)", 2),
             ("Con accessori", 51),
             ("Con ante scorrevoli", 3),
             ("Con illuminazione", 1),
             ("Con serratura", 52)
-        }
+        ]
     }
 }
 # ==============================================================================
