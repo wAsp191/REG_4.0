@@ -131,7 +131,9 @@ SALES_PART_ARTICOLI = {
             "INFERIORE": ("INF", "INFERIORE")
         },
         "disabled_dims": ["Ø"],
-        "pills_config": {}
+        "pills_config": [
+            ("Per ripiano di base", 1)
+        ]
     },
     "Cielino": {
         "part_type": "SALES PART",
