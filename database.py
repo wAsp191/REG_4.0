@@ -779,7 +779,7 @@ DATABASE_PILLS = {
     "Con viteria": ("+VIT", "CON VITERIA"),
     "Con viteria saldata": ("+VIT SALD", "CON VITERIA SALDATA"),
     "Diagonali doppie": ("DD", "DIAGONALI DOPPIE"),
-    "Diagonali incrociate": ("CROC", "A CROCIE"),
+    "Diagonali incrociate": ("CROC", "A CROCE"),
     "Dritto": ("DRITT", "DRITTO"),
     "Forato": ("FOR", "FORATO"),
     "Forata": ("FOR", "FORATA"),
