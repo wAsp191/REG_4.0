@@ -154,7 +154,6 @@ def activate_reset():
         'stringa_commerciale': "",
         'generazione_effettuata': False
     }
-    # Rimosso 'dim_s'
     text_keys = ['dim_l', 'dim_p', 'dim_h', 'dim_dia', 'extra_text', 'select_finitura', 'select_tipologia', 'select_compatibilita']
     for key, val in defaults.items():
         st.session_state[key] = val
@@ -359,21 +358,36 @@ with col_output:
     if btn_genera:
         if articolo_scelto:
             dati_art = DATABASE_ARTICOLI.get(articolo_scelto, {})
-            tags_selezionati_utente = st.session_state.get('extra_tags', [])
+            tags_selezionati_utente = list(st.session_state.get('extra_tags', []))
             
             output_tech_base = dati_art.get("output_tech", articolo_scelto.upper())
             output_comm_base = dati_art.get("output_comm", articolo_scelto.upper())
             ha_finitura = dati_art.get("ha_finitura", False)
             ha_tipologia = dati_art.get("ha_tipologia", False)
             
+            # ---------------------------------------------------------
+            # INIEZIONE AUTOMATICA PILLS DA FINITURA (FINITURE_AUTO_PILLS)
+            # ---------------------------------------------------------
+            fin_scelta_ui = st.session_state.get("select_finitura", "")
+            finitura_str_upper = str(fin_scelta_ui).strip().upper()
+            
+            if ha_finitura and finitura_str_upper and 'FINITURE_AUTO_PILLS' in globals():
+                for tuple_finiture, lista_pills_auto in FINITURE_AUTO_PILLS.items():
+                    if any(fin in finitura_str_upper for fin in tuple_finiture):
+                        for pill_item in lista_pills_auto:
+                            # Estrazione del nome se si tratta di una tupla (nome_pill, ordine)
+                            nome_pill = pill_item[0] if isinstance(pill_item, (tuple, list)) else str(pill_item)
+                            if nome_pill not in tags_selezionati_utente:
+                                tags_selezionati_utente.append(nome_pill)
+                        break
+
             # 1. RILEVAMENTO AUTOMATICO PART TYPE (Con Override da Pills)
             part_type_automatico = dati_art.get("part_type", "SALES PART")
             if any(p in tags_selezionati_utente for p in PILLS_FORZA_PACKAGE):
                 part_type_automatico = "PACKAGE PART"
 
             # 2. REGOLA CONFIGURAZIONE (COLOUR se VERNICIABILE, altrimenti 0)
-            fin_scelta_ui = st.session_state.get("select_finitura", "")
-            if ha_finitura and str(fin_scelta_ui).strip().upper() == "VERNICIABILE":
+            if ha_finitura and finitura_str_upper == "VERNICIABILE":
                 configurazione_automatica = "COLOUR"
             else:
                 configurazione_automatica = "0"
@@ -440,10 +454,11 @@ with col_output:
                             return item[1]
                 
                 pill_key = str(tag).strip()
-                for k, v in DATABASE_PILLS.items():
-                    if k.strip().lower() == pill_key.lower():
-                        if isinstance(v, (tuple, list)) and len(v) >= 3:
-                            return v[2]
+                if 'DATABASE_PILLS' in globals():
+                    for k, v in DATABASE_PILLS.items():
+                        if k.strip().lower() == pill_key.lower():
+                            if isinstance(v, (tuple, list)) and len(v) >= 3:
+                                return v[2]
                 return 99
 
             pills_ordinati_utente = sorted(tags_selezionati_utente, key=estrai_ordine)
@@ -482,10 +497,11 @@ with col_output:
                 else:
                     pill_key = str(pill).strip()
                     tuple_pill = None
-                    for k, v in DATABASE_PILLS.items():
-                        if k.strip().lower() == pill_key.lower():
-                            tuple_pill = v
-                            break
+                    if 'DATABASE_PILLS' in globals():
+                        for k, v in DATABASE_PILLS.items():
+                            if k.strip().lower() == pill_key.lower():
+                                tuple_pill = v
+                                break
                     
                     if tuple_pill and isinstance(tuple_pill, (tuple, list)) and len(tuple_pill) >= 2:
                         t_val = str(tuple_pill[0]).strip().upper()
