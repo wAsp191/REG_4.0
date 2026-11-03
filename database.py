@@ -39,6 +39,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "ADATT",
         "output_comm": "ADATTATORE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": [
             ("Antisgancio", 6),
             ("Attacco montante", 7),
@@ -62,6 +65,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "ANTA",
         "output_comm": "ANTA",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Canalina passa cavi": {
@@ -69,6 +75,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "CANALINA_PASSA_CAVI",
         "output_comm": "CANALINA PASSA CAVI",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Cesto in filo": {
@@ -76,6 +85,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "CESTO_FILO",
         "output_comm": "CESTO IN FILO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Chiusura": {
@@ -83,6 +95,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "CHIUSURA",
         "output_comm": "CHIUSURA",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Cielino": {
@@ -90,6 +105,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "CIELINO",
         "output_comm": "CIELINO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Compensazione": {
@@ -97,6 +115,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "COMPENSAZIONE",
         "output_comm": "COMPENSAZIONE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Coprimontante": {
@@ -104,6 +125,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "COPRIMONTANTE",
         "output_comm": "COPRIMONTANTE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Copripiede": {
@@ -111,6 +135,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "COPRIPIEDE",
         "output_comm": "COPRIPIEDE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Coprischienale": {
@@ -118,6 +145,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "COPRISCHIENALE",
         "output_comm": "COPRISCHIENALE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Corrente": {
@@ -125,6 +155,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "CORRENTE",
         "output_comm": "CORRENTE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Diagonale": {
@@ -132,6 +165,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "DIAGONALE",
         "output_comm": "DIAGONALE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Distanziale": {
@@ -139,6 +175,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "DISTANZIALE",
         "output_comm": "DISTANZIALE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Divisorio": {
@@ -146,6 +185,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "DIVISORIO",
         "output_comm": "DIVISORIO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Fiancata laterale": {
@@ -153,6 +195,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "FIANCATA_LATERALE",
         "output_comm": "FIANCATA LATERALE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Filo": {
@@ -160,6 +205,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "FILO",
         "output_comm": "FILO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Frontalino": {
@@ -167,6 +215,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "FRONTALINO",
         "output_comm": "FRONTALINO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Frontale": {
@@ -174,6 +225,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "FRONTALE",
         "output_comm": "FRONTALE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Gancio": {
@@ -181,6 +235,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "GANCIO",
         "output_comm": "GANCIO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Mensola": {
@@ -188,6 +245,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "MENSOLA",
         "output_comm": "MENSOLA",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Montante": {
@@ -195,6 +255,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "MONTANTE",
         "output_comm": "MONTANTE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Pannello": {
@@ -202,6 +265,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "PANNELLO",
         "output_comm": "PANNELLO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Pannello di rivestimento": {
@@ -209,6 +275,8 @@ SALES_PART_ARTICOLI = {
         "output_tech": "PANN RIV",
         "output_comm": "PANNELLO RIVESTIMENTO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
         "disabled_dims": ["P", "Ø"],
         "pills_config": [
             ("Antisgancio", 6),
@@ -231,6 +299,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "PANNELLO_FRONTALE",
         "output_comm": "PANNELLO FRONTALE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Pedana di base": {
@@ -238,6 +309,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "PEDANA_BASE",
         "output_comm": "PEDANA DI BASE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Piastra di fissaggio": {
@@ -245,6 +319,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "PIASTRA_FISSAGGIO",
         "output_comm": "PIASTRA FISSAGGIO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Piede di base": {
@@ -252,6 +329,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "PIEDE_BASE",
         "output_comm": "PIEDE DI BASE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Profilo": {
@@ -259,6 +339,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "PROFILO",
         "output_comm": "PROFILO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Protezione": {
@@ -266,6 +349,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "PROTEZIONE",
         "output_comm": "PROTEZIONE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Rinforzo": {
@@ -273,9 +359,12 @@ SALES_PART_ARTICOLI = {
         "output_tech": "RINFORZO",
         "output_comm": "RINFORZO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
-   "Ripiano": {
+    "Ripiano": {
         "part_type": "SALES PART",
         "output_tech": "RIP",
         "output_comm": "RIPIANO",
@@ -284,7 +373,9 @@ SALES_PART_ARTICOLI = {
         "tipologie_config": {
             "DI BASE": ("BAS", "DI BASE"),
             "IN FILO": ("FIL", "IN FILO"),
-            "TOP": ("TOP", "TOP")},
+            "TOP": ("TOP", "TOP")
+        },
+        "disabled_dims": [],
         "pills_config": [
             ("Con componente saldato", 52),
             ("Con viteria", 51),
@@ -300,6 +391,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "SCHIENALE",
         "output_comm": "SCHIENALE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Staffa": {
@@ -307,6 +401,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "STAFFA",
         "output_comm": "STAFFA",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Tamponamento": {
@@ -314,6 +411,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "TAMPONAMENTO",
         "output_comm": "TAMPONAMENTO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Tappo": {
@@ -321,6 +421,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "TAPPO",
         "output_comm": "TAPPO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Traversino": {
@@ -328,6 +431,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "TRAVERSINO",
         "output_comm": "TRAVERSINO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Tubolare": {
@@ -335,6 +441,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "TUBOLARE",
         "output_comm": "TUBOLARE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Vasca": {
@@ -342,6 +451,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "VASCA",
         "output_comm": "VASCA",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Zoccolatura": {
@@ -349,6 +461,9 @@ SALES_PART_ARTICOLI = {
         "output_tech": "ZOCCOLATURA",
         "output_comm": "ZOCCOLATURA",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     }
 }
@@ -361,6 +476,9 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "AVANCASSA",
         "output_comm": "AVANCASSA",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Banco espositore": {
@@ -368,6 +486,9 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "BANCO_ESPOSITORE",
         "output_comm": "BANCO ESPOSITORE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Cancelletto": {
@@ -375,6 +496,9 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "CANCELLETTO",
         "output_comm": "CANCELLETTO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Cassa pagamento automatico": {
@@ -382,6 +506,9 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "CASSA_PAGAMENTO_AUTOMATICO",
         "output_comm": "CASSA PAGAMENTO AUTOMATICO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Cassetto estraibile": {
@@ -389,6 +516,9 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "CASSETTO_ESTRAIBILE",
         "output_comm": "CASSETTO ESTRAIBILE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Cassettiera": {
@@ -396,6 +526,9 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "CASSETTIERA",
         "output_comm": "CASSETTIERA",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Controventatura": {
@@ -403,6 +536,9 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "CONTROVENTATURA",
         "output_comm": "CONTROVENTATURA",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Espositore": {
@@ -410,6 +546,9 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "ESPOSITORE",
         "output_comm": "ESPOSITORE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Espositore a gradoni": {
@@ -417,6 +556,9 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "ESPOSITORE_GRADONI",
         "output_comm": "ESPOSITORE A GRADONI",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Espositore riviste": {
@@ -424,6 +566,9 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "ESPOSITORE_RIVISTE",
         "output_comm": "ESPOSITORE RIVISTE",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Spalla": {
@@ -431,6 +576,9 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "SPALLA",
         "output_comm": "SPALLA",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Telaio saldato": {
@@ -438,6 +586,9 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "TELAIO_SALDATO",
         "output_comm": "TELAIO SALDATO",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Totem": {
@@ -445,6 +596,9 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "TOTEM",
         "output_comm": "TOTEM",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     },
     "Vetrina": {
@@ -452,6 +606,9 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "VETRINA",
         "output_comm": "VETRINA",
         "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": [],
         "pills_config": {}
     }
 }
