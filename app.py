@@ -599,19 +599,19 @@ with col_output:
             with col_btn_save:
                 btn_salva = st.button("📥 Salva Codice", use_container_width=True)
                 
-           if btn_salva:
-            if not codice_input_utente.strip():
-                st.error("❌ Inserisci un codice valido.")
-            else:
-                # Recupera l'utente attivo memorizzato al momento del login
-                utente_attivo = st.session_state.get('utente_corrente', 'Sistema')
-                
-                # Chiama la funzione aggiornata passando l'utente come quarto argomento
-                esito = salva_su_excel(
-                    codice_input_utente.strip(), 
-                    st.session_state.get('editable_tech'), 
-                    st.session_state.get('editable_comm'),
-                    utente_attivo  # 👈 Passiamo l'utente per la colonna E
-                )
-                if esito:
-                    st.success(f"✔️ Registrato correttamente da **{utente_attivo}** con codice: **{codice_input_utente.strip()}**.")
+            if btn_salva:
+                if not codice_input_utente.strip():
+                    st.error("❌ Inserisci un codice valido.")
+                else:
+                    # Recupera l'utente attivo memorizzato al momento del login
+                    utente_attivo = st.session_state.get('utente_corrente', 'Sistema')
+                    
+                    # Chiama la funzione aggiornata passando l'utente come quarto argomento
+                    esito = salva_su_excel(
+                        codice_input_utente.strip(), 
+                        st.session_state.get('editable_tech'), 
+                        st.session_state.get('editable_comm'),
+                        utente_attivo
+                    )
+                    if esito:
+                        st.success(f"✔️ Registrato correttamente da **{utente_attivo}** con codice: **{codice_input_utente.strip()}**.")
