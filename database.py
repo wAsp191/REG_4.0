@@ -63,7 +63,7 @@ SALES_PART_ARTICOLI = {
         "output_tech": "ANT",
         "output_comm": "ANTA",
         "ha_finitura": True,
-        "ha_tipologia": False,
+        "ha_tipologia": True,
         "tipologie_config": {
             "A BATTENTE": ("BATT", "A BATTENTE"),
             "SCORREVOLE": ("SCORR", "SCORREVOLE")
@@ -96,7 +96,7 @@ SALES_PART_ARTICOLI = {
         "output_tech": "CHIUS",
         "output_comm": "CHIUSURA",
         "ha_finitura": True,
-        "ha_tipologia": False,
+        "ha_tipologia": True,
         "tipologie_config": {
             "FRONTALE": ("FRONT", "FRONTALE"),
             "SUPERIORE": ("SUP", "SUPERIORE"),
@@ -130,7 +130,7 @@ SALES_PART_ARTICOLI = {
         "output_tech": "COPR MONT",
         "output_comm": "COPRIMONTANTE",
         "ha_finitura": True,
-        "ha_tipologia": False,
+        "ha_tipologia": True,
         "tipologie_config": {
             "PER MONTANTE 30X30": ("XM30X30", "XM30X30"),
             "PER MONTANTE 70X30": ("XM70X30", "XM70X30"),
@@ -147,7 +147,7 @@ SALES_PART_ARTICOLI = {
         "output_tech": "COPR PIED",
         "output_comm": "COPRIPIEDE",
         "ha_finitura": True,
-        "ha_tipologia": False,
+        "ha_tipologia": True,
         "tipologie_config": {
             "PER PIEDE H90": ("XPH90", "XPH90"),
             "PER PIEDE H100": ("XPH100", "XPH100"),
@@ -171,7 +171,7 @@ SALES_PART_ARTICOLI = {
         "output_tech": "CORR",
         "output_comm": "CORRENTE",
         "ha_finitura": True,
-        "ha_tipologia": False,
+        "ha_tipologia": True,
         "tipologie_config": {
             "VPA": ("VPA", "VPA"),
             "TUBOLARE": ("TUB", "TUBOLARE"),
@@ -206,7 +206,7 @@ SALES_PART_ARTICOLI = {
         "output_tech": "DIV",
         "output_comm": "DIVISORIO",
         "ha_finitura": True,
-        "ha_tipologia": False,
+        "ha_tipologia": True,
         "tipologie_config": {
             "STANDARD": ("", ""),
             "IN FILO": ("FIL", "IN FILO")
@@ -239,7 +239,7 @@ SALES_PART_ARTICOLI = {
         "output_tech": "FRONT",
         "output_comm": "FRONTALINO",
         "ha_finitura": True,
-        "ha_tipologia": False,
+        "ha_tipologia": True,
         "tipologie_config": {
             "STANDARD": ("", ""),
             "IN FILO": ("FIL", "IN FILO")
@@ -252,7 +252,7 @@ SALES_PART_ARTICOLI = {
         "output_tech": "FRONT",
         "output_comm": "FRONTALE",
         "ha_finitura": True,
-        "ha_tipologia": False,
+        "ha_tipologia": True,
         "tipologie_config": {
             "STANDARD": ("", ""),
             "IN FILO": ("FIL", "IN FILO")
@@ -285,7 +285,7 @@ SALES_PART_ARTICOLI = {
         "output_tech": "MONT",
         "output_comm": "MONTANTE",
         "ha_finitura": True,
-        "ha_tipologia": False,
+        "ha_tipologia": True,
         "tipologie_config": {
             "TUBOLARE 30X30": ("TUB30X30", "TUBOLARE 30X30"),
             "SEZIONE 70X30": ("70X30", "SEZIONE 70X30"),
@@ -313,7 +313,7 @@ SALES_PART_ARTICOLI = {
         "output_tech": "PANN RIV",
         "output_comm": "PANNELLO RIVESTIMENTO",
         "ha_finitura": True,
-        "ha_tipologia": False,
+        "ha_tipologia": True,
         "tipologie_config": {},
         "disabled_dims": ["P", "Ø"],
         "pills_config": [
@@ -367,7 +367,7 @@ SALES_PART_ARTICOLI = {
         "output_tech": "PIED BAS",
         "output_comm": "PIEDE DI BASE",
         "ha_finitura": True,
-        "ha_tipologia": False,
+        "ha_tipologia": True,
         "tipologie_config": {
             "H90": ("H90", "H90"),
             "H100": ("H100", "H100"),
@@ -381,7 +381,7 @@ SALES_PART_ARTICOLI = {
         "output_tech": "PROF",
         "output_comm": "PROFILO",
         "ha_finitura": True,
-        "ha_tipologia": False,
+        "ha_tipologia": True,
         "tipologie_config": {
             "A L": ("L", "L"),
             "A U": ("U", "U")
@@ -486,7 +486,7 @@ SALES_PART_ARTICOLI = {
         "output_tech": "TUB",
         "output_comm": "TUBOLARE",
         "ha_finitura": True,
-        "ha_tipologia": False,
+        "ha_tipologia": True,
         "tipologie_config": {
             "SEZIONE CIRCOLARE": ("SEZ CIRC", "SEZIONE CIRCOLARE"),
             "SEZIONE RETTANGOLARE": ("SEZ RET", "SEZIONE RETTANGOLARE")
@@ -654,7 +654,7 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "VETR",
         "output_comm": "VETRINA",
         "ha_finitura": True,
-        "ha_tipologia": False,
+        "ha_tipologia": True,
         "tipologie_config": {
             "RETTA": ("RET", "RETTA"),
             "LVA": ("LVA", "LVA"),
