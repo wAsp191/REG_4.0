@@ -287,7 +287,7 @@ SALES_PART_ARTICOLI = {
         "ha_finitura": True,
         "ha_tipologia": True,
         "tipologie_config": {
-            "DECORATIVO 30X30": ("DEC 30X30", "DECORATIVO 30X30")
+            "DECORATIVO 30X30": ("DEC 30X30", "DECORATIVO 30X30"),
             "TUBOLARE 30X30": ("TUB30X30", "TUBOLARE 30X30"),
             "SEZIONE 70X30": ("70X30", "SEZIONE 70X30"),
             "SEZIONE 90X30": ("90X30", "SEZIONE 90X30"),
