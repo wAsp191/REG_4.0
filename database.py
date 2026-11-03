@@ -658,7 +658,7 @@ PACKAGE_PART_SPECIFICI = {
         "tipologie_config": {
             "RETTA": ("RET", "RETTA"),
             "LVA": ("LVA", "LVA"),
-            "DI TESTATA/SINGOLA": ("SING", "SINGOLE"),
+            "DI TESTATA/SINGOLA": ("SING", "SINGOLA"),
             "PORSA": ("PORSA", "PORSA")
         },
         "disabled_dims": ["Ø"],
