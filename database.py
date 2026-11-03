@@ -740,7 +740,7 @@ DATABASE_PILLS = {
     "Angolo aperto": ("ANG AP", "ANGOLO APERTO"),
     "Angolo chiuso": ("ANG CHI", "ANGOLO CHIUSO"),
     "Antisgancio": ("ANT-SGANCIO", "ANTISGANCIO"),
-    "Antisismico": ("ANT-SISM", "ANTISISMICO"),
+    "Antisismica": ("ANT-SISM", "ANTISISMICA"),
     "Antiurto": ("ANT-URT", "ANTIURTO"),
     "Asolato": ("ASOL", "ASOLATO"),
     "Asolata": ("ASOL", "ASOLATA"),
