@@ -683,7 +683,7 @@ PACKAGE_PART_SPECIFICI = {
              ("Asimmetrica (+)", 51),
              ("Verniciata", 1),
              ("Diagonali doppie", 3),
-             (Diagonali incrociate", 4)
+             ("Diagonali incrociate", 4)
              ]
     },
     "Telaio saldato": {
