@@ -671,9 +671,11 @@ PACKAGE_PART_SPECIFICI = {
         "ha_tipologia": True,
         "tipologie_config": {
             "L55": ("L55", "SEZIONE L55"),
-            "L80": ("L80", "SEZIONE L80"),
-            "L100": ("L100", "SEZIONE L100"),
-            "L120": ("L120", "SEZIONE L120")
+            "L80 Z/M": ("L80 Z/M", "SEZIONE L80 Z/M"),
+            "L80 Z/S": ("L80 Z/S", "SEZIONE L80 Z/S"),
+            "L100 Z/M": ("L100 Z/M", "SEZIONE L100 Z/M"),
+            "L100 Z/S": ("L100 Z/S", "SEZIONE L100 Z/S"),
+            "L120 Z/S": ("L120 Z/S", "SEZIONE L120 Z/S")
         },
         "disabled_dims": ["Ø"],
         "pills_config": [
