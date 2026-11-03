@@ -668,10 +668,18 @@ PACKAGE_PART_SPECIFICI = {
         "output_tech": "SPALL",
         "output_comm": "SPALLA",
         "ha_finitura": True,
-        "ha_tipologia": False,
-        "tipologie_config": {},
+        "ha_tipologia": True,
+        "tipologie_config": {
+            "L55": ("L55", "SEZIONE L55"),
+            "L80": ("L80", "SEZIONE L80"),
+            "L100": ("L100", "SEZIONE L100"),
+            "L120": ("L120", "SEZIONE L120")
+        },
         "disabled_dims": ["Ø"],
-        "pills_config": {}
+        "pills_config": [
+             ("Antisismico, 1),
+             ("Asimmetrica (+)", 51)
+             ]
     },
     "Telaio saldato": {
         "part_type": "PACKAGE PART",
