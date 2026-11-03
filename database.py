@@ -662,7 +662,13 @@ PACKAGE_PART_SPECIFICI = {
             "PORSA": ("PORSA", "PORSA")
         },
         "disabled_dims": ["Ø"],
-        "pills_config": {}
+        "pills_config": {
+            ("Compatibilità piede di base (+)", 2),
+            ("Con accessori", 51),
+            ("Con ante scorrevoli", 3),
+            ("Con illuminazione", 1),
+            ("Con serratura", 52)
+        }
     }
 }
 # ==============================================================================
@@ -690,6 +696,7 @@ DATABASE_PILLS = {
     "Bordi smussati": ("B. SMUSS", "BORDI SMUSSATI"),
     "Completa di paracolpo ABS": ("CON PAR. ABS", "COMPLETA DI PARACOLPO ABS"),
     "Con ante scorrevoli": ("CON ANTE SCORR", "CON ANTE SCORREVOLI"),
+    "Con accessori": ("+ACC", "CON CCESSORI"),
     "Con batticarrello": ("CON BATT-CARRELLO", "CON BATTCARRELLO"),
     "Con bocchetta passacavi": ("CON BOCC P.CAVI", "CON BOCCHETTA PASSACAVI"),
     "Con collegamento superiore": ("CON COLL SUP", "CON COLLEGAMENTO SUPERIORE"),
