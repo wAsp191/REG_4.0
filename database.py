@@ -300,10 +300,11 @@ SALES_PART_ARTICOLI = {
         "pills_config": [
             ("Asolato", 2),
             ("Biasolato", 3),
-            ("Con mensole", 4),
-            ("Con mensole saldate", 5),
+            ("Con mensole", 5),
+            ("Con mensole saldate", 6),
             ("Con viteria", 51),
-            ("Orientamento Destro / Sinistro (+)", 1)
+            ("Orientamento Destro / Sinistro (+)", 1),
+            ("Compatibilità piede di base (+)", 4)
         ]
     },
     "Pannello": {
