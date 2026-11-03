@@ -31,6 +31,27 @@ FINITURE_CONFIG = {
 OPZIONI_COMPATIBILITA = ["", "F25", "F25 BESPOKE", "F50", "F50 BESPOKE", "UNIVERSAL", "BC", "FORTISSIMO", "MINIRACK", "UNIMOB", "STAND-ALONE"]
 
 # ==============================================================================
+# REGOLE AUTOMATICHE: ASSOCIAZIONE FINITURE -> PILLS OBBLIGATORI
+# ==============================================================================
+FINITURE_AUTO_PILLS = {
+    # Gruppo 1: Materiali a base legno / pannelli
+    ("LAMINATO", "NOBILITATO", "TRUCIOLATO", "OSB", "HPL"): [
+        ("Bordi smussati", 10),
+        ("Con lati bordati", 11),
+        ("Fresata", 12),
+        ("Fresato", 13),
+        ("Lato della fresatura", 14)
+    ],
+    # Gruppo 2: Materiali plastici e vetri
+    ("PLX", "POLICARBONATO", "VETRO TEMPRATO", "VETRO SATINATO"): [
+        ("Antiurto", 10),
+        ("Con lati bordati", 11),
+        ("Con logo", 12),
+        ("Rasterizzato", 13),
+        ("Rasterizzata", 14)
+    ]
+}
+# ==============================================================================
 # DATABASE ARTICOLI: SALES PART
 # ==============================================================================
 SALES_PART_ARTICOLI = {
