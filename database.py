@@ -876,8 +876,8 @@ SUB_OPTIONS_CONFIG = {
         "H150": ("H150", "H150")
     },
     "Predisposto per montante (+)": {
-        "L80": ("XML80", "PREDISPOSTO PER MONTANTE L80"),
-        "L100/L120": ("XML100/L120", "PREDISPOSTO PER MONTANTE L100/120")
+        "L80": ("L80", "PREDISPOSTO PER MONTANTE L80"),
+        "L100/L120": ("L100/L120", "PREDISPOSTO PER MONTANTE L100/120")
     },
     "Asimmetrica (+)": {
         "AS240": ("AS240", "AS240"),
