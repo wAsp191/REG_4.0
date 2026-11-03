@@ -41,10 +41,8 @@ SALES_PART_ARTICOLI = {
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": [
-            ("Antisgancio", 6),
-            ("Attacco montante", 7),
             ("Compatibilità piede di base (+)", 5),
             ("Con componente saldato", 51),
             ("Con inserti filettati", 52),
@@ -62,27 +60,30 @@ SALES_PART_ARTICOLI = {
     },
     "Anta": {
         "part_type": "SALES PART",
-        "output_tech": "ANTA",
+        "output_tech": "ANT",
         "output_comm": "ANTA",
         "ha_finitura": True,
         "ha_tipologia": False,
-        "tipologie_config": {},
-        "disabled_dims": [],
+        "tipologie_config": {
+            "A BATTENTE": ("BATT", "A BATTENTE"),
+            "SCORREVOLE": ("SCORR", "SCORREVOLE")
+        },
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Canalina passa cavi": {
         "part_type": "SALES PART",
-        "output_tech": "CANALINA_PASSA_CAVI",
+        "output_tech": "CAN P.CAVI",
         "output_comm": "CANALINA PASSA CAVI",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Cesto in filo": {
         "part_type": "SALES PART",
-        "output_tech": "CESTO_FILO",
+        "output_tech": "CEST FIL",
         "output_comm": "CESTO IN FILO",
         "ha_finitura": True,
         "ha_tipologia": False,
@@ -92,147 +93,176 @@ SALES_PART_ARTICOLI = {
     },
     "Chiusura": {
         "part_type": "SALES PART",
-        "output_tech": "CHIUSURA",
+        "output_tech": "CHIUS",
         "output_comm": "CHIUSURA",
         "ha_finitura": True,
         "ha_tipologia": False,
-        "tipologie_config": {},
-        "disabled_dims": [],
+        "tipologie_config": {
+            "FRONTALE": ("FRONT", "FRONTALE"),
+            "SUPERIORE": ("SUP", "SUPERIORE"),
+            "INFERIORE": ("INF", "INFERIORE")
+        },
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Cielino": {
         "part_type": "SALES PART",
-        "output_tech": "CIELINO",
+        "output_tech": "CIEL",
         "output_comm": "CIELINO",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Compensazione": {
         "part_type": "SALES PART",
-        "output_tech": "COMPENSAZIONE",
+        "output_tech": "COMP",
         "output_comm": "COMPENSAZIONE",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Coprimontante": {
         "part_type": "SALES PART",
-        "output_tech": "COPRIMONTANTE",
+        "output_tech": "COPR MONT",
         "output_comm": "COPRIMONTANTE",
         "ha_finitura": True,
         "ha_tipologia": False,
-        "tipologie_config": {},
-        "disabled_dims": [],
+        "tipologie_config": {
+            "PER MONTANTE 30X30": ("XM30X30", "XM30X30"),
+            "PER MONTANTE 70X30": ("XM70X30", "XM70X30"),
+            "PER MONTANTE 90X30": ("XM90X30", "XM90X30"),
+            "PER MONTANTE L55": ("XML55", "XML55"),
+            "PER MONTANTE L80": ("XML80", "XML80"),
+            "PER MONTANTE L100/120": ("XML100/120", "XML100/120")
+        },
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Copripiede": {
         "part_type": "SALES PART",
-        "output_tech": "COPRIPIEDE",
+        "output_tech": "COPR PIED",
         "output_comm": "COPRIPIEDE",
         "ha_finitura": True,
         "ha_tipologia": False,
-        "tipologie_config": {},
-        "disabled_dims": [],
+        "tipologie_config": {
+            "PER PIEDE H90": ("XPH90", "XPH90"),
+            "PER PIEDE H100": ("XPH100", "XPH100"),
+            "PER PIEDE H150": ("XPH150", "XPH150"),
+        },
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Coprischienale": {
         "part_type": "SALES PART",
-        "output_tech": "COPRISCHIENALE",
+        "output_tech": "COPR SCHIEN",
         "output_comm": "COPRISCHIENALE",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Corrente": {
         "part_type": "SALES PART",
-        "output_tech": "CORRENTE",
+        "output_tech": "CORR",
         "output_comm": "CORRENTE",
         "ha_finitura": True,
         "ha_tipologia": False,
-        "tipologie_config": {},
-        "disabled_dims": [],
+        "tipologie_config": {
+            "VPA": ("VPA", "VPA"),
+            "TUBOLARE": ("TUB", "TUBOLARE"),
+            "ESPOSITIVO": ("ESP", "ESPOSITIVO"),
+            "A SEGGIOLA": ("SEG", "A SEGGIOLA")
+        },
+        "disabled_dims": ["Ø", "P"],
         "pills_config": {}
     },
     "Diagonale": {
         "part_type": "SALES PART",
-        "output_tech": "DIAGONALE",
+        "output_tech": "DIAG",
         "output_comm": "DIAGONALE",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø", "P"],
         "pills_config": {}
     },
     "Distanziale": {
         "part_type": "SALES PART",
-        "output_tech": "DISTANZIALE",
+        "output_tech": "DIST",
         "output_comm": "DISTANZIALE",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Divisorio": {
         "part_type": "SALES PART",
-        "output_tech": "DIVISORIO",
+        "output_tech": "DIV",
         "output_comm": "DIVISORIO",
         "ha_finitura": True,
         "ha_tipologia": False,
-        "tipologie_config": {},
+        "tipologie_config": {
+            "STANDARD": ("", ""),
+            "IN FILO": ("FIL", "IN FILO")
+        },
         "disabled_dims": [],
         "pills_config": {}
     },
     "Fiancata laterale": {
         "part_type": "SALES PART",
-        "output_tech": "FIANCATA_LATERALE",
+        "output_tech": "FIANC",
         "output_comm": "FIANCATA LATERALE",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø", "P"],
         "pills_config": {}
     },
     "Filo": {
         "part_type": "SALES PART",
-        "output_tech": "FILO",
+        "output_tech": "FIL",
         "output_comm": "FILO",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["P", "H"],
         "pills_config": {}
     },
     "Frontalino": {
         "part_type": "SALES PART",
-        "output_tech": "FRONTALINO",
+        "output_tech": "FRONT",
         "output_comm": "FRONTALINO",
         "ha_finitura": True,
         "ha_tipologia": False,
-        "tipologie_config": {},
+        "tipologie_config": {
+            "STANDARD": ("", ""),
+            "IN FILO": ("FIL", "IN FILO")
+        },
         "disabled_dims": [],
         "pills_config": {}
     },
     "Frontale": {
         "part_type": "SALES PART",
-        "output_tech": "FRONTALE",
+        "output_tech": "FRONT",
         "output_comm": "FRONTALE",
         "ha_finitura": True,
         "ha_tipologia": False,
-        "tipologie_config": {},
-        "disabled_dims": [],
+        "tipologie_config": {
+            "STANDARD": ("", ""),
+            "IN FILO": ("FIL", "IN FILO")
+        },
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Gancio": {
         "part_type": "SALES PART",
-        "output_tech": "GANCIO",
+        "output_tech": "GANC",
         "output_comm": "GANCIO",
         "ha_finitura": True,
         "ha_tipologia": False,
@@ -242,32 +272,40 @@ SALES_PART_ARTICOLI = {
     },
     "Mensola": {
         "part_type": "SALES PART",
-        "output_tech": "MENSOLA",
+        "output_tech": "MENS",
         "output_comm": "MENSOLA",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø", "L"],
         "pills_config": {}
     },
     "Montante": {
         "part_type": "SALES PART",
-        "output_tech": "MONTANTE",
+        "output_tech": "MONT",
         "output_comm": "MONTANTE",
         "ha_finitura": True,
         "ha_tipologia": False,
-        "tipologie_config": {},
-        "disabled_dims": [],
+        "tipologie_config": {
+            "TUBOLARE 30X30": ("TUB30X30", "TUBOLARE 30X30"),
+            "SEZIONE 70X30": ("70X30", "SEZIONE 70X30"),
+            "SEZIONE 90X30": ("90X30", "SEZIONE 90X30"),
+            "SEZIONE L55": ("L55", "SEZIONE L55"),
+            "SEZIONE L80": ("L80", "SEZIONE L80"),
+            "SEZIONE L100": ("L100", "SEZIONE L100"),
+            "SEZIONE L120": ("L120", "SEZIONE L120"),
+        },
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Pannello": {
         "part_type": "SALES PART",
-        "output_tech": "PANNELLO",
+        "output_tech": "PANN",
         "output_comm": "PANNELLO",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø", "P"],
         "pills_config": {}
     },
     "Pannello di rivestimento": {
@@ -296,72 +334,79 @@ SALES_PART_ARTICOLI = {
     },
     "Pannello frontale": {
         "part_type": "SALES PART",
-        "output_tech": "PANNELLO_FRONTALE",
+        "output_tech": "PANN FRONT",
         "output_comm": "PANNELLO FRONTALE",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø", "P"],
         "pills_config": {}
     },
     "Pedana di base": {
         "part_type": "SALES PART",
-        "output_tech": "PEDANA_BASE",
+        "output_tech": "PED BAS",
         "output_comm": "PEDANA DI BASE",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Piastra di fissaggio": {
         "part_type": "SALES PART",
-        "output_tech": "PIASTRA_FISSAGGIO",
+        "output_tech": "PIAST",
         "output_comm": "PIASTRA FISSAGGIO",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Piede di base": {
         "part_type": "SALES PART",
-        "output_tech": "PIEDE_BASE",
+        "output_tech": "PIED BAS",
         "output_comm": "PIEDE DI BASE",
         "ha_finitura": True,
         "ha_tipologia": False,
-        "tipologie_config": {},
-        "disabled_dims": [],
+        "tipologie_config": {
+            "H90": ("H90", "H90"),
+            "H100": ("H100", "H100"),
+            "H150": ("H150", "H150")
+        },
+        "disabled_dims": ["Ø", "P", "H"],
         "pills_config": {}
     },
     "Profilo": {
         "part_type": "SALES PART",
-        "output_tech": "PROFILO",
+        "output_tech": "PROF",
         "output_comm": "PROFILO",
         "ha_finitura": True,
         "ha_tipologia": False,
-        "tipologie_config": {},
+        "tipologie_config": {
+            "A L": ("L", "L"),
+            "A U": ("U", "U")
+        },
         "disabled_dims": [],
         "pills_config": {}
     },
     "Protezione": {
         "part_type": "SALES PART",
-        "output_tech": "PROTEZIONE",
+        "output_tech": "PROT",
         "output_comm": "PROTEZIONE",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Rinforzo": {
         "part_type": "SALES PART",
-        "output_tech": "RINFORZO",
+        "output_tech": "RINF",
         "output_comm": "RINFORZO",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Ripiano": {
@@ -375,7 +420,7 @@ SALES_PART_ARTICOLI = {
             "IN FILO": ("FIL", "IN FILO"),
             "TOP": ("TOP", "TOP")
         },
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": [
             ("Con componente saldato", 52),
             ("Con viteria", 51),
@@ -388,32 +433,32 @@ SALES_PART_ARTICOLI = {
     },
     "Schienale": {
         "part_type": "SALES PART",
-        "output_tech": "SCHIENALE",
+        "output_tech": "SCHIEN",
         "output_comm": "SCHIENALE",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Staffa": {
         "part_type": "SALES PART",
-        "output_tech": "STAFFA",
+        "output_tech": "STAFF",
         "output_comm": "STAFFA",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Tamponamento": {
         "part_type": "SALES PART",
-        "output_tech": "TAMPONAMENTO",
+        "output_tech": "TAMP",
         "output_comm": "TAMPONAMENTO",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Tappo": {
@@ -428,42 +473,45 @@ SALES_PART_ARTICOLI = {
     },
     "Traversino": {
         "part_type": "SALES PART",
-        "output_tech": "TRAVERSINO",
+        "output_tech": "TRAV",
         "output_comm": "TRAVERSINO",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Tubolare": {
         "part_type": "SALES PART",
-        "output_tech": "TUBOLARE",
+        "output_tech": "TUB",
         "output_comm": "TUBOLARE",
         "ha_finitura": True,
         "ha_tipologia": False,
-        "tipologie_config": {},
+        "tipologie_config": {
+            "SEZIONE CIRCOLARE": ("SEZ CIRC", "SEZIONE CIRCOLARE"),
+            "SEZIONE RETTANGOLARE": ("SEZ RET": "SEZIONE RETTANGOLARE")
+        },
         "disabled_dims": [],
         "pills_config": {}
     },
     "Vasca": {
         "part_type": "SALES PART",
-        "output_tech": "VASCA",
+        "output_tech": "VASC",
         "output_comm": "VASCA",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Zoccolatura": {
         "part_type": "SALES PART",
-        "output_tech": "ZOCCOLATURA",
+        "output_tech": "ZOCC",
         "output_comm": "ZOCCOLATURA",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     }
 }
@@ -473,27 +521,27 @@ SALES_PART_ARTICOLI = {
 PACKAGE_PART_SPECIFICI = {
     "Avancassa": {
         "part_type": "PACKAGE PART",
-        "output_tech": "AVANCASSA",
+        "output_tech": "AVCASSA",
         "output_comm": "AVANCASSA",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Banco espositore": {
         "part_type": "PACKAGE PART",
-        "output_tech": "BANCO_ESPOSITORE",
+        "output_tech": "BANC ESP",
         "output_comm": "BANCO ESPOSITORE",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Cancelletto": {
         "part_type": "PACKAGE PART",
-        "output_tech": "CANCELLETTO",
+        "output_tech": "CANC",
         "output_comm": "CANCELLETTO",
         "ha_finitura": True,
         "ha_tipologia": False,
@@ -503,22 +551,22 @@ PACKAGE_PART_SPECIFICI = {
     },
     "Cassa pagamento automatico": {
         "part_type": "PACKAGE PART",
-        "output_tech": "CASSA_PAGAMENTO_AUTOMATICO",
+        "output_tech": "CASS PAG AUTO",
         "output_comm": "CASSA PAGAMENTO AUTOMATICO",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Cassetto estraibile": {
         "part_type": "PACKAGE PART",
-        "output_tech": "CASSETTO_ESTRAIBILE",
+        "output_tech": "CASS ESTR",
         "output_comm": "CASSETTO ESTRAIBILE",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Cassettiera": {
@@ -528,7 +576,7 @@ PACKAGE_PART_SPECIFICI = {
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Controventatura": {
@@ -538,17 +586,17 @@ PACKAGE_PART_SPECIFICI = {
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Espositore": {
         "part_type": "PACKAGE PART",
-        "output_tech": "ESPOSITORE",
+        "output_tech": "ESP",
         "output_comm": "ESPOSITORE",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Espositore a gradoni": {
@@ -558,7 +606,7 @@ PACKAGE_PART_SPECIFICI = {
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Espositore riviste": {
@@ -568,22 +616,22 @@ PACKAGE_PART_SPECIFICI = {
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Spalla": {
         "part_type": "PACKAGE PART",
-        "output_tech": "SPALLA",
+        "output_tech": "SPALL",
         "output_comm": "SPALLA",
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Telaio saldato": {
         "part_type": "PACKAGE PART",
-        "output_tech": "TELAIO_SALDATO",
+        "output_tech": "TEL SALD",
         "output_comm": "TELAIO SALDATO",
         "ha_finitura": True,
         "ha_tipologia": False,
@@ -598,17 +646,21 @@ PACKAGE_PART_SPECIFICI = {
         "ha_finitura": True,
         "ha_tipologia": False,
         "tipologie_config": {},
-        "disabled_dims": [],
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     },
     "Vetrina": {
         "part_type": "PACKAGE PART",
-        "output_tech": "VETRINA",
+        "output_tech": "VETR",
         "output_comm": "VETRINA",
         "ha_finitura": True,
         "ha_tipologia": False,
-        "tipologie_config": {},
-        "disabled_dims": [],
+        "tipologie_config": {
+            "RETTA": ("RET", "RETTA"),
+            "LVA": ("LVA", "LVA"),
+            "DI TESTATA": ("SING", "SINGOLE")
+        },
+        "disabled_dims": ["Ø"],
         "pills_config": {}
     }
 }
