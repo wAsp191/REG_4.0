@@ -287,16 +287,24 @@ SALES_PART_ARTICOLI = {
         "ha_finitura": True,
         "ha_tipologia": True,
         "tipologie_config": {
+            "DECORATIVO 30X30": ("DEC 30X30", "DECORATIVO 30X30")
             "TUBOLARE 30X30": ("TUB30X30", "TUBOLARE 30X30"),
             "SEZIONE 70X30": ("70X30", "SEZIONE 70X30"),
             "SEZIONE 90X30": ("90X30", "SEZIONE 90X30"),
             "SEZIONE L55": ("L55", "SEZIONE L55"),
             "SEZIONE L80": ("L80", "SEZIONE L80"),
             "SEZIONE L100": ("L100", "SEZIONE L100"),
-            "SEZIONE L120": ("L120", "SEZIONE L120"),
+            "SEZIONE L120": ("L120", "SEZIONE L120")
         },
-        "disabled_dims": ["Ø"],
-        "pills_config": {}
+        "disabled_dims": ["Ø", "L"],
+        "pills_config": [
+            ("Asolato", 2),
+            ("Biasolato", 3),
+            ("Con mensole", 4),
+            ("Con mensole saldate", 5),
+            ("Con viteria", 51),
+            ("Orientamento Destro / Sinistro (+)", 1)
+        ]
     },
     "Pannello": {
         "part_type": "SALES PART",
