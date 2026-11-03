@@ -40,7 +40,7 @@ FINITURE_AUTO_PILLS = {
         ("Con lati bordati", 11),
         ("Fresata", 12),
         ("Fresato", 13),
-        ("Lato della fresatura", 14)
+        ("Lato della fresatura (+)", 14)
     ],
     # Gruppo 2: Materiali plastici e vetri
     ("PLX", "POLICARBONATO", "VETRO TEMPRATO", "VETRO SATINATO"): [
@@ -664,6 +664,22 @@ PACKAGE_PART_SPECIFICI = {
         "tipologie_config": {},
         "disabled_dims": ["Ø"],
         "pills_config": {}
+    },
+     "Mobile retrocassa": {
+        "part_type": "PACKAGE PART",
+        "output_tech": "MOB RETR CASS",
+        "output_comm": "MOBILE RETROCASSA",
+        "ha_finitura": True,
+        "ha_tipologia": False,
+        "tipologie_config": {},
+        "disabled_dims": ["Ø"],
+        "pills_config": [
+             ("Con viteria", 51),
+             ("Con accessori", 52),
+             ("Con ripiani", 2),
+             ("Con ante scorrevoli", 3),
+             ("Mobile", 1) 
+             ]
     },
     "Spalla": {
         "part_type": "PACKAGE PART",
