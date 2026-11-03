@@ -489,7 +489,7 @@ SALES_PART_ARTICOLI = {
         "ha_tipologia": False,
         "tipologie_config": {
             "SEZIONE CIRCOLARE": ("SEZ CIRC", "SEZIONE CIRCOLARE"),
-            "SEZIONE RETTANGOLARE": ("SEZ RET": "SEZIONE RETTANGOLARE")
+            "SEZIONE RETTANGOLARE": ("SEZ RET", "SEZIONE RETTANGOLARE")
         },
         "disabled_dims": [],
         "pills_config": {}
