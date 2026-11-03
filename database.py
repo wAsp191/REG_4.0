@@ -66,10 +66,17 @@ SALES_PART_ARTICOLI = {
         "ha_tipologia": True,
         "tipologie_config": {
             "A BATTENTE": ("BATT", "A BATTENTE"),
-            "SCORREVOLE": ("SCORR", "SCORREVOLE")
+            "SCORREVOLE": ("SCORR", "SCORREVOLE"),
+            "PER CANCELLETTO": ("CANC", "PER CANCELLETTO")
         },
         "disabled_dims": ["Ø"],
-        "pills_config": {}
+        "pills_config": [
+            ("Orientamento Destro / Sinistro (+), 1),
+            ("Con foro serratura", 3),
+            ("Con serratura", 51),
+            ("Forata", 2),
+            ("Con viteria", 52)
+        ]
     },
     "Canalina passa cavi": {
         "part_type": "SALES PART",
