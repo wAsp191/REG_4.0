@@ -71,7 +71,7 @@ SALES_PART_ARTICOLI = {
         },
         "disabled_dims": ["Ø"],
         "pills_config": [
-            ("Orientamento Destro / Sinistro (+), 1),
+            ("Orientamento Destro / Sinistro (+)", 1),
             ("Con foro serratura", 3),
             ("Con serratura", 51),
             ("Forata", 2),
