@@ -261,12 +261,29 @@ with col_input:
     if articolo_scelto:
         pills_config_articolo = dati_articolo.get("pills_config", [])
         
+        # Estrazione base dei pills propri dell'articolo
         if isinstance(pills_config_articolo, dict):
-            pills_ordinati_ui = sorted(list(pills_config_articolo.keys()))
+            pills_ordinati_ui = list(pills_config_articolo.keys())
         elif isinstance(pills_config_articolo, (list, tuple)):
-            pills_ordinati_ui = sorted([p[0] if isinstance(p, (list, tuple)) else str(p) for p in pills_config_articolo])
+            pills_ordinati_ui = [p[0] if isinstance(p, (list, tuple)) else str(p) for p in pills_config_articolo]
         else:
             pills_ordinati_ui = []
+
+        # POPOLAMENTO DINAMICO DEI PILLS IN BASE ALLA FINITURA SCELTA
+        fin_scelta_ui = st.session_state.get("select_finitura", "")
+        finitura_str_upper = str(fin_scelta_ui).strip().upper()
+        
+        if ha_finitura and finitura_str_upper and 'FINITURE_AUTO_PILLS' in globals():
+            for tuple_finiture, lista_pills_auto in FINITURE_AUTO_PILLS.items():
+                if any(fin in finitura_str_upper for fin in tuple_finiture):
+                    for pill_item in lista_pills_auto:
+                        nome_pill = pill_item[0] if isinstance(pill_item, (tuple, list)) else str(pill_item)
+                        if nome_pill not in pills_ordinati_ui:
+                            pills_ordinati_ui.append(nome_pill)
+                    break
+        
+        # Ordinamento alfabetico finale delle opzioni da mostrare nel multiselect
+        pills_ordinati_ui = sorted(pills_ordinati_ui)
             
         if pills_ordinati_ui:
             col_pills_sel, col_pills_dyn = st.columns([1.7, 1.3], gap="medium")
@@ -365,21 +382,8 @@ with col_output:
             ha_finitura = dati_art.get("ha_finitura", False)
             ha_tipologia = dati_art.get("ha_tipologia", False)
             
-            # ---------------------------------------------------------
-            # INIEZIONE AUTOMATICA PILLS DA FINITURA (FINITURE_AUTO_PILLS)
-            # ---------------------------------------------------------
             fin_scelta_ui = st.session_state.get("select_finitura", "")
             finitura_str_upper = str(fin_scelta_ui).strip().upper()
-            
-            if ha_finitura and finitura_str_upper and 'FINITURE_AUTO_PILLS' in globals():
-                for tuple_finiture, lista_pills_auto in FINITURE_AUTO_PILLS.items():
-                    if any(fin in finitura_str_upper for fin in tuple_finiture):
-                        for pill_item in lista_pills_auto:
-                            # Estrazione del nome se si tratta di una tupla (nome_pill, ordine)
-                            nome_pill = pill_item[0] if isinstance(pill_item, (tuple, list)) else str(pill_item)
-                            if nome_pill not in tags_selezionati_utente:
-                                tags_selezionati_utente.append(nome_pill)
-                        break
 
             # 1. RILEVAMENTO AUTOMATICO PART TYPE (Con Override da Pills)
             part_type_automatico = dati_art.get("part_type", "SALES PART")
@@ -443,6 +447,7 @@ with col_output:
             pills_config_art = dati_art.get("pills_config", {})
             
             def estrai_ordine(tag):
+                # Check 1: Dizionario o lista dell'articolo
                 if isinstance(pills_config_art, dict):
                     val = pills_config_art.get(tag, 99)
                     if isinstance(val, dict): return val.get("ordine", 99)
@@ -453,6 +458,14 @@ with col_output:
                         if isinstance(item, (list, tuple)) and len(item) >= 2 and item[0] == tag:
                             return item[1]
                 
+                # Check 2: Cerca in FINITURE_AUTO_PILLS
+                if 'FINITURE_AUTO_PILLS' in globals():
+                    for _, lista_pills_auto in FINITURE_AUTO_PILLS.items():
+                        for p_item in lista_pills_auto:
+                            if isinstance(p_item, (tuple, list)) and len(p_item) >= 2 and p_item[0].strip().lower() == str(tag).strip().lower():
+                                return p_item[1]
+
+                # Check 3: DATABASE_PILLS generico
                 pill_key = str(tag).strip()
                 if 'DATABASE_PILLS' in globals():
                     for k, v in DATABASE_PILLS.items():
@@ -619,10 +632,8 @@ with col_output:
                 if not codice_input_utente.strip():
                     st.error("❌ Inserisci un codice valido.")
                 else:
-                    # Recupera l'utente attivo memorizzato al momento del login
                     utente_attivo = st.session_state.get('utente_corrente', 'Sistema')
                     
-                    # Chiama la funzione aggiornata passando l'utente come quarto argomento
                     esito = salva_su_excel(
                         codice_input_utente.strip(), 
                         st.session_state.get('editable_tech'), 
