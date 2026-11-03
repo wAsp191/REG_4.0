@@ -771,7 +771,7 @@ DATABASE_PILLS = {
     "Bordi smussati": ("B. SMUSS", "BORDI SMUSSATI"),
     "Completa di paracolpo ABS": ("CON PAR. ABS", "COMPLETA DI PARACOLPO ABS"),
     "Con ante scorrevoli": ("CON ANTE SCORR", "CON ANTE SCORREVOLI"),
-    "Con accessori": ("+ACC", "CON CCESSORI"),
+    "Con accessori": ("+ACC", "CON ACCESSORI"),
     "Con batticarrello": ("CON BATT-CARRELLO", "CON BATTCARRELLO"),
     "Con bocchetta passacavi": ("CON BOCC P.CAVI", "CON BOCCHETTA PASSACAVI"),
     "Con collegamento superiore": ("CON COLL SUP", "CON COLLEGAMENTO SUPERIORE"),
