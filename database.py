@@ -677,10 +677,11 @@ PACKAGE_PART_SPECIFICI = {
             "L100 Z/S": ("L100 Z/S", "SEZIONE L100 Z/S"),
             "L120 Z/S": ("L120 Z/S", "SEZIONE L120 Z/S")
         },
-        "disabled_dims": ["Ø"],
+        "disabled_dims": ["Ø", "P"],
         "pills_config": [
-             ("Antisismico", 1),
-             ("Asimmetrica (+)", 51)
+             ("Antisismico", 2),
+             ("Asimmetrica (+)", 51),
+             ("Verniciata", 1)
              ]
     },
     "Telaio saldato": {
