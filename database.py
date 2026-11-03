@@ -681,7 +681,9 @@ PACKAGE_PART_SPECIFICI = {
         "pills_config": [
              ("Antisismica", 2),
              ("Asimmetrica (+)", 51),
-             ("Verniciata", 1)
+             ("Verniciata", 1),
+             ("Diagonali doppie", 3),
+             (Diagonali incrociate", 4)
              ]
     },
     "Telaio saldato": {
@@ -776,6 +778,8 @@ DATABASE_PILLS = {
     "Con serratura": ("+SERR", "CON SERRATURA"),
     "Con viteria": ("+VIT", "CON VITERIA"),
     "Con viteria saldata": ("+VIT SALD", "CON VITERIA SALDATA"),
+    "Diagonali doppie": ("DD", "DIAGONALI DOPPIE"),
+    "Diagonali incrociate": ("CROC", "A CROCIE"),
     "Dritto": ("DRITT", "DRITTO"),
     "Forato": ("FOR", "FORATO"),
     "Forata": ("FOR", "FORATA"),
