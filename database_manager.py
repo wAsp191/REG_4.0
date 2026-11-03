@@ -3,10 +3,11 @@ import pandas as pd
 import gspread
 from google.oauth2.service_account import Credentials
 import datetime
+from zoneinfo import ZoneInfo
 from difflib import SequenceMatcher
 
 def get_google_sheet_connection():
-    """Connessione sicura e blindata a Google Sheets tramite st.secrets."""
+    """Connessione sicura a Google Sheets tramite st.secrets."""
     scope = [
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive"
@@ -20,8 +21,8 @@ def get_google_sheet_connection():
     return spreadsheet.get_worksheet(0)
 
 def carica_database():
-    """Carica il database dal Google Sheet in un DataFrame Pandas (4 colonne)."""
-    expected_cols = ["Codice_Identificativo", "Stringa_Tecnica", "Stringa_Commerciale", "Data_Creazione"]
+    """Carica il database dal Google Sheet in un DataFrame Pandas (5 colonne)."""
+    expected_cols = ["Codice_Identificativo", "Stringa_Tecnica", "Stringa_Commerciale", "Data_Creazione", "Utente"]
     try:
         ws = get_google_sheet_connection()
         data = ws.get_all_records()
@@ -70,17 +71,25 @@ def verifica_match_db(stringa_tech_generata, soglia_attenzione=85.0):
     
     return None, "NUOVO", max_percentuale
 
-def salva_su_excel(codice_id, stringa_tech, stringa_comm):
-    """Salvataggio blindato su Google Sheets a 4 colonne."""
+def salva_su_excel(codice_id, stringa_tech, stringa_comm, utente="Sistema"):
+    """
+    Salvataggio blindato su Google Sheets a 5 colonne:
+    A: Codice_Identificativo
+    B: Stringa_Tecnica
+    C: Stringa_Commerciale
+    D: Data_Creazione
+    E: Utente
+    """
     try:
         ws = get_google_sheet_connection()
-        data_ora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        data_ora = datetime.datetime.now(ZoneInfo("Europe/Rome")).strftime("%Y-%m-%d %H:%M:%S")
         
         nuova_riga = [
             str(codice_id).strip(), 
             str(stringa_tech).strip().upper(), 
             str(stringa_comm).strip().upper(), 
-            data_ora
+            data_ora,
+            str(utente).strip()
         ]
         
         try:
@@ -94,12 +103,13 @@ def salva_su_excel(codice_id, stringa_tech, stringa_comm):
     except Exception:
         try:
             ws = get_google_sheet_connection()
-            data_ora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            data_ora = datetime.datetime.now(ZoneInfo("Europe/Rome")).strftime("%Y-%m-%d %H:%M:%S")
             nuova_riga = [
                 str(codice_id).strip(), 
                 str(stringa_tech).strip().upper(), 
                 str(stringa_comm).strip().upper(), 
-            data_ora
+                data_ora,
+                str(utente).strip()
             ]
             
             tutti_i_dati = ws.get_all_values()
@@ -107,7 +117,7 @@ def salva_su_excel(codice_id, stringa_tech, stringa_comm):
             if prossima_riga < 2:
                 prossima_riga = 2 
                 
-            range_str = f"A{prossima_riga}:D{prossima_riga}"
+            range_str = f"A{prossima_riga}:E{prossima_riga}"
             ws.update(range_str, [nuova_riga], value_input_option="USER_ENTERED")
             return True
             
