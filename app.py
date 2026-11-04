@@ -603,12 +603,12 @@ with col_output:
         else:
             st.success("✅ **CONFIGURAZIONE UNICA**: Nessun duplicato trovato nel database.")
 
-        st.markdown("**Stringa Tecnica:**")
+        st.markdown("**Descrizione Tecnica:**")
         if 'editable_tech' not in st.session_state or st.session_state.get('sync_needed', False):
             st.session_state['editable_tech'] = st.session_state.get('stringa_tecnica', '')
         tech_val = st.text_input("Stringa Tecnica", key="editable_tech", label_visibility="collapsed")
         
-        st.markdown("**Stringa Commerciale:**")
+        st.markdown("**Descrizione Commerciale:**")
         if 'editable_comm' not in st.session_state or st.session_state.get('sync_needed', False):
             st.session_state['editable_comm'] = st.session_state.get('stringa_commerciale', '')
         comm_val = st.text_input("Stringa Commerciale", key="editable_comm", label_visibility="collapsed")
