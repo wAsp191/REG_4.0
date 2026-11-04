@@ -25,7 +25,8 @@ PILLS_FORZA_PACKAGE = [
     "Con ruote",
     "Con serratura",
     "Con viteria",
-    "Con distanziale (+)"
+    "Con distanziale (+)",
+    "Con accessori"
 ]
 
 # Compatibilità anti-NameError
